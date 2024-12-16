@@ -6,6 +6,7 @@ import {
 } from "firebase/auth";
 import { getDatabase } from "firebase/database";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Platform } from "react-native";
 
 // Your Firebase configuration
 const firebaseConfig = {
@@ -21,10 +22,19 @@ const firebaseConfig = {
 // Initialize Firebase app
 const app = initializeApp(firebaseConfig);
 
-// Initialize Auth with AsyncStorage persistence
-const auth = initializeAuth(app, {
-  persistence: getReactNativePersistence(AsyncStorage),
-});
+// Initialize Auth
+let auth;
+
+if (Platform.OS === "web") {
+  // On web, use default persistence
+  auth = getAuth(app);
+} else {
+  // On mobile, use AsyncStorage for persistence
+  auth = initializeAuth(app, {
+    persistence: getReactNativePersistence(AsyncStorage),
+  });
+}
+
 // Get Database instance
 const database = getDatabase(app);
 
