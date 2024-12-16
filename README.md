@@ -1,4 +1,4 @@
-## For class 06 update dependencies if you face error
+## Install dependencies
 
 1. npm install react-native-screens react-native-safe-area-context react-native-gesture-handler react-native-reanimated react-native-get-random-values @react-native-community/masked-view
 
@@ -8,9 +8,7 @@
 
 4. npm cache clean --force
 
-## Install for picker
-
-1. npx expo install @react-native-picker/picker
+5. npx expo install @react-native-picker/picker
 
 ## user stories categorized into Must, Should, and Could priorities:
 
