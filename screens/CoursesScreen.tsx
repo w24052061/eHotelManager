@@ -53,7 +53,7 @@ const CoursesScreen = () => {
     if (course.status === 'available') {
         try {
           const paymentDetails = {
-            cardNumber: '4111222233334444', // Example card details
+            cardNumber: '1111222233334444', // Example card details
             expiryDate: '12/25',
             cvv: '123',
             amount: course.price
