@@ -35,7 +35,7 @@ const CoursesScreen = () => {
   // Handle booking logic
   const handleBookCourse = async (course: Course) => {
     const user = auth.currentUser;
-    console.log('Auth user:', user);
+    // console.log('Auth user:', user);
   
     if (!user) {
       Alert.alert(
@@ -75,10 +75,12 @@ const CoursesScreen = () => {
   const renderCourseItem = ({ item }: { item: Course }) => (
     <View style={styles.courseContainer}>
       <Image
-        source={{ uri: item.image || 'https://via.placeholder.com/150' }}
+        source={{ uri: item.image || 'https://plus.unsplash.com/premium_photo-1687960116497-0dc41e1808a2?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8aG90ZWx8ZW58MHx8MHx8fDA%3D' }}
         style={styles.courseImage}
         resizeMode="cover"
       />
+      
+
       <View style={styles.courseDetails}>
         <Text style={styles.courseName}>{item.name}</Text>
         <Text style={styles.coursePrice}>${item.price.toFixed(2)}</Text>
@@ -228,3 +230,5 @@ const styles = StyleSheet.create({
 });
 
 export default CoursesScreen;
+
+
