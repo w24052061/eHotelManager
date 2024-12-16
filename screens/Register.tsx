@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { ref, set } from 'firebase/database';
@@ -10,27 +10,26 @@ const RegisterScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
   // Enhanced email validation
-  const isValidEmail = (email) => {
+  const isValidEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
   // Password strength validation
-  const isStrongPassword = (password) => {
+  const isStrongPassword = (password: string) => {
     return password.length >= 8 && 
            /[A-Z]/.test(password) && 
            /[a-z]/.test(password) && 
            /[0-9]/.test(password);
   };
 
+  // Handle Registration
   const handleRegister = async () => {
-    // Enhanced validation
     if (!name || !email || !password || !confirmPassword) {
       Alert.alert('Error', 'Please fill in all fields');
       return;
@@ -42,7 +41,7 @@ const RegisterScreen = () => {
     }
 
     if (!isStrongPassword(password)) {
-      Alert.alert('Error', 'Password must be at least 8 characters and include uppercase, lowercase, and numbers');
+      Alert.alert('Error', 'Password must be at least 8 characters, with uppercase, lowercase, and numbers');
       return;
     }
 
@@ -53,9 +52,11 @@ const RegisterScreen = () => {
 
     setLoading(true);
     try {
+      // Create user with Firebase Authentication
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
+      // Store user data in Firebase Realtime Database
       const userRef = ref(database, 'users/' + user.uid);
       await set(userRef, {
         name: name.trim(),
@@ -64,36 +65,30 @@ const RegisterScreen = () => {
         role: 'user'
       });
 
-      Alert.alert('Success', 'Registration Successful');
-
+      // Success alert and redirection
+      Alert.alert('Success', 'Registration successful!');
       setTimeout(() => {
         router.replace('/auth/dashboard');
       }, 1000);
 
     } catch (error) {
       let errorMessage = 'Registration failed';
-      
-      switch (error.code) {
-        case 'auth/email-already-in-use':
-          errorMessage = 'Email already in use';
-          break;
-        case 'auth/invalid-email':
-          errorMessage = 'Invalid email address';
-          break;
-        case 'auth/weak-password':
-          errorMessage = 'Password is too weak';
-          break;
-        default:
-          // Consider logging the error to a service
-          console.error('Unexpected registration error:', error);
+
+      // Handle specific Firebase errors
+      if (error.code === 'auth/email-already-in-use') {
+        errorMessage = 'Email is already in use';
+      } else if (error.code === 'auth/invalid-email') {
+        errorMessage = 'Invalid email address';
+      } else if (error.code === 'auth/weak-password') {
+        errorMessage = 'Password is too weak';
       }
-      
+
       Alert.alert('Error', errorMessage);
     } finally {
       setLoading(false);
     }
   };
-  
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Register</Text>
@@ -138,9 +133,11 @@ const RegisterScreen = () => {
         onPress={handleRegister}
         disabled={loading}
       >
-        <Text style={styles.buttonText}>
-          {loading ? 'Registering...' : 'Register'}
-        </Text>
+        {loading ? (
+          <ActivityIndicator size="small" color="#000" />
+        ) : (
+          <Text style={styles.buttonText}>Register</Text>
+        )}
       </TouchableOpacity>
     </View>
   );
@@ -158,7 +155,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
-    color:'#fff'
+    color: '#fff',
   },
   input: {
     width: '100%',
@@ -168,7 +165,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 10,
     marginVertical: 10,
-    color:'#fff'
+    color: '#fff',
   },
   button: {
     backgroundColor: '#4CAF50',
@@ -176,6 +173,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     borderRadius: 5,
     marginTop: 20,
+    alignItems: 'center',
+  },
+  buttonDisabled: {
+    backgroundColor: '#ccc',
   },
   buttonText: {
     color: 'black',
@@ -184,5 +185,3 @@ const styles = StyleSheet.create({
 });
 
 export default RegisterScreen;
-
-
