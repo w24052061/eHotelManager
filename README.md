@@ -10,6 +10,9 @@
 
 5. npx expo install @react-native-picker/picker
 
+The link below provides you a direct download nessecary node depenencies:
+[node_modules](https://drive.google.com/file/d/1KmrQcQ_l3TV0Vun_OpefuHidIxHbUu0v/view?usp=sharing)
+
 ## user stories categorized into Must, Should, and Could priorities:
 
 ### Must Have
