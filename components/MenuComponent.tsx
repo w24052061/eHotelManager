@@ -6,24 +6,31 @@ import { auth } from '../firebaseConfig';
 
 const MenuComponent = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);  // Track if menu is open
+  const [showMenuButton, setShowMenuButton] = useState(true); // Control the visibility of the hamburger button
   const menuAnimation = useState(new Animated.Value(0))[0]; // Animation for sliding in/out the menu
 
   const toggleMenu = () => {
     const nextState = !isMenuOpen;
     setIsMenuOpen(nextState);
 
-    // Slide in/out animation with callback to toggle button visibility after animation ends
+    // Slide in/out animation
     Animated.timing(menuAnimation, {
       toValue: nextState ? 1 : 0, // When opening, set to 1, when closing, set to 0
       duration: 300,
       easing: Easing.ease,
       useNativeDriver: true,
     }).start(() => {
+      
       if (!nextState) {
-        // Only show the hamburger button after the menu has closed
-        setIsMenuOpen(false);
+        setTimeout(() => {
+          setShowMenuButton(true); 
+        }, 100);  
       }
     });
+
+    if (nextState) {
+      setShowMenuButton(false);
+    }
   };
 
   const handleLogout = async () => {
@@ -37,9 +44,9 @@ const MenuComponent = () => {
   return (
     <View style={styles.container}>
       {/* Hamburger Button to Open Menu */}
-      {!isMenuOpen && (  // Only show the hamburger button when the menu is closed
+      {showMenuButton && (  // Only show the hamburger button when the menu is closed
         <TouchableOpacity style={styles.hamburgerButton} onPress={toggleMenu}>
-          <Text style={styles.hamburgerText}>Menu</Text>
+          <Text style={styles.hamburgerText}>☰</Text>
         </TouchableOpacity>
       )}
 
@@ -61,7 +68,7 @@ const MenuComponent = () => {
       >
         {/* Close Button inside the Menu */}
         <TouchableOpacity style={styles.closeButton} onPress={toggleMenu}>
-          <Text style={styles.closeButtonText}>X</Text>
+          <Text style={styles.closeButtonText}>❌</Text>
         </TouchableOpacity>
 
         {/* Menu Items */}
