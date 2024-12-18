@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Stack } from 'expo-router';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '../src/components/navigation/TabBarIcon';
+import { ActivityIndicator, View } from 'react-native';  // For loading spinner
 
 export default function RootLayout() {
   const [isFirstLaunch, setIsFirstLaunch] = useState<boolean | null>(null);
@@ -12,15 +13,20 @@ export default function RootLayout() {
         setIsFirstLaunch(hasCompletedOnboarding !== 'true');
       } catch (error) {
         console.error('Error checking onboarding status', error);
-        setIsFirstLaunch(true);
+        setIsFirstLaunch(true); // Default to onboarding if there’s an error
       }
     };
 
     checkOnboardingStatus();
   }, []);
 
+  // Display a loading spinner while checking onboarding status
   if (isFirstLaunch === null) {
-    return null; // Or a loading screen
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
   }
 
   return (
@@ -30,7 +36,6 @@ export default function RootLayout() {
       ) : (
         <Stack.Screen name="(tabs)" />
       )}
-     
     </Stack>
   );
 }

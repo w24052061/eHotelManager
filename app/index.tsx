@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "expo-router";
-import { hasCompletedOnboarding } from "@/utils/onboardingStorage"; // Adjust path as needed
+import { hasCompletedOnboarding } from "../src/utils/onboardingStorage"; // Relative path
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const AppRedirector = () => {
@@ -28,19 +28,20 @@ const AppRedirector = () => {
 
   // Show nothing while loading
   if (isLoading) {
-    return null; // Or you can return a loading spinner here
+    return null; // You can replace this with a loading spinner if needed
   }
-  return <Redirect href="/onboarding/screen1" />;
-  // Conditional navigation
-  if (hasCompleted) {
-    return <Redirect href="/page/coursepage" />;
-  }
- else if (isLoggedIn) {
-    return <Redirect href="/auth/dashboard" />;
-  }
-  else{
+
+  // Conditional redirects based on onboarding and login status
+  if (!hasCompleted) {
     return <Redirect href="/onboarding/screen1" />;
   }
+
+  if (isLoggedIn) {
+    return <Redirect href="/auth/dashboard" />;
+  }
+
+  // If not logged in but onboarding is complete, redirect to a different page
+  return <Redirect href="/page/coursepage" />;
 };
 
 export default AppRedirector;

@@ -1,5 +1,5 @@
 import React from 'react';
-import RegisterScreen from '../../screens/Register';
+import RegisterScreen from './Register';
 
 const RegisterTab = () => {
   return <RegisterScreen />;

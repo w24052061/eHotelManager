@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ActivityInd
 import { useRouter } from 'expo-router';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { ref, set } from 'firebase/database';
-import { auth, database } from '../firebaseConfig';
+import { auth, database } from '@/firebaseConfig';
 
 const RegisterScreen = () => {
   const [name, setName] = useState('');

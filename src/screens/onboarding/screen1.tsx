@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
-import { markOnboardingComplete } from '@/utils/onboardingStorage'; // Adjust the path as needed
+import { markOnboardingComplete } from '@/src/utils/onboardingStorage'; // Adjust the path as needed
 
 export default function OnboardingScreen1() {
   const router = useRouter();
