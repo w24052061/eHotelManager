@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Alert, ScrollView, Image } from 'react-native';
 import { router } from 'expo-router';
 import { signOut, onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../firebaseConfig';
-import MenuComponent from '../components/MenuComponent'; // Import MenuComponent
+import { auth } from '@firebaseConfig';
+import MenuComponent from '@/components/MenuComponent'; // Import MenuComponent
 
 const DashboardScreen = () => {
   const [name, setName] = useState('');
@@ -38,9 +38,9 @@ const DashboardScreen = () => {
   };
 
   // Assuming you have image sources for these:
-  const bannerImage = require('../assets/images/Banner.png'); // Replace with your image path
-  const featuredCourseImage1 = require('../assets/images/1.png'); // Replace with your image path
-  const featuredCourseImage2 = require('../assets/images/2.png'); // Replace with your image path
+  const bannerImage = require('../../../assets/images/Banner.png'); // Replace with your image path
+  const featuredCourseImage1 = require('../../../assets/images/1.png'); // Replace with your image path
+  const featuredCourseImage2 = require('../../../assets/images/2.png'); // Replace with your image path
 
   // Navigation Functions
   const navigateToAlertScreen = () => router.push('/page/alertmessagepage');

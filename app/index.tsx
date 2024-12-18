@@ -31,15 +31,18 @@ const AppRedirector = () => {
   }
 
   // Redirect based on status
+
   if (!hasCompleted) {
-    return <Redirect href="/onboarding/screen1" />;
+    return <Redirect href="/onboarding/onBoardingScreen1" />;
   }
 
   if (isLoggedIn) {
     return <Redirect href="/auth/dashboard" />;
   }
 
-  return <Redirect href="/page/coursepage" />;
+  // return <Redirect href="/page/coursepage" />;
+  return <Redirect href="/onboarding/onBoardingScreen1" />;
 };
+
 
 export default AppRedirector;

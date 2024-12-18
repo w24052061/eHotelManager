@@ -12,8 +12,8 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import { ref, get } from 'firebase/database';
-import { auth, database } from '../firebaseConfig';
-import { updateUserProfile } from '../utils/updateUserProfile';
+import { auth, database } from '@firebaseConfig';
+import { updateUserProfile } from '@/utils/updateUserProfile';
 
 const ProfileScreen = () => {
   const [gender, setGender] = useState('');

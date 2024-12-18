@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, Animated, Easing } from 'react-native';
 import { signOut } from 'firebase/auth';
-import { auth } from '../firebaseConfig';
+import { auth } from '@firebaseConfig';
 
 const MenuComponent = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);  // Track if menu is open

@@ -1,5 +1,5 @@
 import React from 'react';
-import DashboardScreen from '../../screens/Dashboard';
+import DashboardScreen from '@/screens/auth/DashboardScreen';
 
 const DashboardTab = () => {
   return <DashboardScreen />;

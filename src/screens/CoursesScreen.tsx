@@ -117,7 +117,7 @@ const CoursesScreen = () => {
         {/* <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
           <Text style={styles.backButtonText}>Back</Text>
         </TouchableOpacity> */}
-        <TouchableOpacity onPress={() => router.push('/auth/dashboard')} style={styles.backButton}>
+        <TouchableOpacity onPress={() => router.push('/dashboard')} style={styles.backButton}>
           <Text style={styles.backButtonText}>Dashboard</Text>
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Courses</Text>

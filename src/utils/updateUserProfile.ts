@@ -1,5 +1,5 @@
 import { ref, update } from 'firebase/database';
-import { database } from '../firebaseConfig';
+import { database } from '@firebaseConfig';
 
 export const updateUserProfile = async (userId, additionalData) => {
   try {
