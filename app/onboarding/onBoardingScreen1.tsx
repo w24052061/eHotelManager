@@ -1,32 +1,34 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
-import { markOnboardingComplete } from '@/utils/onboardingStorage'; // Adjust the path as needed
+import { markOnboardingComplete } from '@/utils/onboardingStorage'; 
+import AnimatedImage from '@/components/AnimatedImage';
 
 export default function OnboardingScreen1() {
   const router = useRouter();
 
   return (
     <View style={styles.container}>
-      <Image 
-        source={require('../../assets/images/1.png')} 
-        style={styles.image} 
-        resizeMode="contain"
+      <AnimatedImage
+        source={require('../../assets/images/onBoardingImage1.webp')}
+        style={styles.imageContainer}
+        duration={3000} // Optional, customize animation duration
+        animationType="wobble" // Choose the animation type (zoom, wobble, fade, bounce, rotate, slide.)
       />
-      <Text style={styles.title}>Welcome to Your Journey</Text>
+      <Text style={styles.title}>Welcome to eHotelManager</Text>
       <Text style={styles.description}>
-        Track your personal growth and achievements with ease
+        Manage your hotel bookings, guest services, and more, all in one place. Let's get you started!
       </Text>
       <View style={styles.buttonContainer}>
-      <TouchableOpacity 
-        style={styles.skipButton}
-        onPress={async () => {
-          await markOnboardingComplete(); // Mark onboarding as complete
-          router.replace('/(auth)/login'); // Redirect to login
-        }}
-      >
-        <Text style={styles.skipButtonText}>Skip</Text>
-      </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.skipButton}
+          onPress={async () => {
+            await markOnboardingComplete(); 
+            router.replace('/(auth)/login'); 
+          }}
+        >
+          <Text style={styles.skipButtonText}>Skip</Text>
+        </TouchableOpacity>
         <TouchableOpacity 
           style={styles.nextButton}
           onPress={() => router.push('/onboarding/onBoardingScreen2')}
@@ -37,67 +39,60 @@ export default function OnboardingScreen1() {
     </View>
   );
 }
+
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#25292e',
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: 20,
-    },
-    image: {
-      width: 300,
-      height: 300,
-      marginBottom: 30,
-    },
-    title: {
-      fontSize: 24,
-      fontWeight: 'bold',
-      color: '#ffffff',
-      marginBottom: 15,
-      textAlign: 'center',
-    },
-    description: {
-      fontSize: 16,
-      color: '#cccccc',
-      textAlign: 'center',
-      marginBottom: 30,
-      paddingHorizontal: 20,
-    },
-    buttonContainer: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      width: '100%',
-      paddingHorizontal: 20,
-    },
-    skipButton: {
-      padding: 15,
-      backgroundColor: 'transparent',
-    },
-    skipButtonText: {
-      color: '#cccccc',
-      fontSize: 16,
-    },
-    nextButton: {
-      padding: 15,
-      backgroundColor: '#4CAF50',
-      borderRadius: 10,
-    },
-    nextButtonText: {
-      color: '#ffffff',
-      fontSize: 16,
-      fontWeight: 'bold',
-    },
-    getStartedButton: {
-      backgroundColor: '#4CAF50',
-      paddingVertical: 15,
-      paddingHorizontal: 50,
-      borderRadius: 10,
-      marginTop: 20,
-    },
-    getStartedButtonText: {
-      color: '#ffffff',
-      fontSize: 18,
-      fontWeight: 'bold',
-    },
-  });
+  container: {
+    flex: 1,
+    backgroundColor: '#25292e',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  image: {
+    width: 300,
+    height: 300,
+    marginBottom: 30,
+    borderRadius:150
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#ffffff',
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  description: {
+    fontSize: 16,
+    color: '#cccccc',
+    textAlign: 'center',
+    marginBottom: 30,
+    paddingHorizontal: 20,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    paddingHorizontal: 20,
+  },
+  skipButton: {
+    padding: 15,
+    backgroundColor: 'transparent',
+  },
+  skipButtonText: {
+    color: '#cccccc',
+    fontSize: 16,
+  },
+  nextButton: {
+    padding: 15,
+    backgroundColor: '#4CAF50',
+    borderRadius: 10,
+  },
+  nextButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  imageContainer: {
+    marginBottom: 30,
+  }
+});

@@ -1,31 +1,33 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
+import AnimatedImage from '@/components/AnimatedImage';
 
 export default function OnboardingScreen2() {
   const router = useRouter();
 
   return (
     <View style={styles.container}>
-      <Image 
-        source={require('../../assets/images/2.png')} 
-        style={styles.image} 
-        resizeMode="contain"
+      <AnimatedImage
+        source={require('../../assets/images/onBoardingImage2.webp')}
+        style={styles.imageContainer}
+        duration={3000} // Optional, customize animation duration
+        animationType="rotate" // Choose the animation type (zoom, wobble, fade, bounce, rotate, slide.)
       />
-      <Text style={styles.title}>Set Your Goals</Text>
+      <Text style={styles.title}>Manage Your Rooms</Text>
       <Text style={styles.description}>
-        Create and track your personal and professional objectives
+        Effortlessly manage hotel rooms, availability, and bookings. Our platform gives you complete control over your property.
       </Text>
       <View style={styles.buttonContainer}>
         <TouchableOpacity 
           style={styles.skipButton}
-          onPress={() => router.replace('/login')}
+          onPress={() => router.replace('/(auth)/login')}
         >
           <Text style={styles.skipButtonText}>Skip</Text>
         </TouchableOpacity>
         <TouchableOpacity 
           style={styles.nextButton}
-          onPress={() => router.push('/onboarding/screen3')}
+          onPress={() => router.push('/onboarding/onBoardingScreen3')}
         >
           <Text style={styles.nextButtonText}>Next</Text>
         </TouchableOpacity>
@@ -33,67 +35,60 @@ export default function OnboardingScreen2() {
     </View>
   );
 }
+
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#25292e',
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: 20,
-    },
-    image: {
-      width: 300,
-      height: 300,
-      marginBottom: 30,
-    },
-    title: {
-      fontSize: 24,
-      fontWeight: 'bold',
-      color: '#ffffff',
-      marginBottom: 15,
-      textAlign: 'center',
-    },
-    description: {
-      fontSize: 16,
-      color: '#cccccc',
-      textAlign: 'center',
-      marginBottom: 30,
-      paddingHorizontal: 20,
-    },
-    buttonContainer: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      width: '100%',
-      paddingHorizontal: 20,
-    },
-    skipButton: {
-      padding: 15,
-      backgroundColor: 'transparent',
-    },
-    skipButtonText: {
-      color: '#cccccc',
-      fontSize: 16,
-    },
-    nextButton: {
-      padding: 15,
-      backgroundColor: '#4CAF50',
-      borderRadius: 10,
-    },
-    nextButtonText: {
-      color: '#ffffff',
-      fontSize: 16,
-      fontWeight: 'bold',
-    },
-    getStartedButton: {
-      backgroundColor: '#4CAF50',
-      paddingVertical: 15,
-      paddingHorizontal: 50,
-      borderRadius: 10,
-      marginTop: 20,
-    },
-    getStartedButtonText: {
-      color: '#ffffff',
-      fontSize: 18,
-      fontWeight: 'bold',
-    },
-  });
+  container: {
+    flex: 1,
+    backgroundColor: '#25292e',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  image: {
+    width: 300,
+    height: 300,
+    marginBottom: 30,
+    borderRadius:150
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#ffffff',
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  description: {
+    fontSize: 16,
+    color: '#cccccc',
+    textAlign: 'center',
+    marginBottom: 30,
+    paddingHorizontal: 20,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    paddingHorizontal: 20,
+  },
+  skipButton: {
+    padding: 15,
+    backgroundColor: 'transparent',
+  },
+  skipButtonText: {
+    color: '#cccccc',
+    fontSize: 16,
+  },
+  nextButton: {
+    padding: 15,
+    backgroundColor: '#4CAF50',
+    borderRadius: 10,
+  },
+  nextButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  imageContainer: {
+    marginBottom: 30,
+  }
+});
