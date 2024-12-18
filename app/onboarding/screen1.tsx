@@ -1,31 +1,35 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
+import { markOnboardingComplete } from '@/utils/onboardingStorage'; // Adjust the path as needed
 
-export default function OnboardingScreen2() {
+export default function OnboardingScreen1() {
   const router = useRouter();
 
   return (
     <View style={styles.container}>
       <Image 
-        source={require('@/assets/images/2.png')} 
+        source={require('../../assets/images/1.png')} 
         style={styles.image} 
         resizeMode="contain"
       />
-      <Text style={styles.title}>Set Your Goals</Text>
+      <Text style={styles.title}>Welcome to Your Journey</Text>
       <Text style={styles.description}>
-        Create and track your personal and professional objectives
+        Track your personal growth and achievements with ease
       </Text>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity 
-          style={styles.skipButton}
-          onPress={() => router.replace('/login')}
-        >
-          <Text style={styles.skipButtonText}>Skip</Text>
-        </TouchableOpacity>
+      <TouchableOpacity 
+        style={styles.skipButton}
+        onPress={async () => {
+          await markOnboardingComplete(); // Mark onboarding as complete
+          router.replace('/(auth)/login'); // Redirect to login
+        }}
+      >
+        <Text style={styles.skipButtonText}>Skip</Text>
+      </TouchableOpacity>
         <TouchableOpacity 
           style={styles.nextButton}
-          onPress={() => router.push('/onboarding/screen3')}
+          onPress={() => router.push('/onboarding/screen2')}
         >
           <Text style={styles.nextButtonText}>Next</Text>
         </TouchableOpacity>

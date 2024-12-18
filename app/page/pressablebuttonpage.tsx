@@ -1,5 +1,5 @@
 import React from 'react';
-import PressableButtonScreen from '../../screens/PressableButton';
+import PressableButtonScreen from '../../src/screens/PressableButton';
 
 const PressableButtonPage = () => {
   return <PressableButtonScreen />;

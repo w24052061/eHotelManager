@@ -11,9 +11,9 @@ import {
   SafeAreaView,
   Button,
 } from 'react-native';
-import { fetchCourses, processCoursePurchase } from '../utils/courseService';
-import { Course } from '../model/Course';
-import { auth } from '../firebaseConfig';
+import { fetchCourses, processCoursePurchase } from '@/utils/courseService';
+import { Course } from '@/components/model/Course';
+import { auth } from '@firebaseConfig';
 import { useRouter } from 'expo-router';
 
 
@@ -230,5 +230,3 @@ const styles = StyleSheet.create({
 });
 
 export default CoursesScreen;
-
-

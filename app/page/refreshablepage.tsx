@@ -1,5 +1,5 @@
 import React from 'react';
-import RefreshableListScreen from '../../screens/RefreshableList';
+import RefreshableListScreen from '../../src/screens/RefreshableList';
 
 const RefreshablePage = () => {
   return <RefreshableListScreen />;

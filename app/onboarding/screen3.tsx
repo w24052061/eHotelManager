@@ -20,7 +20,7 @@ export default function OnboardingScreen3() {
   return (
     <View style={styles.container}>
       <Image 
-        source={require('@/assets/images/3.png')} 
+        source={require('../../assets/images/3.png')} 
         style={styles.image} 
         resizeMode="contain"
       />

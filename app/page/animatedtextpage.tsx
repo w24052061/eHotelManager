@@ -1,5 +1,5 @@
 import React from 'react';
-import AnimatedTextScreen from '../../screens/AnimatedText';
+import AnimatedTextScreen from '../../src/screens/AnimatedText';
 
 const AnimatedTextPage = () => {
   return <AnimatedTextScreen />;

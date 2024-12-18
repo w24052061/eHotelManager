@@ -1,16 +1,17 @@
 {
-  "extends": "expo/tsconfig.base",
+  "extends": "expo/tsconfig.base",   // Base config from Expo
   "compilerOptions": {
     "strict": true,
-    "baseUrl": ".",         // Set the base directory for relative imports
+    "baseUrl": ".",  // Root directory of the app as the base
     "paths": {
-      "@/*": ["*"]               // Alias '@' maps to 'src' directory
+      "@/*": ["src/*"],  // Alias for `src` folder
+      "@firebaseConfig": ["firebaseConfig.js"]  // Alias for firebaseConfig.js in the root directory
     }
   },
   "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts"
+    "**/*.ts",             // Include all TypeScript files
+    "**/*.tsx",            // Include all TSX files
+    ".expo/types/**/*.ts", // Include Expo types
+    "expo-env.d.ts"        // Include Expo environment types
   ]
 }

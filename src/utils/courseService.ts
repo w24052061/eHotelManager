@@ -1,8 +1,8 @@
 // services/courseService.ts
 import { ref, push, set, onValue, update , serverTimestamp } from "firebase/database";
-import { database } from "../firebaseConfig";
-import { Course } from "../model/Course";
-import { PaymentDetails } from '../model/PaymentDetails';
+import { database } from "@firebaseConfig";
+import { Course } from "@/components/model/Course";
+import { PaymentDetails } from '@/components/model/PaymentDetails';
 
 export const addCourse = async (courseData: Course) => {
   try {

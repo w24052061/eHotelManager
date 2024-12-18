@@ -1,5 +1,5 @@
 import React from 'react';
-import AlertMessageScreen from '../../screens/AlertMessage';
+import AlertMessageScreen from '../../src/screens/AlertMessage';
 
 const AlertMessagePage = () => {
   return <AlertMessageScreen />;

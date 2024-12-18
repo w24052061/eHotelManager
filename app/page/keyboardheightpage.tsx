@@ -1,5 +1,5 @@
 import React from 'react';
-import KeyboardAdjustScreen from '../../screens/AdjustMyKeyboard';
+import KeyboardAdjustScreen from '../../src/screens/AdjustMyKeyboard';
 
 const KeyboardHeightPage = () => {
   return <KeyboardAdjustScreen />;
