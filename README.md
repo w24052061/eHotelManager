@@ -48,65 +48,67 @@ These features would improve user experience but are not essential for the initi
 
 ## Project Structure
 
+```
 eHotelManager/
 ├── /assets/
-│ ├── /images/ # All images (logos, icons, etc.)
-│ └── /icons/ # SVG or vector icons
+│   ├── /images/                    # All images (logos, icons, etc.)
+│   └── /icons/                     # SVG or vector icons
 │
-├── /src/ # All the source code for the app
-│ ├── /components/ # Reusable components
-│ │ ├── Header.tsx # Header component (e.g., navigation bar)
-│ │ ├── Footer.tsx # Footer component
-│ │ ├── RoomCard.tsx # Displays room information
-│ │ ├── ComplaintCard.tsx # Displays customer complaints
-│ │ └── BookingForm.tsx # Form for booking rooms
-│ ├── /constants/ # Constants and configurations
-│ │ ├── Colors.ts # Color scheme
-│ │ ├── Fonts.ts # Fonts used in the app
-│ │ ├── API.ts # API endpoints and configurations
-│ │ └── PaymentGateway.ts # Payment gateway info
-│ ├── /contexts/ # Context for managing global states
-│ │ ├── AuthContext.tsx # Authentication context (e.g., user login)
-│ │ └── RoomContext.tsx # Context for room availability and status
-│ ├── /hooks/ # Custom React hooks
-│ │ ├── useAuth.ts # Custom hook for authentication
-│ │ └── useRooms.ts # Custom hook for managing rooms
-│ ├── /navigation/ # Navigation setup
-│ │ ├── AppNavigator.tsx # Main navigator (with tabs)
-│ │ ├── StaffNavigator.tsx # Staff specific navigation
-│ │ └── CustomerNavigator.tsx # Customer specific navigation
-│ ├── /screens/ # Screens for each route/page
-│ │ ├── /auth/ # Authentication screens
-│ │ │ ├── LoginScreen.tsx # Login screen
-│ │ │ ├── RegisterScreen.tsx # Registration screen
-│ │ │ └── ForgotPassword.tsx # Forgot password screen
-│ │ ├── /dashboard/ # Dashboard screens
-│ │ │ ├── CustomerDashboard.tsx # Customer dashboard
-│ │ │ └── StaffDashboard.tsx # Staff dashboard (view complaints, room statuses)
-│ │ ├── /profile/ # Profile-related screens
-│ │ │ └── ProfileScreen.tsx # Profile screen (view/edit profile)
-│ │ ├── /booking/ # Booking-related screens
-│ │ │ ├── RoomListScreen.tsx # List of available rooms
-│ │ │ └── BookingConfirmation.tsx # Booking confirmation screen
-│ │ ├── /complaints/ # Complaint-related screens
-│ │ │ └── ComplaintsScreen.tsx # View/Manage customer complaints
-│ │ ├── /payment/ # Payment-related screens
-│ │ │ ├── PaymentScreen.tsx # Payment form for booking
-│ │ │ └── PaymentSuccess.tsx # Success screen after payment
-│ ├── /styles/ # Global styles
-│ │ └── globalStyles.ts # Common styles (buttons, containers)
-│ ├── /utils/ # Utility functions
-│ │ ├── validateForm.ts # Form validation logic
-│ │ └── apiClient.ts # API request functions (e.g., fetch, POST)
+├── /src/                           # All the source code for the app
+│   ├── /components/                # Reusable components
+│   │   ├── Header.tsx              # Header component (e.g., navigation bar)
+│   │   ├── Footer.tsx              # Footer component
+│   │   ├── RoomCard.tsx            # Displays room information
+│   │   ├── ComplaintCard.tsx       # Displays customer complaints
+│   │   └── BookingForm.tsx         # Form for booking rooms
+│   ├── /constants/                 # Constants and configurations
+│   │   ├── Colors.ts               # Color scheme
+│   │   ├── Fonts.ts                # Fonts used in the app
+│   │   ├── API.ts                  # API endpoints and configurations
+│   │   └── PaymentGateway.ts       # Payment gateway info
+│   ├── /contexts/                  # Context for managing global states
+│   │   ├── AuthContext.tsx         # Authentication context (e.g., user login)
+│   │   └── RoomContext.tsx         # Context for room availability and status
+│   ├── /hooks/                     # Custom React hooks
+│   │   ├── useAuth.ts              # Custom hook for authentication
+│   │   └── useRooms.ts             # Custom hook for managing rooms
+│   ├── /navigation/                # Navigation setup
+│   │   ├── AppNavigator.tsx        # Main navigator (with tabs)
+│   │   ├── StaffNavigator.tsx      # Staff specific navigation
+│   │   └── CustomerNavigator.tsx   # Customer specific navigation
+│   ├── /screens/                   # Screens for each route/page
+│   │   ├── /auth/                  # Authentication screens
+│   │   │   ├── LoginScreen.tsx     # Login screen
+│   │   │   ├── RegisterScreen.tsx  # Registration screen
+│   │   │   └── ForgotPassword.tsx  # Forgot password screen
+│   │   ├── /dashboard/             # Dashboard screens
+│   │   │   ├── CustomerDashboard.tsx # Customer dashboard
+│   │   │   └── StaffDashboard.tsx  # Staff dashboard (view complaints, room statuses)
+│   │   ├── /profile/               # Profile-related screens
+│   │   │   └── ProfileScreen.tsx   # Profile screen (view/edit profile)
+│   │   ├── /booking/               # Booking-related screens
+│   │   │   ├── RoomListScreen.tsx  # List of available rooms
+│   │   │   └── BookingConfirmation.tsx # Booking confirmation screen
+│   │   ├── /complaints/            # Complaint-related screens
+│   │   │   └── ComplaintsScreen.tsx  # View/Manage customer complaints
+│   │   ├── /payment/               # Payment-related screens
+│   │   │   ├── PaymentScreen.tsx   # Payment form for booking
+│   │   │   └── PaymentSuccess.tsx  # Success screen after payment
+│   ├── /styles/                    # Global styles
+│   │   └── globalStyles.ts         # Common styles (buttons, containers)
+│   ├── /utils/                     # Utility functions
+│   │   ├── validateForm.ts         # Form validation logic
+│   │   └── apiClient.ts            # API request functions (e.g., fetch, POST)
 │
-├── /test/ # Unit tests and components testing
-│ ├── /components/ # Tests for components
-│ │ ├── Header.test.tsx # Test for Header component
-│ │ └── RoomCard.test.tsx # Test for RoomCard component
-│ ├── /screens/ # Tests for screens
-│ │ └── CustomerDashboard.test.tsx # Test for CustomerDashboard screen
+├── /test/                          # Unit tests and components testing
+│   ├── /components/                # Tests for components
+│   │   ├── Header.test.tsx         # Test for Header component
+│   │   └── RoomCard.test.tsx       # Test for RoomCard component
+│   ├── /screens/                   # Tests for screens
+│   │   └── CustomerDashboard.test.tsx  # Test for CustomerDashboard screen
 │
-├── /public/ # Static files for app (favicon, etc.)
-├── App.tsx # Root component of the app
-├── package.json # Project configuration and dependencies
-└── README.md # Project documentation
+├── /public/                        # Static files for app (favicon, etc.)
+├── App.tsx                         # Root component of the app
+├── package.json                    # Project configuration and dependencies
+└── README.md                       # Project documentation
+```
