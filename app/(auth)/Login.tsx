@@ -8,7 +8,7 @@ export default function LoginPage() {
   const router = useRouter();
 
   const navigateToRegister = () => {
-    router.push('/register'); // Navigate to the register page
+    router.push('/Register'); // Navigate to the register page
   };
 
   const navigateToForgotPassword = () => {
