@@ -24,7 +24,7 @@ export default function OnboardingScreen1() {
           style={styles.skipButton}
           onPress={async () => {
             await markOnboardingComplete(); 
-            router.replace('/(auth)/login'); 
+            router.replace('/(auth)/Login'); 
           }}
         >
           <Text style={styles.skipButtonText}>Skip</Text>

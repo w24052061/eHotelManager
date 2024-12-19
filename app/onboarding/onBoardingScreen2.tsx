@@ -21,7 +21,7 @@ export default function OnboardingScreen2() {
       <View style={styles.buttonContainer}>
         <TouchableOpacity 
           style={styles.skipButton}
-          onPress={() => router.replace('/(auth)/login')}
+          onPress={() => router.replace('/(auth)/Login')}
         >
           <Text style={styles.skipButtonText}>Skip</Text>
         </TouchableOpacity>
