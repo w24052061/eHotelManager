@@ -112,7 +112,6 @@ eHotelManager/
 │   │   │   ├── LoginScreen.tsx        # Login screen
 │   │   │   ├── ProfileScreen.tsx      # User profile screen (view/edit user details)
 │   │   │   └── RegisterScreen.tsx     # Register screen (new user registration)
-│   │   ├── /dashboard/                # Dashboard-related screens (admin/staff/guest)
 │   │   ├── /rooms/                    # Rooms-related screens
 │   │   │   ├── AvailableRooms.tsx     # Available rooms screen (for guests to book)
 │   │   │   ├── RoomDetails.tsx        # Room details screen
@@ -131,15 +130,13 @@ eHotelManager/
 │   │   ├── roomService.ts             # Room service API calls and utilities
 │   │   ├── onboardingStorage.ts      # Onboarding status (whether onboarding is completed)
 │   │   └── updateUserProfile.ts      # Utility to update user profile
-├── /test/                             # Unit tests for components and screens
-│   ├── /components/                   # Tests for UI components
-│   │   ├── Header.test.tsx            # Test for Header component
-│   │   └── RoomCard.test.tsx          # Test for RoomCard component
-│   └── /screens/                      # Test for screens
-│       └── CustomerDashboard.test.tsx # Test for CustomerDashboard screen
 ├── /package.json                      # Project configuration and dependencies
 ├── /README.md                         # Project documentation
 ├── /firebaseConfig.js                 # Firebase configuration
 ├── /tsconfig.json                     # TypeScript configuration file
 └── /app.json                          # Expo app configuration
 ```
+
+## PowerShell code to take out my file and folders name:
+
+Get-ChildItem -Path "C:\Users\arash\Documents\GitHub\eHotelManager" -Recurse | Where-Object { $_.FullName -notmatch '\\node_modules\\' } | ForEach-Object { $_.FullName } | Out-File "C:\Users\arash\Documents\GitHub\eHotelManager_Files.txt"
