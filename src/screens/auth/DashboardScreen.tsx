@@ -39,8 +39,8 @@ const DashboardScreen = () => {
 
   // Assuming you have image sources for these:
   const bannerImage = require('../../../assets/images/Banner.png'); // Replace with your image path
-  const featuredCourseImage1 = require('../../../assets/images/1.png'); // Replace with your image path
-  const featuredCourseImage2 = require('../../../assets/images/2.png'); // Replace with your image path
+  const featuredCourseImage1 = require('../../../assets/images/onBoardingImage1.webp'); // Replace with your image path
+  const featuredCourseImage2 = require('../../../assets/images/onBoardingImage2.webp'); // Replace with your image path
 
   // Navigation Functions
   const navigateToAlertScreen = () => router.push('/page/alertmessagepage');
