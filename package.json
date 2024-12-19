@@ -37,6 +37,7 @@
     "expo-web-browser": "~14.0.1",
     "firebase": "^11.1.0",
     "metro": "^0.81.0",
+    "my-journey": "file:",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-native": "0.76.5",
