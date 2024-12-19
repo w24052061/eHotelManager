@@ -43,7 +43,7 @@ const CoursesScreen = () => {
         'Please log in to book a course.',
         [
           { text: 'Cancel', style: 'cancel' },
-          { text: 'Log In', onPress: () => router.push('/(tabs)/loginpage') },
+          { text: 'Log In', onPress: () => router.push('/(auth)/Login') },
         ]
       );
       return;
@@ -117,7 +117,7 @@ const CoursesScreen = () => {
         {/* <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
           <Text style={styles.backButtonText}>Back</Text>
         </TouchableOpacity> */}
-        <TouchableOpacity onPress={() => router.push('/dashboard')} style={styles.backButton}>
+        <TouchableOpacity onPress={() => router.push('/Dashboard')} style={styles.backButton}>
           <Text style={styles.backButtonText}>Dashboard</Text>
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Courses</Text>

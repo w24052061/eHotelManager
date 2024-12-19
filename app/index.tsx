@@ -40,8 +40,8 @@ const AppRedirector = () => {
     return <Redirect href="/auth/dashboard" />;
   }
 
-  // return <Redirect href="/page/coursepage" />;
-  return <Redirect href="/onboarding/onBoardingScreen1" />;
+  return <Redirect href="/page/coursepage" />;
+  // return <Redirect href="/onboarding/onBoardingScreen1" />;
 };
 
 

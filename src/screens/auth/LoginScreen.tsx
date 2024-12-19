@@ -21,7 +21,7 @@ const LoginScreen = () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       Alert.alert('Success', 'Login Successful');
-      router.replace('/auth/dashboard');
+      router.replace('/Dashboard');
     } catch (error) {
       Alert.alert('Error', 'Login failed');
     } finally {

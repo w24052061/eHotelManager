@@ -18,7 +18,7 @@ const DashboardScreen = () => {
         setUser(currentUser);
         setName(currentUser.displayName || currentUser.email.split('@')[0]);
       } else {
-        router.replace('/(tabs)/loginpage');
+        router.replace('/(auth)/Login');
       }
     });
 
