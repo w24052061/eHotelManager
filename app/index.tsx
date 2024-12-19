@@ -37,7 +37,7 @@ const AppRedirector = () => {
   }
 
   if (isLoggedIn) {
-    return <Redirect href="/auth/dashboard" />;
+    return <Redirect href="/Dashboard" />;
   }
 
   return <Redirect href="/page/coursepage" />;
