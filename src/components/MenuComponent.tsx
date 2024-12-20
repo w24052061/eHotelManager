@@ -3,12 +3,14 @@ import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, Animated, Easing } from 'react-native';
 import { signOut } from 'firebase/auth';
 import { auth } from '@firebaseConfig';
+import { useRouter } from 'expo-router';
 
 const MenuComponent = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);  // Track if menu is open
   const [showMenuButton, setShowMenuButton] = useState(true); // Control the visibility of the hamburger button
   const menuAnimation = useState(new Animated.Value(0))[0]; // Animation for sliding in/out the menu
-
+  const router = useRouter();
+  
   const toggleMenu = () => {
     const nextState = !isMenuOpen;
     setIsMenuOpen(nextState);
@@ -41,6 +43,12 @@ const MenuComponent = () => {
     }
   };
 
+
+  const navigateToHome = () => {
+    router.push('/');  // Use the '/' route to navigate to the Home page
+  };
+
+
   return (
     <View style={styles.container}>
       {/* Hamburger Button to Open Menu */}
@@ -72,6 +80,9 @@ const MenuComponent = () => {
         </TouchableOpacity>
 
         {/* Menu Items */}
+        <TouchableOpacity style={styles.menuItem} onPress={navigateToHome}>
+          <Text style={styles.menuItemText}>Home</Text>
+        </TouchableOpacity>
         <TouchableOpacity style={styles.menuItem} onPress={handleLogout}>
           <Text style={styles.menuItemText}>Logout</Text>
         </TouchableOpacity>
