@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Stack } from 'expo-router';
-import AsyncStorage from '../src/components/navigation/TabBarIcon';
+import AsyncStorage from '@react-native-async-storage/async-storage'; // Correct import
 import { ActivityIndicator, View } from 'react-native';  // For loading spinner
 
 export default function RootLayout() {
@@ -32,9 +32,9 @@ export default function RootLayout() {
   return (
     <Stack screenOptions={{ headerShown: false }}>
       {isFirstLaunch ? (
-        <Stack.Screen name="onboarding/screen1" />
+        <Stack.Screen name="onboarding/onBoardingScreen1" /> 
       ) : (
-        <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="(tabs)" />  
       )}
     </Stack>
   );
