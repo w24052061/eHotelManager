@@ -1,38 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity, ActivityIndicator, Alert, Dimensions, ScrollView } from 'react-native';
+import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity, ActivityIndicator, Alert, Dimensions } from 'react-native';
 import { fetchRooms } from '@/utils/roomService';  // Import necessary functions
 import { Room } from '@/components/model/Room';  // Import Room model
 import { useRouter } from 'expo-router';
 import ButtonComponent from '@/components/ButtonComponent';
 import MenuComponent from '@/components/MenuComponent'; // Import MenuComponent
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { auth } from '@firebaseConfig';  // Import Firebase auth
+import { auth } from '@firebaseConfig';
 
 const HomePage_Screen = () => {
   const [rooms, setRooms] = useState<Room[]>([]);  // State for storing the rooms
   const [loading, setLoading] = useState(true);  // Loading state
-  const [isLoggedIn, setIsLoggedIn] = useState(false);  // State for checking if the user is logged in
+  const [isLoggedIn, setIsLoggedIn] = useState(false);  // Logged-in state
   const router = useRouter();  // Router to navigate to other pages
 
   // Fetch rooms on component mount
   useEffect(() => {
-    // Fetch rooms data independently of the login state
     fetchRooms((fetchedRooms) => {
       setRooms(fetchedRooms);  // Set rooms in the state
       setLoading(false);  // Set loading to false after data is fetched
     });
 
-    // Check if the user is logged in
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setIsLoggedIn(true);  // User is logged in
-      } else {
-        setIsLoggedIn(false);  // User is not logged in
-      }
+    // Check if the user is logged in or not
+    onAuthStateChanged(auth, (user) => {
+      setIsLoggedIn(!!user); // If user is logged in, set the state to true
     });
-
-    // Cleanup the subscription on unmount
-    return () => unsubscribe();
   }, []);  // Empty dependency array to fetch once on component mount
 
   // Get the screen width for responsiveness
@@ -43,7 +35,6 @@ const HomePage_Screen = () => {
 
   // Render room item
   const renderRoomItem = ({ item }: { item: Room }) => (
-   
     <View style={styles.roomContainer}>
       <Image source={{ uri: item.image }} style={styles.roomImage} />
       <View style={styles.roomDetails}>
