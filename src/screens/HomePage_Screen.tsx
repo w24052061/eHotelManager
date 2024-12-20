@@ -1,25 +1,49 @@
-// HomePage.tsx
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
-import { fetchRooms, processRoomBooking } from '@/utils/roomService';  // Import necessary functions
+import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity, ActivityIndicator, Alert, Dimensions, ScrollView } from 'react-native';
+import { fetchRooms } from '@/utils/roomService';  // Import necessary functions
 import { Room } from '@/components/model/Room';  // Import Room model
 import { useRouter } from 'expo-router';
+import ButtonComponent from '@/components/ButtonComponent';
+import MenuComponent from '@/components/MenuComponent'; // Import MenuComponent
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { auth } from '@firebaseConfig';  // Import Firebase auth
 
 const HomePage_Screen = () => {
   const [rooms, setRooms] = useState<Room[]>([]);  // State for storing the rooms
   const [loading, setLoading] = useState(true);  // Loading state
+  const [isLoggedIn, setIsLoggedIn] = useState(false);  // State for checking if the user is logged in
   const router = useRouter();  // Router to navigate to other pages
 
   // Fetch rooms on component mount
   useEffect(() => {
+    // Fetch rooms data independently of the login state
     fetchRooms((fetchedRooms) => {
       setRooms(fetchedRooms);  // Set rooms in the state
       setLoading(false);  // Set loading to false after data is fetched
     });
+
+    // Check if the user is logged in
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsLoggedIn(true);  // User is logged in
+      } else {
+        setIsLoggedIn(false);  // User is not logged in
+      }
+    });
+
+    // Cleanup the subscription on unmount
+    return () => unsubscribe();
   }, []);  // Empty dependency array to fetch once on component mount
+
+  // Get the screen width for responsiveness
+  const screenWidth = Dimensions.get('window').width;
+
+  // Calculate number of columns based on screen width (responsive layout)
+  const numColumns = screenWidth < 600 ? 2 : screenWidth < 1200 ? 3 : 4;  // 1 for mobile, 2 for tablet, 3 for desktop
 
   // Render room item
   const renderRoomItem = ({ item }: { item: Room }) => (
+   
     <View style={styles.roomContainer}>
       <Image source={{ uri: item.image }} style={styles.roomImage} />
       <View style={styles.roomDetails}>
@@ -99,11 +123,19 @@ const HomePage_Screen = () => {
   // Render the HomePage screen with the list of rooms
   return (
     <View style={styles.safeArea}>
+      {/* Show Menu if Logged In, Show Login Button if Not */}
+      {isLoggedIn ? (
+        <MenuComponent /> // Show menu if the user is logged in
+      ) : (
+        <ButtonComponent text="Go to Login Page" link="/Login" color="secondary" width={200} /> // Show login button if not logged in
+      )}
+
       <Text style={styles.title}>Available Rooms</Text>
       <FlatList
         data={rooms}
         renderItem={renderRoomItem}
         keyExtractor={(item) => item.id.toString()}
+        numColumns={numColumns}  // Responsive columns
         contentContainerStyle={styles.listContainer}
         ListEmptyComponent={() => (
           <View style={styles.emptyContainer}>
@@ -117,18 +149,20 @@ const HomePage_Screen = () => {
 
 const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: '#25292e' },
-  title: { fontSize: 24, color: 'white', fontWeight: 'bold', padding: 16 },
+  title: { fontSize: 24, color: 'white', fontWeight: 'bold', padding: 16, textAlign: 'center' },
   loadingContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   loadingText: { color: '#fff', fontSize: 16 },
   roomContainer: {
-    flexDirection: 'row',
+    flex: 1,
+    flexDirection: 'column',
     marginBottom: 16,
     backgroundColor: '#fff',
     borderRadius: 10,
     overflow: 'hidden',
     elevation: 3,
+    marginHorizontal: 10,
   },
-  roomImage: { width: 120, height: 120 },
+  roomImage: { width: '100%', height: 120 },
   roomDetails: { flex: 1, padding: 12 },
   roomName: { fontSize: 18, fontWeight: 'bold' },
   roomPrice: { fontSize: 16, color: '#888' },
