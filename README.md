@@ -140,3 +140,33 @@ eHotelManager/
 ## PowerShell code to take out my file and folders name:
 
 Get-ChildItem -Path "C:\Users\arash\Documents\GitHub\eHotelManager" -Recurse | Where-Object { $_.FullName -notmatch '\\node_modules\\' } | ForEach-Object { $_.FullName } | Out-File "C:\Users\arash\Documents\GitHub\eHotelManager_Files.txt"
+
+## How the button component works:
+
+The button will adjust its width based on the width prop. If no width is passed, it defaults to 100%.
+This allows you to create buttons that can either take up the full width or have a fixed/variable width depending on the use case.
+
+### Styling Flexibility:
+
+If you want to adjust other styles (like height, padding, or margins), you can still use the style prop to pass additional custom styling.
+This provides the flexibility to control the button width dynamically while keeping the component reusable and clean.
+
+### Usage Example:
+
+Example 1: Full-width Button
+
+```
+<ButtonComponent text="Go to Dashboard" link="/auth/dashboard" color="primary" width="100%" />
+```
+
+Example 2: Fixed width Button
+
+```
+<ButtonComponent text="Go to Profile" link="/auth/profile" color="secondary" width={200} />
+```
+
+Example 3: Custom width using percentage
+
+```
+<ButtonComponent text="Sign Out" link="/auth/login" color="danger" width="80%" />
+```
