@@ -24,7 +24,7 @@ export default function OnboardingScreen3() {
           style={styles.skipButton}
           onPress={async () => {
             await markOnboardingComplete();
-            router.replace('/page/coursepage');
+            router.replace('/page/HomePage');
           }}
         >
           <Text style={styles.skipButtonText}>Finish</Text>

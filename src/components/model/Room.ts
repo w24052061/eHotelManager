@@ -1,5 +1,5 @@
 // model/Course.ts
-export interface Course {
+export interface Room {
     id?: string;
     name: string;
     image: string;

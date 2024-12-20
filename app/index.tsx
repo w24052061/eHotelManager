@@ -40,7 +40,7 @@ const AppRedirector = () => {
     return <Redirect href="/Dashboard" />;
   }
 
-  return <Redirect href="/page/coursepage" />;
+  return <Redirect href="/page/HomePage" />;
   // return <Redirect href="/onboarding/onBoardingScreen1" />;
 };
 
