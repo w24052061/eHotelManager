@@ -68,7 +68,7 @@ const RegisterScreen = () => {
       // Success alert and redirection
       Alert.alert('Success', 'Registration successful!');
       setTimeout(() => {
-        router.replace('/auth/dashboard');
+        router.replace('/Dashboard');
       }, 1000);
 
     } catch (error) {
