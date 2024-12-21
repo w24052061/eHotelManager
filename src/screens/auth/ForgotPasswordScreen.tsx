@@ -54,7 +54,7 @@ const ForgotPassword = () => {
         </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => router.push('/auth/login')}>
+      <TouchableOpacity onPress={() => router.push('/Login')}>
         <Text style={styles.backToLogin}>Back to Login</Text>
       </TouchableOpacity>
     </View>
