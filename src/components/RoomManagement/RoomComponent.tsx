@@ -52,14 +52,14 @@ const RoomComponent = () => {
             {role === "admin" ? (
               <ButtonComponent
                 text="Edit Room"
-                link={`/auth/room/${item.id}`}
+                link={`/${item.id}/RoomSinglePage`}
                 color="secondary"
                 width="100%"
               />
             ) : (
               <ButtonComponent
                 text="Book Room"
-                link={`/auth/room/${item.id}`}
+                link={`/${item.id}/RoomSinglePage`}
                 color="primary"
                 width="100%"
               />
@@ -128,4 +128,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 8,
   },
+  RoomCardBottomLeft: {},
+  RoomCardBottomRight: {},
 });
