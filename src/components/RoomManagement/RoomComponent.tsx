@@ -18,6 +18,7 @@ const defaultRoomImage = require("../../../assets/images/defaultRoomImage.webp")
 
 const RoomComponent = () => {
   const [rooms, setRooms] = useState<Room[]>([]);
+  const role = useCheckUserRole();
 
   useEffect(() => {
     fetchRooms();
@@ -36,7 +37,6 @@ const RoomComponent = () => {
   const renderRoom: ListRenderItem<Room> = ({ item }) => {
     // If `item.image` is empty or undefined, use `defaultRoomImage`
     const imageSource = item.image ? { uri: item.image } : defaultRoomImage;
-    const role = useCheckUserRole();
 
     return (
       <View style={styles.roomContainer}>
@@ -49,24 +49,21 @@ const RoomComponent = () => {
             <Text style={styles.roomStatus}>Status: {item.status}</Text>
           </View>
           <View style={styles.RoomCardBottomRight}>
-            if (role === "admin")
-            {
+            {role === "admin" ? (
               <ButtonComponent
                 text="Edit Room"
                 link={`/auth/room/${item.id}`}
                 color="secondary"
                 width="100%"
               />
-            }
-            else
-            {
+            ) : (
               <ButtonComponent
                 text="Book Room"
                 link={`/auth/room/${item.id}`}
                 color="primary"
                 width="100%"
               />
-            }
+            )}
           </View>
         </View>
       </View>
