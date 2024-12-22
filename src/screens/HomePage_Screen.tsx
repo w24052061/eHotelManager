@@ -4,7 +4,6 @@ import { fetchRooms } from '@/utils/roomService';  // Import necessary functions
 import { Room } from '@/components/model/Room';  // Import Room model
 import { useRouter } from 'expo-router';
 import ButtonComponent from '@/components/ButtonComponent';
-import MenuComponent from '@/components/MenuComponent'; // Import MenuComponent
 import HamburgerMenu from '@/components/HamburgerMenu'; // Import MenuComponent
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { auth } from '@firebaseConfig';
@@ -133,7 +132,9 @@ const HomePage_Screen = () => {
       {isLoggedIn ? (
         <HamburgerMenu /> // Show menu if the user is logged in
       ) : (
-        <ButtonComponent text="Go to Login Page" link="/Login" color="secondary" width={200} /> // Show login button if not logged in
+        <View style={styles.buttonLogin}>
+          <ButtonComponent text="Login / Register  👤" link="/Login" color="primary" width={200} /> // Show login button if not logged in
+        </View>
       )}
 
       <Text style={styles.title}>Available Rooms</Text>
@@ -199,6 +200,13 @@ const styles = StyleSheet.create({
   emptyContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   emptyText: { color: '#fff', fontSize: 18 },
   listContainer: { padding: 16 },
+  buttonLogin:{
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    paddingLeft: 20,
+    paddingTop: 20,
+    textAlign: 'center',
+  }
 });
 
 export default HomePage_Screen;

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Alert, ScrollView, Image } fr
 import { router } from 'expo-router';
 import { signOut, onAuthStateChanged } from 'firebase/auth';
 import { auth } from '@firebaseConfig';
-import MenuComponent from '@/components/MenuComponent'; // Import MenuComponent
+import HamburgerMenu from '@/components/HamburgerMenu';
 
 const DashboardScreen = () => {
   const [name, setName] = useState('');
@@ -50,7 +50,7 @@ const DashboardScreen = () => {
       <View style={styles.header}>
         <Text style={styles.title}>Welcome, {name}!</Text>
       </View>
-      <MenuComponent /> {/* Include the MenuComponent at the top */}
+      <HamburgerMenu />
 
       <ScrollView style={styles.content}>
         {/* Banner Image */}
