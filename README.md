@@ -198,35 +198,8 @@ An admin dashboard is a user interface used by administrators to manage and inte
 
 #### Content Management
 
-- Publish, Edit, Delete: Manage articles, blog posts, product listings, and other content elements.
-- Moderation: Oversee user-generated content, including comments and posts, to ensure they adhere to community guidelines.
-
-#### System Monitoring
-
-- Performance Metrics: Monitor the health and performance of the application, including server load, response times, and resource utilization.
-- Security Alerts: Receive notifications about potential security issues and take immediate actions to mitigate risks.
-
-#### E-commerce Functions (if applicable)
-
-- Order and Inventory Management: Oversee order processing, inventory levels, and supply chain operations.
-- Payment Processing: Manage payment gateways, transaction records, and customer refunds.
-
-#### Marketing Tools
-
-- Email Campaigns: Create and manage email marketing campaigns.
-- SEO Tools: Monitor and optimize the application’s search engine performance and visibility.
-
-#### Configuration and Settings
-
-- System Configuration: Adjust settings that affect the overall operation of the application, like payment configurations, email server settings, etc.
-- Theme Customization: Change the look and feel of the application or the dashboard itself.
-
-### How It Works Technically
-
-- Backend Integration: The dashboard interfaces with the backend via APIs. It sends requests to fetch or manipulate data and receives responses. Modern dashboards often use RESTful services or GraphQL.
-- Authentication and Security: Access to the admin dashboard is secured through authentication mechanisms like OAuth, JWT, etc. Data transmitted between the server and the dashboard is usually encrypted using SSL/TLS.
-- Frontend Technology: Dashboards are commonly built using web technologies such as HTML, CSS, JavaScript, and frameworks like React, Angular, or Vue.js. They may also use specialized dashboard design frameworks and libraries to enhance functionality.
-- Database Interaction: The dashboard queries the database indirectly through the backend to retrieve, update, or delete data. This setup helps maintain data integrity and security.
+- Publish, Edit, Delete: Manage and handle rooms, create and update pages and contents of each room sigle pages and etc.
+- Moderation: Oversee user-activities like booked rooms, messages, complaints, payments, Create and manage email marketing and etc.
 
 ### Example Scenario
 
