@@ -1,42 +1,49 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Modal } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Modal,
+  Alert,
+} from "react-native";
 import { useRouter } from "expo-router";
 import { auth } from "@firebaseConfig";
 import { signOut } from "firebase/auth";
-import { Alert } from "react-native";
+import useCheckUserRole from "@/components/CheckUserRole";
 
 const HamburgerMenu = () => {
   const [menuVisible, setMenuVisible] = useState(false);
   const router = useRouter();
 
-  const toggleMenu = () => {
-    setMenuVisible(!menuVisible);
-  };
+  const role = useCheckUserRole();
+  const isLoggedIn = role !== "" && role !== "loading";
 
-  const navigateToHome = () => {
-    router.push("/"); // Navigates to the Home page
-  };
+  const toggleMenu = () => setMenuVisible((prev) => !prev);
 
-  const navigateToDash = () => {
-    router.push("/Dashboard"); // Navigates to the Dashboard page
-  };
+  const navigateToHome = () => router.push("/");
+  const navigateToDash = () => router.push("/Dashboard");
+  const navigateToLogin = () => router.push("/Login");
 
   const handleLogout = async () => {
     try {
       await signOut(auth);
-    } catch (error) {
+    } catch (error: any) {
       Alert.alert("Logout Error", error.message);
     }
   };
 
   return (
     <View style={styles.container}>
+      {/* Hamburger Button */}
       <TouchableOpacity onPress={toggleMenu} style={styles.menuButton}>
         <Text style={styles.menuText}>☰</Text>
       </TouchableOpacity>
+
+      {/* Dropdown Menu */}
       {menuVisible && (
         <Modal
-          transparent={true}
+          transparent
           animationType="none"
           visible={menuVisible}
           onRequestClose={toggleMenu}
@@ -46,12 +53,23 @@ const HamburgerMenu = () => {
               <Text style={styles.menuItem} onPress={navigateToHome}>
                 🏠 Home
               </Text>
-              <Text style={styles.menuItem} onPress={navigateToDash}>
-                📊 Dashboard
-              </Text>
-              <Text style={styles.menuItem} onPress={handleLogout}>
-                ↪️ Logout
-              </Text>
+
+              {isLoggedIn ? (
+                // If logged in, show Dashboard and Logout
+                <View>
+                  <Text style={styles.menuItem} onPress={navigateToDash}>
+                    📊 Dashboard
+                  </Text>
+                  <Text style={styles.menuItem} onPress={handleLogout}>
+                    ↪️ Logout
+                  </Text>
+                </View>
+              ) : (
+                // Otherwise, show Login
+                <Text style={styles.menuItem} onPress={navigateToLogin}>
+                  📲 Login
+                </Text>
+              )}
             </View>
           </TouchableOpacity>
         </Modal>
@@ -60,20 +78,22 @@ const HamburgerMenu = () => {
   );
 };
 
+export default HamburgerMenu;
+
+/* --- Styles --- */
 const styles = StyleSheet.create({
   container: {
-    marginTop: 50,
-    marginLeft: 20, // Align to the left side of the screen
-    alignItems: "flex-start", // Align items to the start (left)
+    marginTop: 20,
+    marginLeft: 20,
+    alignItems: "flex-start",
   },
   menuButton: {
-    padding: 5,
     width: 50,
     height: 50,
+    backgroundColor: "#4a4e69",
+    borderRadius: 25,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#4a4e69", // Dark desaturated blue
-    borderRadius: 25, // Circular button
     shadowColor: "#333",
     shadowOpacity: 0.3,
     shadowRadius: 10,
@@ -82,7 +102,7 @@ const styles = StyleSheet.create({
   },
   menuText: {
     fontSize: 28,
-    color: "#ffffff", // White color for the menu icon
+    color: "#fff",
   },
   modalOverlay: {
     flex: 1,
@@ -91,19 +111,15 @@ const styles = StyleSheet.create({
   },
   menu: {
     marginTop: 50,
-    backgroundColor: "#ffffff",
+    backgroundColor: "#fff",
     padding: 20,
     width: "50%",
     maxWidth: 400,
-    borderRadius: 0,
   },
   menuItem: {
     fontSize: 18,
     padding: 15,
     color: "#333",
-    textAlign: "left", // Align text to the left
-    fontFamily: "Roboto-Regular", // Assuming Roboto is available, otherwise, default will be used
+    textAlign: "left",
   },
 });
-
-export default HamburgerMenu;
