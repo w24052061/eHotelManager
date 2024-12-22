@@ -1,125 +1,78 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet, Animated, ScrollView, FlatList } from 'react-native';
-import { useRouter } from 'expo-router'; // Use router for navigation (optional)
+import { View, Text, TouchableOpacity, StyleSheet, Modal } from 'react-native';
 
-const HamburgerMenu = ({ navigation }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const menuAnimation = new Animated.Value(0);
+const SimpleHamburgerMenu = () => {
+    const [menuVisible, setMenuVisible] = useState(false);
 
-  // Toggle the menu and apply slide-in/out animation
-  const toggleMenu = () => {
-    const nextState = !isMenuOpen;
-    setIsMenuOpen(nextState);
+    const toggleMenu = () => {
+        setMenuVisible(!menuVisible);
+    };
 
-    Animated.timing(menuAnimation, {
-      toValue: nextState ? 1 : 0,
-      duration: 300,
-      easing: Easing.ease,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  // Handle menu item click and navigate
-  const handleMenuItemClick = (item) => {
-    navigation.navigate(item); // Navigate to the clicked screen
-    toggleMenu(); // Close menu after navigation
-  };
-
-  return (
-    <View style={styles.container}>
-      {/* Hamburger Button */}
-      <TouchableOpacity style={styles.hamburgerButton} onPress={toggleMenu}>
-        <Text style={styles.hamburgerText}>☰</Text>
-      </TouchableOpacity>
-
-      {/* Sliding Menu */}
-      <Animated.View
-        style={[
-          styles.menu,
-          {
-            transform: [
-              {
-                translateX: menuAnimation.interpolate({
-                  inputRange: [0, 1],
-                  outputRange: [-250, 0], // Slide menu from left
-                }),
-              },
-            ],
-          },
-        ]}
-      >
-        {/* Close Button inside the Menu */}
-        <TouchableOpacity style={styles.closeButton} onPress={toggleMenu}>
-          <Text style={styles.closeButtonText}>❌</Text>
-        </TouchableOpacity>
-
-        {/* Scrollable Menu Items */}
-        <ScrollView style={styles.menuItemsContainer}>
-          <FlatList
-            data={['Home', 'Profile']}
-            renderItem={({ item }) => (
-              <TouchableOpacity style={styles.menuItem} onPress={() => handleMenuItemClick(item)}>
-                <Text style={styles.menuItemText}>{item}</Text>
-              </TouchableOpacity>
+    return (
+        <View style={styles.container}>
+            <TouchableOpacity onPress={toggleMenu} style={styles.menuButton}>
+                <Text style={styles.menuText}>☰</Text>
+            </TouchableOpacity>
+            {menuVisible && (
+                <Modal
+                    transparent={true}
+                    animationType="none"
+                    visible={menuVisible}
+                    onRequestClose={toggleMenu}>
+                    <TouchableOpacity style={styles.modalOverlay} onPress={toggleMenu}>
+                        <View style={styles.menu}>
+                            <Text style={styles.menuItem} onPress={() => alert('Option 1 Selected')}>Option 1</Text>
+                            <Text style={styles.menuItem} onPress={() => alert('Option 2 Selected')}>Option 2</Text>
+                            <Text style={styles.menuItem} onPress={() => alert('Option 3 Selected')}>Option 3</Text>
+                        </View>
+                    </TouchableOpacity>
+                </Modal>
             )}
-            keyExtractor={(item) => item}
-          />
-        </ScrollView>
-      </Animated.View>
-    </View>
-  );
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    position: 'relative',
-  },
-  hamburgerButton: {
-    backgroundColor: '#007AFF',
-    padding: 10,
-    borderRadius: 5,
-    marginTop: 20,
-    marginLeft: 20,
-  },
-  hamburgerText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  menu: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    height: '100%',
-    width: 250,
-    backgroundColor: '#2c3e50',
-    paddingTop: 50,
-    paddingLeft: 15,
-  },
-  closeButton: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-    backgroundColor: '#e74c3c',
-    padding: 10,
-    borderRadius: 50,
-  },
-  closeButtonText: {
-    color: '#fff',
-    fontSize: 18,
-  },
-  menuItemsContainer: {
-    paddingTop: 20,
-  },
-  menuItem: {
-    paddingVertical: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#34495e',
-  },
-  menuItemText: {
-    fontSize: 16,
-    color: '#ecf0f1',
-  },
+    container: {
+        marginTop: 50,
+        marginRight: 20,
+        alignItems: 'flex-end',
+    },
+    menuButton: {
+        padding: 10,
+        fontSize: 18,
+        width: 50,
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    menuText: {
+        fontSize: 28,
+        color: '#000',
+    },
+    modalOverlay: {
+        flex: 1,
+        justifyContent: 'flex-start',
+        alignItems: 'flex-end',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+    },
+    menu: {
+        marginTop: 50,
+        backgroundColor: 'white',
+        borderRadius: 5,
+        padding: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.5,
+        shadowRadius: 4,
+        elevation: 5,
+    },
+    menuItem: {
+        fontSize: 18,
+        padding: 10,
+        borderTopWidth: 1,
+        borderTopColor: '#f0f0f0',
+    }
 });
 
-export default HamburgerMenu;
+export default SimpleHamburgerMenu;

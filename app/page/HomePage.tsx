@@ -4,7 +4,11 @@ import{ScrollView } from 'react-native';
 
 const HomePage = () => {
   
-  return <HomePage_Screen />;
+  return (
+  
+    <HomePage_Screen />
+  
+  );
 };
 
 export default HomePage;

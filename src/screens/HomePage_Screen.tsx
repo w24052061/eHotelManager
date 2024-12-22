@@ -5,6 +5,7 @@ import { Room } from '@/components/model/Room';  // Import Room model
 import { useRouter } from 'expo-router';
 import ButtonComponent from '@/components/ButtonComponent';
 import MenuComponent from '@/components/MenuComponent'; // Import MenuComponent
+import HamburgerMenu from '@/components/HamburgerMenu'; // Import MenuComponent
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { auth } from '@firebaseConfig';
 
@@ -111,12 +112,26 @@ const HomePage_Screen = () => {
     );
   }
 
-  // Render the HomePage screen with the list of rooms
+
+
+
+
+
+
+
+
+
+
+
+
+  //------------------------------------- Render the HomePage screen with the list of rooms -------------------------------------
+  //------------------------------------- Render the HomePage screen with the list of rooms -------------------------------------
+  //------------------------------------- Render the HomePage screen with the list of rooms -------------------------------------
   return (
     <View style={styles.safeArea}>
       {/* Show Menu if Logged In, Show Login Button if Not */}
       {isLoggedIn ? (
-        <MenuComponent /> // Show menu if the user is logged in
+        <HamburgerMenu /> // Show menu if the user is logged in
       ) : (
         <ButtonComponent text="Go to Login Page" link="/Login" color="secondary" width={200} /> // Show login button if not logged in
       )}
@@ -137,6 +152,26 @@ const HomePage_Screen = () => {
     </View>
   );
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: '#25292e' },
