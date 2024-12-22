@@ -42,14 +42,6 @@ const DashboardScreen = () => {
   const featuredCourseImage1 = require('../../../assets/images/onBoardingImage1.webp'); // Replace with your image path
   const featuredCourseImage2 = require('../../../assets/images/onBoardingImage2.webp'); // Replace with your image path
 
-  // Navigation Functions
-  const navigateToAlertScreen = () => router.push('/page/alertmessagepage');
-  const navigateToAnimationScreen = () => router.push('/page/animatedtextpage');
-  const navigateToKeyboardAdjustScreen = () => router.push('/page/keyboardheightpage');
-  const navigateToPressableButtonScreen = () => router.push('/page/pressablebuttonpage');
-  const navigateToRefreshableScreen = () => router.push('/page/refreshablepage');
-  const navigateToMyProfileScreen = () => router.push('/auth/profile');
-  const navigateToMyCourses = () => router.push('/page/coursepage');
   
   if (!user) return null;
 
