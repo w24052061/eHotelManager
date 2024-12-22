@@ -4,7 +4,16 @@ import {
   initializeAuth,
   getReactNativePersistence,
 } from "firebase/auth";
-import { getDatabase } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  set,
+  get,
+  update,
+  query,
+  orderByChild,
+  equalTo,
+} from "firebase/database";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Platform } from "react-native";
 
@@ -24,12 +33,9 @@ const app = initializeApp(firebaseConfig);
 
 // Initialize Auth
 let auth;
-
 if (Platform.OS === "web") {
-  // On web, use default persistence
   auth = getAuth(app);
 } else {
-  // On mobile, use AsyncStorage for persistence
   auth = initializeAuth(app, {
     persistence: getReactNativePersistence(AsyncStorage),
   });
@@ -38,4 +44,85 @@ if (Platform.OS === "web") {
 // Get Database instance
 const database = getDatabase(app);
 
-export { app, auth, database };
+// Authentication methods
+const signIn = (email, password) =>
+  auth.signInWithEmailAndPassword(email, password);
+const signUp = (email, password) =>
+  auth.createUserWithEmailAndPassword(email, password);
+const resetPassword = (email) => auth.sendPasswordResetEmail(email);
+const signOut = () => auth.signOut();
+
+// Realtime Database methods
+const getRooms = async () => {
+  const roomsRef = ref(database, "rooms/");
+  const snapshot = await get(roomsRef);
+  return snapshot.val();
+};
+
+const getRoomById = async (id) => {
+  const roomRef = ref(database, `rooms/${id}`);
+  const snapshot = await get(roomRef);
+  return snapshot.val();
+};
+
+const bookRoom = async (id, data) => {
+  const bookingRef = ref(database, `rooms/${id}`);
+  await update(bookingRef, data);
+};
+
+const getBookings = async (userId) => {
+  const bookingsRef = query(
+    ref(database, "bookings"),
+    orderByChild("userId"),
+    equalTo(userId)
+  );
+  const snapshot = await get(bookingsRef);
+  return snapshot.val();
+};
+
+const submitComplaint = async (data) => {
+  const newComplaintRef = ref(database, "complaints/");
+  const newComplaintKey = push(newComplaintRef).key;
+  await set(ref(database, `complaints/${newComplaintKey}`), data);
+  return newComplaintKey;
+};
+
+const getComplaints = async () => {
+  const complaintsRef = ref(database, "complaints/");
+  const snapshot = await get(complaintsRef);
+  return snapshot.val();
+};
+
+const updateComplaintStatus = async (id, status) => {
+  const complaintRef = ref(database, `complaints/${id}`);
+  await update(complaintRef, { status });
+};
+
+const updateRoomStatus = async (roomId, newStatus) => {
+  const roomStatusRef = ref(database, `rooms/${roomId}/status`);
+  try {
+    await update(roomStatusRef, { status: newStatus });
+    return { success: true };
+  } catch (error) {
+    console.error("Error updating room status:", error);
+    return { success: false, error: error.message };
+  }
+};
+
+export {
+  app,
+  auth,
+  database,
+  signIn,
+  signUp,
+  resetPassword,
+  signOut,
+  getRooms,
+  getRoomById,
+  bookRoom,
+  getBookings,
+  submitComplaint,
+  getComplaints,
+  updateComplaintStatus,
+  updateRoomStatus,
+};
