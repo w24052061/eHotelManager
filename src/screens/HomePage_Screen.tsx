@@ -5,7 +5,7 @@ import ButtonComponent from "@/components/ButtonComponent";
 import HamburgerMenu from "@/components/HamburgerMenu";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@firebaseConfig";
-import RoomComponent from "@/components/RoomManagement/RoomComponent"; // <--- Import
+import RoomComponent from "@/components/RoomManagement/RoomComponent";
 
 const HomePage_Screen = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
