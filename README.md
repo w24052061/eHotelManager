@@ -140,7 +140,10 @@ eHotelManager/
 ## PowerShell code to take out my file and folders name:
 
 ```
-Get-ChildItem -Path "C:\Users\arash\Documents\GitHub\eHotelManager" -Recurse | Where-Object { $_.FullName -notmatch '\\node_modules\\' } | ForEach-Object { $_.FullName } | Out-File "C:\Users\arash\Documents\GitHub\eHotelManager_Files.txt"
+Get-ChildItem -Path "C:\Users\A4MM4A\Documents\GitHub\eHotelManager" -Recurse |
+    Where-Object { $_.FullName -notmatch '\\node_modules\\|\\.expo\\' } |
+    ForEach-Object { $_.FullName } |
+    Out-File "C:\Users\A4MM4A\Documents\GitHub\eHotelManager_Files.txt"
 ```
 
 ## How the button component works:
