@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, FlatList, Button, Alert, StyleSheet } from "react-native";
 import { getRooms, updateRoomStatus } from "@firebaseConfig"; // Assuming correct names
-
-// Define the structure of a room object
-interface Room {
-  id: string;
-  name: string;
-  status: string;
-}
+import { Room } from "@/components/model/Room";
 
 const RoomManagement = () => {
   const [rooms, setRooms] = useState<Room[]>([]);

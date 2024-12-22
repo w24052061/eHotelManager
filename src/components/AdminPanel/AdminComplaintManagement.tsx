@@ -9,13 +9,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { getComplaints, updateComplaintStatus } from "@firebaseConfig";
-
-// Define a type for your complaints
-interface Complaint {
-  id: string;
-  description: string;
-  status: string;
-}
+import { Complaint } from "@/components/model/complaints"; // Import the Room model
 
 const ComplaintManagement = () => {
   const [complaints, setComplaints] = useState<Complaint[]>([]);

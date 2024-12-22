@@ -8,14 +8,7 @@ import {
   Alert,
 } from "react-native";
 import { getRooms } from "@firebaseConfig"; // Correct import assuming getRooms is correctly exported
-
-// Define the structure of the room data
-interface Room {
-  id: string;
-  name: string;
-  status: string;
-  price: number;
-}
+import { Room } from "@/components/model/Room"; // Import the Room model
 
 const Dashboard = () => {
   const [rooms, setRooms] = useState<Room[]>([]);
