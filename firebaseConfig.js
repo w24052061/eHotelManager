@@ -56,7 +56,14 @@ const signOut = () => auth.signOut();
 const getRooms = async () => {
   const roomsRef = ref(database, "rooms/");
   const snapshot = await get(roomsRef);
-  return snapshot.val();
+  if (snapshot.exists()) {
+    return Object.keys(snapshot.val()).map((key) => ({
+      id: key,
+      ...snapshot.val()[key],
+    }));
+  } else {
+    return []; // Return an empty array if no rooms found
+  }
 };
 
 const getRoomById = async (id) => {
