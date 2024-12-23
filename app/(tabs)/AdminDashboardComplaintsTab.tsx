@@ -2,7 +2,6 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import AdminComplaintManagement from "@/components/AdminPanel/AdminComplaintManagement";
-// or import AdminDashboardComplaints from "...";
 
 export default function AdminComplaintsTab() {
   return (
