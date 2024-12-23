@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -10,14 +10,16 @@ import {
   Alert,
   Keyboard,
   TouchableWithoutFeedback,
-} from 'react-native';
-import { ref, get } from 'firebase/database';
-import { auth, database } from '@firebaseConfig';
-import { updateUserProfile } from '@/utils/updateUserProfile';
+} from "react-native";
+import { ref, get } from "firebase/database";
+import { auth, database } from "@firebaseConfig";
+import { updateUserProfile } from "@/utils/updateUserProfile";
 
 const ProfileScreen = () => {
-  const [gender, setGender] = useState('');
-  const [mobileNumber, setMobileNumber] = useState('');
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [gender, setGender] = useState("");
+  const [mobileNumber, setMobileNumber] = useState("");
   const [loading, setLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -30,12 +32,14 @@ const ProfileScreen = () => {
         .then((snapshot) => {
           if (snapshot.exists()) {
             const data = snapshot.val();
-            setGender(data.gender || '');
-            setMobileNumber(data.mobile || '');
+            setName(data.name || "");
+            setSurname(data.surname || "");
+            setGender(data.gender || "");
+            setMobileNumber(data.mobile || "");
           }
         })
         .catch((error) => {
-          console.error('Error fetching user profile:', error);
+          console.error("Error fetching user profile:", error);
         });
     }
   }, [user]);
@@ -43,13 +47,13 @@ const ProfileScreen = () => {
   const handleSaveProfile = async () => {
     if (loading) return; // Prevent multiple save attempts
 
-    if (!gender || !mobileNumber) {
-      Alert.alert('Error', 'Please fill in all fields');
+    if (!name || !surname || !gender || !mobileNumber) {
+      Alert.alert("Error", "Please fill in all fields");
       return;
     }
 
     if (!/^[0-9]{10}$/.test(mobileNumber)) {
-      Alert.alert('Error', 'Please enter a valid 10-digit mobile number');
+      Alert.alert("Error", "Please enter a valid 10-digit mobile number");
       return;
     }
 
@@ -57,25 +61,49 @@ const ProfileScreen = () => {
 
     try {
       const additionalData = {
+        name: name.trim(),
+        surname: surname.trim(),
         gender: gender.trim(),
         mobile: mobileNumber.trim(),
       };
       await updateUserProfile(user.uid, additionalData);
-      Alert.alert('Success', 'Profile updated successfully!');
+      Alert.alert("Success", "Profile updated successfully!");
     } catch (error) {
-      Alert.alert('Error', 'Failed to update profile.');
+      Alert.alert("Error", "Failed to update profile.");
       console.error(error);
     } finally {
       setLoading(false);
     }
   };
 
-  const genderOptions = ['Male', 'Female', 'Other'];
+  const genderOptions = ["Male", "Female", "Other"];
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <Text style={styles.title}>Complete Your Profile</Text>
+
+        <Text style={styles.label}>Name</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter your name"
+          value={name}
+          onChangeText={setName}
+          editable={!loading}
+          returnKeyType="done"
+          onSubmitEditing={Keyboard.dismiss}
+        />
+
+        <Text style={styles.label}>Surname</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter your surname"
+          value={surname}
+          onChangeText={setSurname}
+          editable={!loading}
+          returnKeyType="done"
+          onSubmitEditing={Keyboard.dismiss}
+        />
 
         <Text style={styles.label}>Mobile Number</Text>
         <TextInput
@@ -86,7 +114,7 @@ const ProfileScreen = () => {
           keyboardType="numeric"
           editable={!loading}
           returnKeyType="done"
-          onSubmitEditing={Keyboard.dismiss} // Dismiss keyboard on submit
+          onSubmitEditing={Keyboard.dismiss}
         />
 
         <Text style={styles.label}>Gender</Text>
@@ -95,9 +123,7 @@ const ProfileScreen = () => {
           onPress={() => setModalVisible(true)}
           disabled={loading}
         >
-          <Text style={styles.dropdownText}>
-            {gender || 'Select Gender'}
-          </Text>
+          <Text style={styles.dropdownText}>{gender || "Select Gender"}</Text>
         </TouchableOpacity>
 
         {/* Modal for selecting gender */}
@@ -142,7 +168,9 @@ const ProfileScreen = () => {
           onPress={handleSaveProfile}
           disabled={loading}
         >
-          <Text style={styles.buttonText}>{loading ? 'Saving...' : 'Save Profile'}</Text>
+          <Text style={styles.buttonText}>
+            {loading ? "Saving..." : "Save Profile"}
+          </Text>
         </TouchableOpacity>
       </View>
     </TouchableWithoutFeedback>
@@ -152,94 +180,94 @@ const ProfileScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     padding: 20,
-    backgroundColor: '#25292e',
+    backgroundColor: "#25292e",
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 20,
-    color: '#fff',
+    color: "#fff",
   },
   label: {
-    alignSelf: 'flex-start',
+    alignSelf: "flex-start",
     fontSize: 16,
     marginBottom: 5,
-    color: '#fff',
+    color: "#fff",
   },
   input: {
-    width: '100%',
+    width: "100%",
     height: 40,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 5,
     paddingHorizontal: 10,
     marginBottom: 20,
-    backgroundColor: '#fff',
-    color: 'black',
+    backgroundColor: "#fff",
+    color: "black",
   },
   dropdown: {
-    width: '100%',
+    width: "100%",
     height: 40,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 5,
-    justifyContent: 'center',
+    justifyContent: "center",
     paddingHorizontal: 10,
     marginBottom: 20,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   dropdownText: {
-    color: '#333',
+    color: "#333",
   },
   button: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: "#4CAF50",
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 5,
     marginTop: 20,
   },
   buttonDisabled: {
-    backgroundColor: '#999',
+    backgroundColor: "#999",
   },
   buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
+    color: "#fff",
+    fontWeight: "bold",
   },
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
   },
   modalContent: {
-    width: '80%',
-    backgroundColor: '#fff',
+    width: "80%",
+    backgroundColor: "#fff",
     borderRadius: 10,
     padding: 20,
   },
   modalTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 10,
   },
   modalItem: {
     padding: 15,
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    borderBottomColor: "#ccc",
   },
   modalItemText: {
     fontSize: 16,
-    color: '#333',
+    color: "#333",
   },
   closeButton: {
     marginTop: 10,
-    alignSelf: 'center',
+    alignSelf: "center",
   },
   closeButtonText: {
-    color: '#007BFF',
+    color: "#007BFF",
     fontSize: 16,
   },
 });
