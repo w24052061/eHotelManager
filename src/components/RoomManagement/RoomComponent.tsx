@@ -7,11 +7,12 @@ import {
   FlatList,
   ListRenderItem,
 } from "react-native";
-// Import the getRooms function from your firebase config
+
 import { getRooms } from "@firebaseConfig";
-import { Room } from "@/components/model/Room"; // Import the Room model
+import { Room } from "@/components/model/Room";
 import ButtonComponent from "@/components/ButtonComponent";
 import useCheckUserRole from "@/components/CheckUserRole";
+import { isRoomAvailable } from "@/components/RoomManagement/RoomAvailability";
 
 // Import the default image asset
 const defaultRoomImage = require("../../../assets/images/defaultRoomImage.webp");
