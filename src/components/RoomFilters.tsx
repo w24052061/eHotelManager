@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   picker: {
-    height: 40,
+    height: 50,
     width: 150,
   },
 });

@@ -172,7 +172,7 @@ export default function RoomComponent() {
             {!item.isUnavailable &&
               (role === "admin" ? (
                 <ButtonComponent
-                  text="Edit Room"
+                  text="Manage"
                   link={`/${item.id}/RoomSinglePage`}
                   color="secondary"
                   width="100%"

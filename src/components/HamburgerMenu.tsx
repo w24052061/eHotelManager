@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
     padding: 20,
     width: "50%",
     maxWidth: 400,
+    minWidth: 250,
   },
   menuItem: {
     fontSize: 18,

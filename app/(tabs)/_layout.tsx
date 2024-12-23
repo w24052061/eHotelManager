@@ -6,14 +6,26 @@ import { Feather, Ionicons } from "@expo/vector-icons";
 
 export default function AdminLayout() {
   return (
-    <Tabs>
+    <Tabs
+      screenOptions={{
+        tabBarStyle: {
+          height: 50, // Set height to 50px
+          backgroundColor: "#fff", // Optional: set a background color
+        },
+        tabBarLabelStyle: {
+          fontSize: 12, // Optional: adjust the label font size
+        },
+        tabBarIconStyle: {
+          marginBottom: -5, // Optional: adjust icon alignment
+        },
+      }}
+    >
       {/* Tab 1: Admin Dashboard */}
       <Tabs.Screen
         name="AdminDashboardRoomsTab"
         options={{
           title: "Manage Rooms",
           tabBarIcon: ({ focused, color, size }) => (
-            // for example, using Feather bed icon
             <Feather
               name="key"
               size={size}
@@ -28,7 +40,6 @@ export default function AdminLayout() {
         options={{
           title: "Manage Complaints",
           tabBarIcon: ({ focused, color, size }) => (
-            // using Ionicons clipboard icon
             <Ionicons
               name="clipboard"
               size={size}
