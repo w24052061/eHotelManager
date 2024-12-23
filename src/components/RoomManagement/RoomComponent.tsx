@@ -6,6 +6,7 @@ import {
   StyleSheet,
   FlatList,
   ListRenderItem,
+  ActivityIndicator,
 } from "react-native";
 
 import { getRooms } from "@firebaseConfig";
@@ -17,79 +18,130 @@ import { isRoomAvailable } from "@/components/RoomManagement/RoomAvailability";
 // Import the default image asset
 const defaultRoomImage = require("../../../assets/images/defaultRoomImage.webp");
 
-const RoomComponent = () => {
-  const [rooms, setRooms] = useState<Room[]>([]);
+export default function RoomComponent() {
+  const [rooms, setRooms] = useState<Array<Room & { isUnavailable?: boolean }>>(
+    []
+  );
+  const [loading, setLoading] = useState(true);
   const role = useCheckUserRole();
 
   useEffect(() => {
     fetchRooms();
   }, []);
 
-  const fetchRooms = async () => {
+  async function fetchRooms() {
     try {
-      const fetchedRooms = await getRooms(); // from firebaseConfig.js
-      setRooms(fetchedRooms);
+      setLoading(true);
+      const fetchedRooms = await getRooms(); // Should return an array of Room objects
+      console.log("Fetched Rooms:", fetchedRooms);
+      // We'll check if each room is available "today"
+      const todayStr = new Date().toISOString().split("T")[0]; // e.g. "2024-12-23"
+
+      const updatedRooms = await Promise.all(
+        fetchedRooms.map(async (room) => {
+          const available = await isRoomAvailable(room.id, todayStr, todayStr);
+          return { ...room, isUnavailable: !available };
+        })
+      );
+
+      setRooms(updatedRooms);
     } catch (error) {
-      console.log("Error fetching rooms:", error);
+      console.error("Error fetching rooms:", error);
+    } finally {
+      setLoading(false);
     }
-  };
+  }
 
   // Render each room in the list
-  const renderRoom: ListRenderItem<Room> = ({ item }) => {
-    // If `item.image` is empty or undefined, use `defaultRoomImage`
+  const renderRoom: ListRenderItem<Room & { isUnavailable?: boolean }> = ({
+    item,
+  }) => {
+    // If `item.image` is empty or undefined, use the local default image
     const imageSource = item.image ? { uri: item.image } : defaultRoomImage;
 
+    // If the room is unavailable, apply a light-gray background
+    const containerStyle = [
+      styles.roomContainer,
+      item.isUnavailable && { backgroundColor: "#e0e0e0" },
+    ];
+
     return (
-      <View style={styles.roomContainer}>
+      <View style={containerStyle}>
         <Image source={imageSource} style={styles.roomImage} />
         <Text style={styles.roomName}>{item.name}</Text>
         <Text style={styles.roomDescription}>{item.description}</Text>
+
         <View style={styles.RoomCardBottom}>
           <View style={styles.RoomCardBottomLeft}>
             <Text style={styles.roomPrice}>Price: ${item.price}</Text>
-            <Text style={styles.roomStatus}>Status: {item.status}</Text>
+            <Text style={styles.roomStatus}>
+              Status: {item.isUnavailable ? "Unavailable" : "Available"}
+            </Text>
           </View>
+
           <View style={styles.RoomCardBottomRight}>
-            {role === "admin" ? (
-              <ButtonComponent
-                text="Edit Room"
-                link={`/${item.id}/RoomSinglePage`}
-                color="secondary"
-                width="100%"
-              />
-            ) : (
-              <ButtonComponent
-                text="Book Room"
-                link={`/${item.id}/RoomSinglePage`}
-                color="primary"
-                width="100%"
-              />
-            )}
+            {/* Only show the button if the room is available */}
+            {!item.isUnavailable &&
+              (role === "admin" ? (
+                <ButtonComponent
+                  text="Edit Room"
+                  link={`/${item.id}/RoomSinglePage`}
+                  color="secondary"
+                  width="100%"
+                />
+              ) : (
+                <ButtonComponent
+                  text="Book Room"
+                  link={`/${item.id}/RoomSinglePage`}
+                  color="primary"
+                  width="100%"
+                />
+              ))}
           </View>
         </View>
       </View>
     );
   };
 
+  // Show a loading indicator until rooms are fetched
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#000" />
+        <Text>Loading Rooms...</Text>
+      </View>
+    );
+  }
+
+  // Main render
   return (
     <View style={styles.container}>
       <FlatList
         data={rooms}
         keyExtractor={(item) => item.id}
         renderItem={renderRoom}
+        ListEmptyComponent={
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyText}>No rooms available</Text>
+          </View>
+        }
       />
     </View>
   );
-};
+}
 
-export default RoomComponent;
-
+/* ---------- STYLES ---------- */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 16,
     paddingTop: 20,
     backgroundColor: "#f5f5f5",
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   roomContainer: {
     marginBottom: 16,
@@ -131,4 +183,12 @@ const styles = StyleSheet.create({
   },
   RoomCardBottomLeft: {},
   RoomCardBottomRight: {},
+  emptyContainer: {
+    marginTop: 20,
+    alignItems: "center",
+  },
+  emptyText: {
+    fontSize: 16,
+    color: "#999",
+  },
 });
