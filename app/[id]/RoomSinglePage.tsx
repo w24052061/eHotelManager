@@ -5,30 +5,31 @@ import {
   ActivityIndicator,
   Image,
   StyleSheet,
-  TextInput,
   Button,
   Alert,
+  Platform,
 } from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { useLocalSearchParams } from "expo-router";
 import { getRoomById } from "@firebaseConfig";
 import { isRoomAvailable } from "@/components/RoomManagement/RoomAvailability";
 import { addBooking } from "@/components/RoomManagement/RoomBooking";
-import { auth } from "@firebaseConfig"; // Ensure Firebase auth is configured
+import { auth } from "@firebaseConfig";
+import HamburgerMenu from "@/components/HamburgerMenu";
 
 const defaultRoomImage = require("../../assets/images/defaultRoomImage.webp");
 
 export default function RoomSinglePage() {
-  // Grab the dynamic param from the route, e.g., /123 => id = "123"
   const { id } = useLocalSearchParams<{ id: string }>();
-
-  // Local state for room data and booking inputs
   const [room, setRoom] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [fromDate, setFromDate] = useState(""); // Start date
-  const [toDate, setToDate] = useState(""); // End date
-  const [bookingLoading, setBookingLoading] = useState(false); // Booking process indicator
 
-  // Fetch room data when "id" is available
+  const [fromDate, setFromDate] = useState<Date | null>(null);
+  const [toDate, setToDate] = useState<Date | null>(null);
+  const [showFromPicker, setShowFromPicker] = useState(false);
+  const [showToPicker, setShowToPicker] = useState(false);
+  const [bookingLoading, setBookingLoading] = useState(false);
+
   useEffect(() => {
     if (id) {
       fetchRoomData(id);
@@ -46,16 +47,25 @@ export default function RoomSinglePage() {
     }
   }
 
-  async function handleBooking() {
+  const handleBooking = async () => {
     if (!fromDate || !toDate) {
-      Alert.alert("Error", "Please enter both start and end dates.");
+      Alert.alert("Error", "Please select both start and end dates.");
+      return;
+    }
+
+    if (toDate <= fromDate) {
+      Alert.alert("Error", "End date must be after start date.");
       return;
     }
 
     setBookingLoading(true);
 
     try {
-      const available = await isRoomAvailable(id as string, fromDate, toDate);
+      const available = await isRoomAvailable(
+        id as string,
+        fromDate.toISOString().split("T")[0],
+        toDate.toISOString().split("T")[0]
+      );
 
       if (!available) {
         Alert.alert(
@@ -76,16 +86,15 @@ export default function RoomSinglePage() {
       const result = await addBooking({
         roomId: id as string,
         userId,
-        fromDate,
-        toDate,
+        fromDate: fromDate.toISOString().split("T")[0],
+        toDate: toDate.toISOString().split("T")[0],
         email,
       });
 
       if (result.success) {
         Alert.alert("Success", "Room booked successfully!");
-        // Optionally navigate to a confirmation page or reset input fields
-        setFromDate("");
-        setToDate("");
+        setFromDate(null);
+        setToDate(null);
       } else {
         Alert.alert("Error", result.message);
       }
@@ -95,9 +104,8 @@ export default function RoomSinglePage() {
     } finally {
       setBookingLoading(false);
     }
-  }
+  };
 
-  // Show loading spinner while fetching room data
   if (loading) {
     return (
       <View style={styles.center}>
@@ -106,7 +114,6 @@ export default function RoomSinglePage() {
     );
   }
 
-  // Handle case when no room is found
   if (!room) {
     return (
       <View style={styles.center}>
@@ -115,13 +122,12 @@ export default function RoomSinglePage() {
     );
   }
 
-  // Destructure room fields
   const { name, description, image, price, status } = room;
   const imageSource = image ? { uri: image } : defaultRoomImage;
 
-  // Render room info and booking form
   return (
     <View style={styles.container}>
+      <HamburgerMenu />
       <Image source={imageSource} style={styles.roomImage} />
       <Text style={styles.roomTitle}>{name}</Text>
       <Text style={styles.roomDescription}>{description}</Text>
@@ -129,21 +135,41 @@ export default function RoomSinglePage() {
       <Text style={styles.roomStatus}>Status: {status}</Text>
 
       <View style={styles.bookingForm}>
-        <Text>From Date (YYYY-MM-DD):</Text>
-        <TextInput
-          value={fromDate}
-          onChangeText={setFromDate}
-          placeholder="Enter start date"
-          style={styles.input}
+        <Text>Select From Date:</Text>
+        <Button
+          title={fromDate ? fromDate.toDateString() : "Pick a date"}
+          onPress={() => setShowFromPicker(true)}
         />
+        {showFromPicker && (
+          <DateTimePicker
+            value={fromDate || new Date()}
+            mode="date"
+            display={Platform.OS === "ios" ? "inline" : "default"}
+            minimumDate={new Date()}
+            onChange={(event, date) => {
+              setShowFromPicker(false);
+              if (date) setFromDate(date);
+            }}
+          />
+        )}
 
-        <Text>To Date (YYYY-MM-DD):</Text>
-        <TextInput
-          value={toDate}
-          onChangeText={setToDate}
-          placeholder="Enter end date"
-          style={styles.input}
+        <Text>Select To Date:</Text>
+        <Button
+          title={toDate ? toDate.toDateString() : "Pick a date"}
+          onPress={() => setShowToPicker(true)}
         />
+        {showToPicker && (
+          <DateTimePicker
+            value={toDate || new Date()}
+            mode="date"
+            display={Platform.OS === "ios" ? "inline" : "default"}
+            minimumDate={fromDate || new Date()}
+            onChange={(event, date) => {
+              setShowToPicker(false);
+              if (date) setToDate(date);
+            }}
+          />
+        )}
 
         <Button
           title={bookingLoading ? "Booking..." : "Book Now"}
@@ -193,12 +219,5 @@ const styles = StyleSheet.create({
   },
   bookingForm: {
     marginTop: 16,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 4,
-    padding: 8,
-    marginBottom: 12,
   },
 });
