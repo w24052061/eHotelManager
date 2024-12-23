@@ -7,7 +7,6 @@ import {
   FlatList,
   ListRenderItem,
   ActivityIndicator,
-  TouchableOpacity,
 } from "react-native";
 import { Link } from "expo-router";
 import { getRooms } from "@firebaseConfig";
@@ -34,7 +33,7 @@ export default function RoomComponent() {
     try {
       setLoading(true);
       const fetchedRooms = await getRooms(); // Should return an array of Room objects
-      console.log("Fetched Rooms:", fetchedRooms);
+      // console.log("Fetched Rooms:", fetchedRooms);
       // We'll check if each room is available "today"
       const todayStr = new Date().toISOString().split("T")[0]; // e.g. "2024-12-23"
 

@@ -7,32 +7,31 @@ import {
   StyleSheet,
   Button,
   Alert,
-  Platform,
+  ScrollView,
 } from "react-native";
-import DateTimePicker from "@react-native-community/datetimepicker";
+import { Calendar } from "react-native-calendars";
 import { useLocalSearchParams } from "expo-router";
 import { getRoomById } from "@firebaseConfig";
-import { isRoomAvailable } from "@/components/RoomManagement/RoomAvailability";
+import { fetchBookings } from "@/utils/firebaseUtils";
 import { addBooking } from "@/components/RoomManagement/RoomBooking";
 import { auth } from "@firebaseConfig";
 import HamburgerMenu from "@/components/HamburgerMenu";
-
-const defaultRoomImage = require("../../assets/images/defaultRoomImage.webp");
 
 export default function RoomSinglePage() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const [room, setRoom] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
-  const [fromDate, setFromDate] = useState<Date | null>(null);
-  const [toDate, setToDate] = useState<Date | null>(null);
-  const [showFromPicker, setShowFromPicker] = useState(false);
-  const [showToPicker, setShowToPicker] = useState(false);
+  const [selectedDates, setSelectedDates] = useState<{ [key: string]: any }>(
+    {}
+  );
+  const [bookedDates, setBookedDates] = useState<string[]>([]);
   const [bookingLoading, setBookingLoading] = useState(false);
 
   useEffect(() => {
     if (id) {
       fetchRoomData(id);
+      fetchBookedDates(id);
     }
   }, [id]);
 
@@ -47,34 +46,53 @@ export default function RoomSinglePage() {
     }
   }
 
-  const handleBooking = async () => {
-    if (!fromDate || !toDate) {
-      Alert.alert("Error", "Please select both start and end dates.");
-      return;
+  async function fetchBookedDates(roomId: string) {
+    try {
+      const bookings = await fetchBookings(roomId);
+      const dates = bookings.flatMap((booking) => {
+        const startDate = new Date(booking.fromDate);
+        const endDate = new Date(booking.toDate);
+        const bookedRange: string[] = [];
+        for (
+          let date = startDate;
+          date <= endDate;
+          date.setDate(date.getDate() + 1)
+        ) {
+          bookedRange.push(date.toISOString().split("T")[0]);
+        }
+        return bookedRange;
+      });
+      setBookedDates(dates);
+    } catch (error) {
+      console.error("Error fetching booked dates:", error);
     }
+  }
 
-    if (toDate <= fromDate) {
-      Alert.alert("Error", "End date must be after start date.");
+  const handleDayPress = (day: any) => {
+    const { dateString } = day;
+
+    if (selectedDates[dateString]) {
+      const updatedDates = { ...selectedDates };
+      delete updatedDates[dateString];
+      setSelectedDates(updatedDates);
+    } else {
+      setSelectedDates({
+        ...selectedDates,
+        [dateString]: { selected: true, selectedColor: "blue" },
+      });
+    }
+  };
+
+  const handleBooking = async () => {
+    const dates = Object.keys(selectedDates);
+    if (dates.length === 0) {
+      Alert.alert("Error", "Please select at least one date.");
       return;
     }
 
     setBookingLoading(true);
 
     try {
-      const available = await isRoomAvailable(
-        id as string,
-        fromDate.toISOString().split("T")[0],
-        toDate.toISOString().split("T")[0]
-      );
-
-      if (!available) {
-        Alert.alert(
-          "Unavailable",
-          "The room is not available for the selected dates."
-        );
-        return;
-      }
-
       const userId = auth.currentUser?.uid;
       const email = auth.currentUser?.email;
 
@@ -86,15 +104,15 @@ export default function RoomSinglePage() {
       const result = await addBooking({
         roomId: id as string,
         userId,
-        fromDate: fromDate.toISOString().split("T")[0],
-        toDate: toDate.toISOString().split("T")[0],
+        fromDate: dates[0],
+        toDate: dates[dates.length - 1],
         email,
       });
 
       if (result.success) {
         Alert.alert("Success", "Room booked successfully!");
-        setFromDate(null);
-        setToDate(null);
+        setSelectedDates({});
+        fetchBookedDates(id); // Refresh booked dates
       } else {
         Alert.alert("Error", result.message);
       }
@@ -123,61 +141,47 @@ export default function RoomSinglePage() {
   }
 
   const { name, description, image, price, status } = room;
-  const imageSource = image ? { uri: image } : defaultRoomImage;
+
+  const markedDates = {
+    ...bookedDates.reduce(
+      (acc, date) => ({
+        ...acc,
+        [date]: {
+          disabled: true,
+          disableTouchEvent: true,
+          marked: true,
+          dotColor: "red",
+        },
+      }),
+      {}
+    ),
+    ...selectedDates,
+  };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <HamburgerMenu />
-      <Image source={imageSource} style={styles.roomImage} />
+      {image && <Image source={{ uri: image }} style={styles.roomImage} />}
       <Text style={styles.roomTitle}>{name}</Text>
       <Text style={styles.roomDescription}>{description}</Text>
       <Text style={styles.roomPrice}>Price: ${price}</Text>
       <Text style={styles.roomStatus}>Status: {status}</Text>
 
-      <View style={styles.bookingForm}>
-        <Text>Select From Date:</Text>
-        <Button
-          title={fromDate ? fromDate.toDateString() : "Pick a date"}
-          onPress={() => setShowFromPicker(true)}
-        />
-        {showFromPicker && (
-          <DateTimePicker
-            value={fromDate || new Date()}
-            mode="date"
-            display={Platform.OS === "ios" ? "inline" : "default"}
-            minimumDate={new Date()}
-            onChange={(event, date) => {
-              setShowFromPicker(false);
-              if (date) setFromDate(date);
-            }}
-          />
-        )}
+      <Calendar
+        onDayPress={handleDayPress}
+        markedDates={markedDates}
+        minDate={new Date().toISOString().split("T")[0]} // Only today and future dates
+        markingType={"period"}
+      />
 
-        <Text>Select To Date:</Text>
-        <Button
-          title={toDate ? toDate.toDateString() : "Pick a date"}
-          onPress={() => setShowToPicker(true)}
-        />
-        {showToPicker && (
-          <DateTimePicker
-            value={toDate || new Date()}
-            mode="date"
-            display={Platform.OS === "ios" ? "inline" : "default"}
-            minimumDate={fromDate || new Date()}
-            onChange={(event, date) => {
-              setShowToPicker(false);
-              if (date) setToDate(date);
-            }}
-          />
-        )}
-
+      <View style={styles.bookingButton}>
         <Button
           title={bookingLoading ? "Booking..." : "Book Now"}
           onPress={handleBooking}
           disabled={bookingLoading}
         />
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -189,14 +193,15 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     padding: 16,
+    backgroundColor: "#fff",
   },
   roomImage: {
     width: "100%",
     height: 200,
     borderRadius: 8,
     marginBottom: 16,
+    marginTop: 35,
     resizeMode: "cover",
   },
   roomTitle: {
@@ -217,7 +222,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#888",
   },
-  bookingForm: {
+  bookingButton: {
     marginTop: 16,
+    marginBottom: 50,
   },
 });
