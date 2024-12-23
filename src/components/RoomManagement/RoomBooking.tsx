@@ -1,25 +1,34 @@
 import { ref, push } from "firebase/database";
-import { isRoomAvailable } from "@/components/RoomManagement/RoomAvailability";
 import { database } from "@firebaseConfig";
 
-export async function createBooking(roomId, fromDate, toDate, userId) {
-  const available = await isRoomAvailable(roomId, fromDate, toDate);
-
-  if (!available) {
-    return {
-      success: false,
-      message: "Room is not available for the selected dates.",
+export async function addBooking({
+  roomId,
+  userId,
+  fromDate,
+  toDate,
+  email,
+}: {
+  roomId: string;
+  userId: string;
+  fromDate: string;
+  toDate: string;
+  email: string;
+}): Promise<{ success: boolean; message: string }> {
+  try {
+    const bookingsRef = ref(database, "bookings");
+    const newBooking = {
+      roomId,
+      userId,
+      fromDate,
+      toDate,
+      email,
     };
+
+    await push(bookingsRef, newBooking);
+
+    return { success: true, message: "Booking successful!" };
+  } catch (error) {
+    console.error("Error adding booking:", error);
+    return { success: false, message: "Failed to book room." };
   }
-
-  const bookingsRef = ref(database, "bookings");
-  const newBooking = {
-    roomId,
-    fromDate,
-    toDate,
-    userId,
-  };
-
-  await push(bookingsRef, newBooking);
-  return { success: true, message: "Booking successful!" };
 }
