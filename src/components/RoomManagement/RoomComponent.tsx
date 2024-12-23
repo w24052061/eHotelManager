@@ -5,8 +5,8 @@ import {
   Image,
   StyleSheet,
   FlatList,
-  ListRenderItem,
   ActivityIndicator,
+  Dimensions,
 } from "react-native";
 import { Link } from "expo-router";
 import { getRooms } from "@firebaseConfig";
@@ -24,16 +24,39 @@ export default function RoomComponent() {
   );
   const [loading, setLoading] = useState(true);
   const role = useCheckUserRole();
+  const [numColumns, setNumColumns] = useState(1); // Default to 1 column
 
   useEffect(() => {
     fetchRooms();
+
+    const handleResize = () => {
+      const { width } = Dimensions.get("window");
+      if (width < 600) {
+        setNumColumns(1);
+      } else if (width < 900) {
+        setNumColumns(2);
+      } else if (width < 1200) {
+        setNumColumns(3);
+      } else {
+        setNumColumns(4);
+      }
+    };
+
+    // Initialize on component mount
+    handleResize();
+
+    // Add event listener for window resize
+    Dimensions.addEventListener("change", handleResize);
+
+    // Cleanup event listener on unmount
+    return () => Dimensions.removeEventListener("change", handleResize);
   }, []);
 
   async function fetchRooms() {
     try {
       setLoading(true);
       const fetchedRooms = await getRooms(); // Should return an array of Room objects
-      // console.log("Fetched Rooms:", fetchedRooms);
+      console.log("Fetched Rooms:", fetchedRooms);
       // We'll check if each room is available "today"
       const todayStr = new Date().toISOString().split("T")[0]; // e.g. "2024-12-23"
 
@@ -53,8 +76,10 @@ export default function RoomComponent() {
   }
 
   // Render each room in the list
-  const renderRoom: ListRenderItem<Room & { isUnavailable?: boolean }> = ({
+  const renderRoom = ({
     item,
+  }: {
+    item: Room & { isUnavailable?: boolean };
   }) => {
     // If `item.image` is empty or undefined, use the local default image
     const imageSource = item.image ? { uri: item.image } : defaultRoomImage;
@@ -122,6 +147,8 @@ export default function RoomComponent() {
         data={rooms}
         keyExtractor={(item) => item.id}
         renderItem={renderRoom}
+        numColumns={numColumns} // Dynamically adjust the number of columns
+        columnWrapperStyle={numColumns > 1 && styles.columnWrapper}
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
             <Text style={styles.emptyText}>No rooms available</Text>
@@ -146,7 +173,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   roomContainer: {
-    marginBottom: 16,
+    flex: 1,
+    margin: 8, // Add margin to create space between cards
     padding: 12,
     backgroundColor: "#ffffff",
     borderRadius: 8,
@@ -192,5 +220,8 @@ const styles = StyleSheet.create({
   emptyText: {
     fontSize: 16,
     color: "#999",
+  },
+  columnWrapper: {
+    justifyContent: "space-between",
   },
 });
