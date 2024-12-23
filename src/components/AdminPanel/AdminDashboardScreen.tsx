@@ -6,21 +6,31 @@ import {
   ActivityIndicator,
   Text,
 } from "react-native";
-import RoomComponent from "@/components/RoomManagement/RoomComponent";
-import HamburgerMenu from "@/components/HamburgerMenu";
-import useCheckUserRole from "@/components/CheckUserRole";
 import { useRouter } from "expo-router";
+import useCheckUserRole from "@/components/CheckUserRole";
+import HamburgerMenu from "@/components/HamburgerMenu";
+import RoomComponent from "@/components/RoomManagement/RoomComponent";
 
 export default function App() {
   const router = useRouter();
   const role = useCheckUserRole();
 
   useEffect(() => {
-    if (role !== "loading" && role === "") {
+    // Skip if still loading
+    if (role === "loading") return;
+
+    // role === "" => Not logged in
+    if (role === "") {
       router.replace("/Login");
     }
+    // role === "staff" => Go to dashboard
+    else if (role === "staff") {
+      router.replace("/Dashboard");
+    }
+    // If role === "admin" or "user", do nothing — let them see this page
   }, [role, router]);
 
+  // While loading, show a spinner
   if (role === "loading") {
     return (
       <View style={styles.loadingContainer}>
@@ -30,10 +40,8 @@ export default function App() {
     );
   }
 
-  if (role === "" || role === "staff") {
-    router.replace("/Dashboard");
-  }
-
+  // By now, role is "admin", "user", or we triggered a redirect above
+  // If the redirect is triggered, we'll quickly leave this screen
   return (
     <SafeAreaView style={styles.container}>
       <HamburgerMenu />
