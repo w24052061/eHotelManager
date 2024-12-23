@@ -24,6 +24,7 @@ const HamburgerMenu = () => {
   const navigateToHome = () => router.push("/");
   const navigateToDash = () => router.push("/Dashboard");
   const navigateToLogin = () => router.push("/Login");
+  const navigateToProfile = () => router.push("/profile");
 
   const handleLogout = async () => {
     try {
@@ -59,6 +60,9 @@ const HamburgerMenu = () => {
                 <View>
                   <Text style={styles.menuItem} onPress={navigateToDash}>
                     📊 Dashboard
+                  </Text>
+                  <Text style={styles.menuItem} onPress={navigateToProfile}>
+                    🙎🏻‍♂️ Profile
                   </Text>
                   <Text style={styles.menuItem} onPress={handleLogout}>
                     ↪️ Logout
