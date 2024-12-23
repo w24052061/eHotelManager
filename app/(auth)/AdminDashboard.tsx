@@ -1,9 +1,19 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
-import AdminDashboardScreen from "@/components/AdminPanel/AdminDashboardScreen";
+// app/(auth)/AdminDashboard.tsx (redirect file)
+import React, { useEffect } from "react";
+import { View, Text } from "react-native";
+import { useRouter } from "expo-router";
 
-const AdminDashboard = () => {
-  return <AdminDashboardScreen />;
-};
+export default function AdminDashboard() {
+  const router = useRouter();
 
-export default AdminDashboard;
+  useEffect(() => {
+    // When this screen mounts, jump to our admin tabs route
+    router.replace("/(tabs)/AdminDashboardRoomsTab");
+  }, []);
+
+  return (
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <Text>Redirecting to Admin Dashboard Tabs...</Text>
+    </View>
+  );
+}
