@@ -7,8 +7,9 @@ import {
   FlatList,
   ListRenderItem,
   ActivityIndicator,
+  TouchableOpacity,
 } from "react-native";
-
+import { Link } from "expo-router";
 import { getRooms } from "@firebaseConfig";
 import { Room } from "@/components/model/Room";
 import ButtonComponent from "@/components/ButtonComponent";
@@ -67,7 +68,9 @@ export default function RoomComponent() {
 
     return (
       <View style={containerStyle}>
-        <Image source={imageSource} style={styles.roomImage} />
+        <Link href={`/${item.id}/RoomSinglePage`}>
+          <Image source={imageSource} style={styles.roomImage} />
+        </Link>
         <Text style={styles.roomName}>{item.name}</Text>
         <Text style={styles.roomDescription}>{item.description}</Text>
 
