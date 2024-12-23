@@ -3,7 +3,7 @@ import { View, Text, ActivityIndicator } from "react-native";
 import { useRouter } from "expo-router";
 import useCheckUserRole from "@/components/CheckUserRole";
 import DashboardScreen from "@/screens/auth/DashboardScreen";
-import AdminDashboard from "./AdminDashboard"; // Ensure path is correct
+import AdminDashboard from "./AdminDashboard";
 
 export default function DashboardTab() {
   const router = useRouter();
