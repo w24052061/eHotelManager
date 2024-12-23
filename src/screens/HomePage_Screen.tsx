@@ -16,7 +16,6 @@ const HomePage_Screen = () => {
 
       <Text style={styles.title}>Available Rooms</Text>
 
-      {/* --- Use RoomComponent here --- */}
       <RoomComponent />
     </View>
   );
