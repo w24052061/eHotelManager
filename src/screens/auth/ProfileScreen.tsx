@@ -8,8 +8,9 @@ import {
   Modal,
   FlatList,
   Alert,
-  Keyboard,
-  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  ScrollView,
+  Platform,
 } from "react-native";
 import { ref, get } from "firebase/database";
 import { auth, database } from "@firebaseConfig";
@@ -45,7 +46,7 @@ const ProfileScreen = () => {
   }, [user]);
 
   const handleSaveProfile = async () => {
-    if (loading) return; // Prevent multiple save attempts
+    if (loading) return;
 
     if (mobileNumber && !/^[0-9]{10}$/.test(mobileNumber)) {
       Alert.alert("Error", "Please enter a valid 10-digit mobile number");
@@ -74,8 +75,11 @@ const ProfileScreen = () => {
   const genderOptions = ["Male", "Female", "Other"];
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+    >
+      <ScrollView contentContainerStyle={styles.container}>
         <Text style={styles.title}>Complete Your Profile</Text>
 
         <Text style={styles.label}>Name</Text>
@@ -85,8 +89,6 @@ const ProfileScreen = () => {
           value={name}
           onChangeText={setName}
           editable={!loading}
-          returnKeyType="done"
-          onSubmitEditing={Keyboard.dismiss}
         />
 
         <Text style={styles.label}>Surname</Text>
@@ -96,8 +98,6 @@ const ProfileScreen = () => {
           value={surname}
           onChangeText={setSurname}
           editable={!loading}
-          returnKeyType="done"
-          onSubmitEditing={Keyboard.dismiss}
         />
 
         <Text style={styles.label}>Mobile Number</Text>
@@ -108,8 +108,6 @@ const ProfileScreen = () => {
           onChangeText={setMobileNumber}
           keyboardType="numeric"
           editable={!loading}
-          returnKeyType="done"
-          onSubmitEditing={Keyboard.dismiss}
         />
 
         <Text style={styles.label}>Gender</Text>
@@ -121,41 +119,39 @@ const ProfileScreen = () => {
           <Text style={styles.dropdownText}>{gender || "Select Gender"}</Text>
         </TouchableOpacity>
 
-        {/* Modal for selecting gender */}
+        {/* Gender Selection Modal */}
         <Modal
           visible={modalVisible}
           transparent={true}
           animationType="slide"
           onRequestClose={() => setModalVisible(false)}
         >
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <View style={styles.modalOverlay}>
-              <View style={styles.modalContent}>
-                <Text style={styles.modalTitle}>Select Gender</Text>
-                <FlatList
-                  data={genderOptions}
-                  keyExtractor={(item) => item}
-                  renderItem={({ item }) => (
-                    <TouchableOpacity
-                      style={styles.modalItem}
-                      onPress={() => {
-                        setGender(item);
-                        setModalVisible(false);
-                      }}
-                    >
-                      <Text style={styles.modalItemText}>{item}</Text>
-                    </TouchableOpacity>
-                  )}
-                />
-                <TouchableOpacity
-                  style={styles.closeButton}
-                  onPress={() => setModalVisible(false)}
-                >
-                  <Text style={styles.closeButtonText}>Cancel</Text>
-                </TouchableOpacity>
-              </View>
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>Select Gender</Text>
+              <FlatList
+                data={genderOptions}
+                keyExtractor={(item) => item}
+                renderItem={({ item }) => (
+                  <TouchableOpacity
+                    style={styles.modalItem}
+                    onPress={() => {
+                      setGender(item);
+                      setModalVisible(false);
+                    }}
+                  >
+                    <Text style={styles.modalItemText}>{item}</Text>
+                  </TouchableOpacity>
+                )}
+              />
+              <TouchableOpacity
+                style={styles.closeButton}
+                onPress={() => setModalVisible(false)}
+              >
+                <Text style={styles.closeButtonText}>Cancel</Text>
+              </TouchableOpacity>
             </View>
-          </TouchableWithoutFeedback>
+          </View>
         </Modal>
 
         <TouchableOpacity
@@ -167,8 +163,8 @@ const ProfileScreen = () => {
             {loading ? "Saving..." : "Save Profile"}
           </Text>
         </TouchableOpacity>
-      </View>
-    </TouchableWithoutFeedback>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
