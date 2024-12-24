@@ -4,7 +4,7 @@ import RequestServiceButton from "./RequestServiceButton";
 import ComplaintModal from "./ComplaintModal";
 import CancelButton from "./CancelButton";
 
-const BookedRoomCard = ({ booking }) => {
+export default BookedRoomCard = ({ booking }) => {
   const [showComplaintModal, setShowComplaintModal] = useState(false);
 
   return (
