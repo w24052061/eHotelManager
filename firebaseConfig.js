@@ -30,7 +30,7 @@ const firebaseConfig = {
 
 // Initialize Firebase app
 const app = initializeApp(firebaseConfig);
-
+const db = getFirestore(app);
 // Initialize Auth
 let auth;
 if (Platform.OS === "web") {
@@ -117,6 +117,7 @@ const updateRoomStatus = async (roomId, newStatus) => {
 };
 
 export {
+  db,
   app,
   auth,
   database,
