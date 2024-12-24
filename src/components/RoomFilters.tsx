@@ -18,7 +18,7 @@ export default function RoomFilters({
   return (
     <View style={styles.container}>
       <View style={styles.filter}>
-        <Text style={styles.label}>Sort by Price:</Text>
+        <Text style={styles.label}>Sort By Price:</Text>
         <Picker
           selectedValue={sortOption}
           onValueChange={(value) => setSortOption(value)}
@@ -30,7 +30,7 @@ export default function RoomFilters({
       </View>
 
       <View style={styles.filter}>
-        <Text style={styles.label}>Available Rooms:</Text>
+        <Text style={styles.label}>Available By Date:</Text>
         <Picker
           selectedValue={filterDate}
           onValueChange={(value) => setFilterDate(value)}
@@ -64,6 +64,6 @@ const styles = StyleSheet.create({
   },
   picker: {
     height: 50,
-    width: 150,
+    width: "90%",
   },
 });
