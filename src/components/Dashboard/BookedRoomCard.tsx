@@ -9,11 +9,12 @@ export default BookedRoomCard = ({ booking }) => {
 
   return (
     <View style={styles.card}>
-      <Text style={styles.cardTitle}>Room ID: {booking.roomId}</Text>
-      <Text>From: {booking.fromDate}</Text>
-      <Text>To: {booking.toDate}</Text>
-      <Text>Status: {booking.status}</Text>
-
+      <View style={styles.bookdetails}>
+        <Text style={styles.cardTitle}>Room ID: {booking.roomId}</Text>
+        <Text>From: {booking.fromDate}</Text>
+        <Text>To: {booking.toDate}</Text>
+        <Text>Status: {booking.status}</Text>
+      </View>
       {/* Request Service Button */}
       <RequestServiceButton bookingId={booking.id} roomId={booking.roomId} />
 
@@ -22,7 +23,7 @@ export default BookedRoomCard = ({ booking }) => {
         style={styles.complaintLink}
         onPress={() => setShowComplaintModal(true)}
       >
-        Submit Complaint
+        COMPLAINT
       </Text>
 
       {/* Cancel Room Button */}
@@ -45,6 +46,14 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     borderRadius: 8,
     elevation: 2,
+    borderWidth: 3,
+    borderStyle: "dashed",
+  },
+  bookdetails: {
+    marginBottom: 10,
+    borderBottomWidth: 3,
+    borderStyle: "dashed",
+    paddingBottom: 10,
   },
   cardTitle: {
     fontSize: 18,
@@ -52,9 +61,12 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   complaintLink: {
-    color: "blue",
-    textDecorationLine: "underline",
+    color: "#ffffff",
     marginTop: 10,
-    marginBottom: 15,
+    marginBottom: 10,
+    textAlign: "center",
+    padding: 7,
+    borderRadius: 2,
+    backgroundColor: "#4A4E69",
   },
 });
