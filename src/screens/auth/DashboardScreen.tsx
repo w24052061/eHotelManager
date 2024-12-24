@@ -62,7 +62,7 @@ const DashboardScreen = () => {
       <View style={styles.subContainer}>
         <Text style={styles.title}>Welcome, {userName}!</Text>
       </View>
-      <View style={styles.subContainer}>
+      <View style={{ flex: 1 }}>
         <BookedRooms />
       </View>
     </View>
@@ -79,12 +79,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-  },
-  subContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 20,
   },
   title: {
     fontSize: 24,
