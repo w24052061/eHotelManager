@@ -8,7 +8,7 @@ const BUTTON_COLORS = {
   primary: "#4CAF50", // Green
   secondary: "#007AFF", // Blue
   danger: "#FF0000", // Red
-  default: "#CCCCCC", // Grey
+  default: "#4A4E69", // Grey
 };
 
 const ButtonComponent: React.FC<ButtonComponentProps> = ({
