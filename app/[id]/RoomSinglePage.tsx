@@ -8,6 +8,9 @@ import {
   Button,
   Alert,
   ScrollView,
+  TextInput,
+  Modal,
+  TouchableOpacity,
 } from "react-native";
 import { Calendar } from "react-native-calendars";
 import { Redirect, useLocalSearchParams } from "expo-router";
@@ -18,6 +21,7 @@ import { auth } from "@firebaseConfig";
 import HamburgerMenu from "@/components/HamburgerMenu";
 import useCheckUserRole from "@/components/CheckUserRole";
 import ButtonComponent from "@/components/ButtonComponent";
+import { useRouter } from "expo-router";
 
 export default function RoomSinglePage() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -25,12 +29,18 @@ export default function RoomSinglePage() {
   const [loading, setLoading] = useState(true);
   const role = useCheckUserRole();
   const isLoggedIn = role !== "" && role !== "loading";
+  const router = useRouter();
 
   const [selectedDates, setSelectedDates] = useState<{ [key: string]: any }>(
     {}
   );
   const [bookedDates, setBookedDates] = useState<string[]>([]);
   const [bookingLoading, setBookingLoading] = useState(false);
+
+  // Modal states
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [cardNumber, setCardNumber] = useState("");
+  const [userName, setUserName] = useState("");
 
   useEffect(() => {
     if (id) {
@@ -117,6 +127,9 @@ export default function RoomSinglePage() {
         Alert.alert("Success", "Room booked successfully!");
         setSelectedDates({});
         fetchBookedDates(id); // Refresh booked dates
+
+        // Redirect to the dashboard
+        router.push("/Dashboard");
       } else {
         Alert.alert("Error", result.message);
       }
@@ -126,6 +139,22 @@ export default function RoomSinglePage() {
     } finally {
       setBookingLoading(false);
     }
+  };
+
+  const handlePayment = () => {
+    if (cardNumber !== "1111222233334444") {
+      Alert.alert("Error", "Invalid card number.");
+      return;
+    }
+
+    if (!userName) {
+      const fallbackName = auth.currentUser?.email.split("@")[0];
+      setUserName(fallbackName || "");
+      Alert.alert("Notice", `Using fallback name: ${fallbackName}`);
+    }
+
+    setIsModalVisible(false); // Close the modal
+    handleBooking(); // Proceed with booking
   };
 
   if (loading) {
@@ -181,8 +210,8 @@ export default function RoomSinglePage() {
       {isLoggedIn ? (
         <View style={styles.bookingButton}>
           <Button
-            title={bookingLoading ? "Booking..." : "Book Now"}
-            onPress={handleBooking}
+            title={bookingLoading ? "Processing..." : "Book Now"}
+            onPress={() => setIsModalVisible(true)}
             disabled={bookingLoading}
           />
         </View>
@@ -194,11 +223,100 @@ export default function RoomSinglePage() {
           width="100%"
         />
       )}
+
+      {/* Modal for Payment */}
+      <Modal visible={isModalVisible} animationType="slide" transparent={true}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Enter Payment Details</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Insert only: 1111222233334444"
+              placeholderTextColor="lightgrey"
+              keyboardType="number-pad"
+              value={cardNumber}
+              onChangeText={setCardNumber}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder={`Any name: ${
+                auth.currentUser?.email.split("@")[0] || ""
+              }`}
+              placeholderTextColor="lightgrey"
+              value={userName}
+              onChangeText={setUserName}
+            />
+            <View style={styles.modalButtons}>
+              <TouchableOpacity style={styles.button} onPress={handlePayment}>
+                <Text style={styles.buttonText}>Pay</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.buttonCancel}
+                onPress={() => setIsModalVisible(false)}
+              >
+                <Text style={styles.buttonText}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    width: "80%",
+    backgroundColor: "white",
+    borderRadius: 8,
+    padding: 16,
+    alignItems: "center",
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 16,
+  },
+  input: {
+    width: "100%",
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    padding: 8,
+    marginBottom: 16,
+  },
+  modalButtons: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+  },
+  button: {
+    flex: 1,
+    backgroundColor: "blue",
+    padding: 10,
+    marginHorizontal: 5,
+    alignItems: "center",
+    borderRadius: 8,
+  },
+  buttonCancel: {
+    flex: 1,
+    backgroundColor: "red",
+    padding: 10,
+    marginHorizontal: 5,
+    alignItems: "center",
+    borderRadius: 8,
+  },
+  buttonText: {
+    color: "white",
+    fontWeight: "bold",
+  },
+
   center: {
     flex: 1,
     justifyContent: "center",
