@@ -1,18 +1,38 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 import { router } from "expo-router";
-import { onAuthStateChanged, signOut } from "firebase/auth";
-import { auth } from "@firebaseConfig";
+import { onAuthStateChanged } from "firebase/auth";
+import { ref, get } from "firebase/database";
+import { auth, database } from "@firebaseConfig";
 import HamburgerMenu from "@/components/HamburgerMenu";
 
 const DashboardScreen = () => {
   const [userName, setUserName] = useState<string | null>(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
-        const name = currentUser.displayName || currentUser.email.split("@")[0];
-        setUserName(name);
+        const userRef = ref(database, `users/${currentUser.uid}`);
+
+        try {
+          const snapshot = await get(userRef);
+
+          if (snapshot.exists()) {
+            const data = snapshot.val();
+            // Use 'name' from database if it exists, otherwise fallback to email before '@'
+            const name = data.name || currentUser.email.split("@")[0];
+            setUserName(name);
+          } else {
+            // If no data in the database, fallback to email before '@'
+            const fallbackName = currentUser.email.split("@")[0];
+            setUserName(fallbackName);
+          }
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+          // Fallback in case of error
+          const fallbackName = currentUser.email.split("@")[0];
+          setUserName(fallbackName);
+        }
       } else {
         router.replace("/Login");
       }
