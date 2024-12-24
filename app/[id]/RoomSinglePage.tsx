@@ -10,17 +10,21 @@ import {
   ScrollView,
 } from "react-native";
 import { Calendar } from "react-native-calendars";
-import { useLocalSearchParams } from "expo-router";
+import { Redirect, useLocalSearchParams } from "expo-router";
 import { getRoomById } from "@firebaseConfig";
 import { fetchBookings } from "@/utils/firebaseUtils";
 import { addBooking } from "@/components/RoomManagement/RoomBooking";
 import { auth } from "@firebaseConfig";
 import HamburgerMenu from "@/components/HamburgerMenu";
+import useCheckUserRole from "@/components/CheckUserRole";
+import ButtonComponent from "@/components/ButtonComponent";
 
 export default function RoomSinglePage() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const [room, setRoom] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const role = useCheckUserRole();
+  const isLoggedIn = role !== "" && role !== "loading";
 
   const [selectedDates, setSelectedDates] = useState<{ [key: string]: any }>(
     {}
@@ -174,13 +178,22 @@ export default function RoomSinglePage() {
         markingType={"period"}
       />
 
-      <View style={styles.bookingButton}>
-        <Button
-          title={bookingLoading ? "Booking..." : "Book Now"}
-          onPress={handleBooking}
-          disabled={bookingLoading}
+      {isLoggedIn ? (
+        <View style={styles.bookingButton}>
+          <Button
+            title={bookingLoading ? "Booking..." : "Book Now"}
+            onPress={handleBooking}
+            disabled={bookingLoading}
+          />
+        </View>
+      ) : (
+        <ButtonComponent
+          text="Login to Book"
+          link={"Login"}
+          color="default"
+          width="100%"
         />
-      </View>
+      )}
     </ScrollView>
   );
 }
