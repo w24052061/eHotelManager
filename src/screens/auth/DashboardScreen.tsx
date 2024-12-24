@@ -5,6 +5,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { ref, get } from "firebase/database";
 import { auth, database } from "@firebaseConfig";
 import HamburgerMenu from "@/components/HamburgerMenu";
+import { BookedRooms } from "@/components/Dashboard/BookedRooms";
 
 const DashboardScreen = () => {
   const [userName, setUserName] = useState<string | null>(null);
@@ -54,6 +55,9 @@ const DashboardScreen = () => {
       <HamburgerMenu />
       <View style={styles.subContainer}>
         <Text style={styles.title}>Welcome, {userName}!</Text>
+      </View>
+      <View style={styles.subContainer}>
+        <BookedRooms />
       </View>
     </View>
   );

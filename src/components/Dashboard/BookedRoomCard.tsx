@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import RequestServiceButton from "./RequestServiceButton";
 import ComplaintModal from "./ComplaintModal";
 import CancelButton from "./CancelButton";
 
-export default function BookedRoomCard({ booking }) {
+const BookedRoomCard = ({ booking }) => {
   const [showComplaintModal, setShowComplaintModal] = useState(false);
 
   return (
@@ -14,13 +14,18 @@ export default function BookedRoomCard({ booking }) {
       <Text>To: {booking.toDate}</Text>
       <Text>Status: {booking.status}</Text>
 
-      {/* 1) Service Button */}
+      {/* Request Service Button */}
       <RequestServiceButton bookingId={booking.id} roomId={booking.roomId} />
 
-      {/* 2) Complaint Button (opens modal) */}
-      <Button title="Complaint" onPress={() => setShowComplaintModal(true)} />
+      {/* Complaint Button */}
+      <Text
+        style={styles.complaintLink}
+        onPress={() => setShowComplaintModal(true)}
+      >
+        Submit Complaint
+      </Text>
 
-      {/* 3) Cancel Button */}
+      {/* Cancel Room Button */}
       <CancelButton bookingId={booking.id} />
 
       {/* Complaint Modal */}
@@ -31,18 +36,25 @@ export default function BookedRoomCard({ booking }) {
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   card: {
     backgroundColor: "#fff",
-    margin: 10,
-    padding: 10,
+    padding: 16,
+    marginVertical: 8,
     borderRadius: 8,
     elevation: 2,
   },
   cardTitle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "bold",
+    marginBottom: 8,
+  },
+  complaintLink: {
+    color: "blue",
+    textDecorationLine: "underline",
+    marginTop: 10,
+    marginBottom: 15,
   },
 });

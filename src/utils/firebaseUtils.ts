@@ -1,6 +1,5 @@
-import { getDatabase, ref, get, query, orderByChild, equalTo } from "firebase/database";
-import { doc, updateDoc } from "firebase/firestore";
-import { db } from "@firebaseConfig";
+import { getDatabase, ref, get, query, orderByChild, equalTo, update, push, set  } from "firebase/database";
+import { database } from "@firebaseConfig";
 
 // Fetch user role
 export const fetchUserRole = async (userId: string) => {
@@ -34,33 +33,39 @@ export const fetchBookings = async (roomId: string) => {
 
 // Cancel a booking by setting status to "cancel-pending"
 export async function requestCancelBooking(bookingId) {
-  const bookingRef = doc(db, "bookings", bookingId);
-  await updateDoc(bookingRef, { status: "cancel-pending" });
+  const bookingRef = ref(database, `bookings/${bookingId}`);
+  await update(bookingRef, { status: "cancel-pending" });
 }
-
 
 // Service request queries by users
 export async function addServiceRequest({ bookingId, userId, roomId }) {
-  const servicesRef = collection(db, "services");
-  await addDoc(servicesRef, {
+  const servicesRef = ref(database, "services"); // Reference to "services" node
+  const newServiceRef = push(servicesRef); // Create a unique key for the service request
+
+  await set(newServiceRef, {
     bookingId,
     userId,
     roomId,
-    createdAt: serverTimestamp(),
+    createdAt: Date.now(),
     status: "pending",
   });
-}
 
+  return newServiceRef.key; // Return the unique ID of the new service request
+}
 
 // Add a complaint to the database
 export async function addComplaint({ bookingId, userId, title, message }) {
-  const complaintsRef = collection(db, "complaints");
-  await addDoc(complaintsRef, {
+  const complaintsRef = ref(database, "complaints"); // Reference to "complaints" node
+  const newComplaintRef = push(complaintsRef); // Create a unique key for the complaint
+
+  await set(newComplaintRef, {
     bookingId,
     userId,
     title,
     message,
-    createdAt: serverTimestamp(),
-    status: "pending"
+    createdAt: Date.now(), // Use a timestamp
+    status: "pending",
   });
+
+  return newComplaintRef.key; // Return the unique ID of the new complaint
 }
