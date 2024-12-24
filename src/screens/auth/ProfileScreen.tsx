@@ -47,12 +47,7 @@ const ProfileScreen = () => {
   const handleSaveProfile = async () => {
     if (loading) return; // Prevent multiple save attempts
 
-    if (!name || !surname || !gender || !mobileNumber) {
-      Alert.alert("Error", "Please fill in all fields");
-      return;
-    }
-
-    if (!/^[0-9]{10}$/.test(mobileNumber)) {
+    if (mobileNumber && !/^[0-9]{10}$/.test(mobileNumber)) {
       Alert.alert("Error", "Please enter a valid 10-digit mobile number");
       return;
     }
