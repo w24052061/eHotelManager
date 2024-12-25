@@ -12,6 +12,8 @@ export default BookedRoomCard = ({ booking }) => {
     if (booking.toDate < today) return "Passed";
     if (booking.status === "cancel-pending") return "Cancel Pending";
     if (booking.status === "cancel-accepted") return "Cancel Accepted";
+    if (booking.status === "cancel-rejected")
+      return "Cancel Request been Rejected";
     return "Available";
   };
 
