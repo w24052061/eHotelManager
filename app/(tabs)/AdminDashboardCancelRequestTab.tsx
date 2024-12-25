@@ -1,14 +1,20 @@
-import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+import { View, StyleSheet } from "react-native";
+import { Provider as PaperProvider } from "react-native-paper";
+import AdminCancelRequests from "@/components/AdminPanel/AdminCancelRequests";
+import HamburgerMenu from "@/components/HamburgerMenu";
 
-const AdminDashboardCancelRequestTab = () => {
+export default function AdminDashboardIndex() {
   return (
-    <View>
-      <Text>AdminDashboardCancelRequestTab</Text>
-    </View>
+    <PaperProvider>
+      <View style={styles.container}>
+        <HamburgerMenu />
+        <AdminCancelRequests />
+      </View>
+    </PaperProvider>
   );
-};
+}
 
-export default AdminDashboardCancelRequestTab;
-
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: "#fff" },
+});
