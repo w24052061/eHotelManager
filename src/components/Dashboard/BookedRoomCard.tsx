@@ -7,16 +7,30 @@ import CancelButton from "./CancelButton";
 export default BookedRoomCard = ({ booking }) => {
   const [showComplaintModal, setShowComplaintModal] = useState(false);
 
+  const getStatus = (booking) => {
+    const today = new Date().toISOString().split("T")[0];
+    if (booking.toDate < today) return "Passed";
+    if (booking.status === "cancel-pending") return "Cancel Pending";
+    return "Available";
+  };
+
+  const status = getStatus(booking);
+  const isPassed = status === "Passed";
+  const isCancelRequested = status === "Cancel Pending";
+  const shouldShowCancel = !isPassed && !isCancelRequested;
+
   return (
     <View style={styles.card}>
       <View style={styles.bookdetails}>
         <Text style={styles.cardTitle}>Room ID: {booking.roomId}</Text>
         <Text>From: {booking.fromDate}</Text>
         <Text>To: {booking.toDate}</Text>
-        <Text>Status: {booking.status}</Text>
+        <Text>Status: {getStatus(booking)}</Text>
       </View>
       {/* Request Service Button */}
-      <RequestServiceButton bookingId={booking.id} roomId={booking.roomId} />
+      {!isPassed && (
+        <RequestServiceButton bookingId={booking.id} roomId={booking.roomId} />
+      )}
 
       {/* Complaint Button */}
       <Text
@@ -27,7 +41,7 @@ export default BookedRoomCard = ({ booking }) => {
       </Text>
 
       {/* Cancel Room Button */}
-      <CancelButton bookingId={booking.id} />
+      {shouldShowCancel && <CancelButton bookingId={booking.id} />}
 
       {/* Complaint Modal */}
       <ComplaintModal

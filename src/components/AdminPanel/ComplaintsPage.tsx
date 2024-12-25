@@ -6,8 +6,9 @@ import {
   FlatList,
   ActivityIndicator,
   Alert,
-  Text, // Correctly imported from 'react-native'
-  Pressable, // Use Pressable instead of TouchableWithoutFeedback
+  Text,
+  Pressable,
+  ScrollView,
 } from "react-native";
 import { Card, Title, Paragraph, Button } from "react-native-paper";
 import Modal from "react-native-modal";
@@ -89,15 +90,7 @@ const ComplaintsPage: React.FC = () => {
           style: "destructive",
           onPress: async () => {
             try {
-              console.log(
-                "🔍 Attempting to delete complaint with ID:",
-                selectedComplaint.id
-              );
-              await removeComplaint(selectedComplaint.id);
-              console.log(
-                "✅ Successfully deleted complaint with ID:",
-                selectedComplaint.id
-              );
+              await deleteComplaint(selectedComplaint.id);
               Alert.alert("Success", "Complaint removed successfully.");
               closeModal();
               fetchData(); // Refresh the complaints list
@@ -185,7 +178,10 @@ const ComplaintsPage: React.FC = () => {
         onBackButtonPress={closeModal}
         style={styles.modal}
       >
-        <View style={styles.modalContent}>
+        <ScrollView
+          style={styles.modalContent}
+          contentContainerStyle={styles.modalContentContainer}
+        >
           <Title style={styles.modalTitle}>{selectedComplaint?.title}</Title>
           {relatedBooking && (
             <Paragraph style={styles.info}>
@@ -225,7 +221,7 @@ const ComplaintsPage: React.FC = () => {
               Close
             </Button>
           </View>
-        </View>
+        </ScrollView>
       </Modal>
     </View>
   );
@@ -275,7 +271,13 @@ const styles = StyleSheet.create({
   modalContent: {
     backgroundColor: "white",
     padding: 20,
+    paddingTop: 0,
     borderRadius: 8,
+    maxHeight: "80%", // Limit the maximum height
+    flex: 0, // Allow the modal to wrap content
+  },
+  modalContentContainer: {
+    flexGrow: 0, // Prevent ScrollView from expanding
   },
   modalTitle: {
     fontSize: 20,
