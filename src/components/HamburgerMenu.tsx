@@ -26,6 +26,8 @@ const HamburgerMenu = () => {
   const navigateToLogin = () => router.push("/Login");
   const navigateToProfile = () => router.push("/profile");
   const navigateToManageStaff = () => router.push("/ManageStaff");
+  const navigateToRoomManagement = () =>
+    router.push("page/AdminRoomManagement");
 
   const handleLogout = async () => {
     try {
@@ -84,7 +86,13 @@ const HamburgerMenu = () => {
                     📊 Dashboard
                   </Text>
                   <Text style={styles.menuItem} onPress={navigateToManageStaff}>
-                    👥 User Management
+                    👥 Manage Users
+                  </Text>
+                  <Text
+                    style={styles.menuItem}
+                    onPress={navigateToRoomManagement}
+                  >
+                    🛏️ Manage Rooms
                   </Text>
                   <Text style={styles.menuItem} onPress={handleLogout}>
                     ↪️ Logout
