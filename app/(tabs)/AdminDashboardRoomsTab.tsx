@@ -1,12 +1,17 @@
 // app/(auth)/admin/index.tsx
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import AdminDashboardScreen from "@/components/AdminPanel/AdminDashboardScreen";
+import { Provider as PaperProvider } from "react-native-paper";
+import AdminDashboard from "@/components/AdminPanel/AdminDashboard";
+import HamburgerMenu from "@/components/HamburgerMenu";
 
 export default function AdminDashboardIndex() {
   return (
     <View style={styles.container}>
-      <AdminDashboardScreen />
+      <HamburgerMenu />
+      <PaperProvider>
+        <AdminDashboard />
+      </PaperProvider>
     </View>
   );
 }

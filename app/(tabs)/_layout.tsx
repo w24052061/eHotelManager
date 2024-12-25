@@ -24,7 +24,7 @@ export default function AdminLayout() {
       <Tabs.Screen
         name="AdminDashboardRoomsTab"
         options={{
-          title: "Manage Rooms",
+          title: "Rooms",
           tabBarIcon: ({ focused, color, size }) => (
             <Feather
               name="key"
@@ -38,10 +38,24 @@ export default function AdminLayout() {
       <Tabs.Screen
         name="AdminDashboardComplaintsTab"
         options={{
-          title: "Manage Complaints",
+          title: "Complaints",
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
               name="clipboard"
+              size={size}
+              color={focused ? "#4a4e69" : color}
+            />
+          ),
+        }}
+      />
+      {/* Tab 3: Cancel Requests */}
+      <Tabs.Screen
+        name="AdminDashboardCancelRequestTab"
+        options={{
+          title: "Recalls",
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name="trash-bin-outline"
               size={size}
               color={focused ? "#4a4e69" : color}
             />

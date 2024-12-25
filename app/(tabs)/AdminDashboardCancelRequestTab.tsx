@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
-const AdminDashboardComplaintsTab = () => {
+const AdminDashboardCancelRequestTab = () => {
   return (
     <View>
-      <Text>AdminDashboardComplaintsTab</Text>
+      <Text>AdminDashboardCancelRequestTab</Text>
     </View>
   );
 };
 
-export default AdminDashboardComplaintsTab;
+export default AdminDashboardCancelRequestTab;
 
 const styles = StyleSheet.create({});

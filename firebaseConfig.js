@@ -115,6 +115,46 @@ const updateRoomStatus = async (roomId, newStatus) => {
   }
 };
 
+const updateRoomDetails = async (roomId, data) => {
+  const roomRef = ref(database, `rooms/${roomId}`);
+  await update(roomRef, data);
+};
+
+// **Updated getBookings to fetch all bookings**
+const getAllBookings = async () => {
+  const bookingsRef = ref(database, "bookings/");
+  const snapshot = await get(bookingsRef);
+  if (snapshot.exists()) {
+    return Object.keys(snapshot.val()).map((key) => ({
+      id: key,
+      ...snapshot.val()[key],
+    }));
+  } else {
+    return [];
+  }
+};
+
+// Optional: Keep original getBookings for user-specific bookings
+const getBookingsByUser = async (userId) => {
+  if (!userId) {
+    throw new Error("User ID is undefined");
+  }
+  const bookingsRef = query(
+    ref(database, "bookings"),
+    orderByChild("userId"),
+    equalTo(userId)
+  );
+  const snapshot = await get(bookingsRef);
+  if (snapshot.exists()) {
+    return Object.keys(snapshot.val()).map((key) => ({
+      id: key,
+      ...snapshot.val()[key],
+    }));
+  } else {
+    return [];
+  }
+};
+
 export {
   app,
   auth,
@@ -131,4 +171,7 @@ export {
   getComplaints,
   updateComplaintStatus,
   updateRoomStatus,
+  updateRoomDetails,
+  getBookingsByUser,
+  getAllBookings,
 };
