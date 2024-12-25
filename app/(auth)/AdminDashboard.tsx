@@ -8,7 +8,7 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     // When this screen mounts, jump to our admin tabs route
-    router.replace("/(tabs)/AdminDashboardRoomsTab");
+    router.replace("/(tabs)/AdminDashboardBookingsTab");
   }, []);
 
   return (

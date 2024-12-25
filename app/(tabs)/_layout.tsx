@@ -22,12 +22,12 @@ export default function AdminLayout() {
     >
       {/* Tab 1: Admin Dashboard */}
       <Tabs.Screen
-        name="AdminDashboardRoomsTab"
+        name="AdminDashboardBookingsTab"
         options={{
-          title: "Rooms",
+          title: "Bookings",
           tabBarIcon: ({ focused, color, size }) => (
             <Feather
-              name="key"
+              name="bookmark"
               size={size}
               color={focused ? "#4a4e69" : color}
             />
@@ -52,10 +52,10 @@ export default function AdminLayout() {
       <Tabs.Screen
         name="AdminDashboardCancelRequestTab"
         options={{
-          title: "Recalls",
+          title: "Requests",
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
-              name="trash-bin-outline"
+              name="chatbubble-ellipses-outline"
               size={size}
               color={focused ? "#4a4e69" : color}
             />

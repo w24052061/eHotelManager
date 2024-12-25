@@ -19,16 +19,7 @@ import {
 } from "firebase/database";
 import { database } from "@firebaseConfig";
 import CancelRequestCard from "./CancelRequestCard";
-
-interface Booking {
-  id: string;
-  email: string;
-  fromDate: string;
-  toDate: string;
-  roomId: string;
-  status?: string;
-  userId: string;
-}
+import { Booking } from "@/components/model/Booking";
 
 const AdminCancelRequests: React.FC = () => {
   const [cancelRequests, setCancelRequests] = useState<Booking[]>([]);

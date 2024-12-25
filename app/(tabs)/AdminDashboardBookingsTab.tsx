@@ -1,17 +1,17 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
-import AdminRequests from "@/components/AdminPanel/AdminRequests";
+import AdminDashboard from "@/components/AdminPanel/AdminDashboard";
 import HamburgerMenu from "@/components/HamburgerMenu";
 
-export default function AdminDashboardIndex() {
+export default function AdminDashboardBookingsTab() {
   return (
-    <PaperProvider>
-      <View style={styles.container}>
-        <HamburgerMenu />
-        <AdminRequests />
-      </View>
-    </PaperProvider>
+    <View style={styles.container}>
+      <HamburgerMenu />
+      <PaperProvider>
+        <AdminDashboard />
+      </PaperProvider>
+    </View>
   );
 }
 

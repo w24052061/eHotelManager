@@ -2,16 +2,7 @@
 
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
-
-interface Booking {
-  id: string;
-  email: string;
-  fromDate: string;
-  toDate: string;
-  roomId: string;
-  status?: string;
-  userId: string;
-}
+import { Booking } from "@/components/model/Booking";
 
 interface CancelRequestCardProps {
   booking: Booking;
