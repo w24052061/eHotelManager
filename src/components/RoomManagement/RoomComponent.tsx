@@ -153,9 +153,13 @@ export default function RoomComponent() {
 
     return (
       <View style={containerStyle}>
-        <Link href={`/${item.id}/RoomSinglePage`}>
+        {role !== "admin" ? (
+          <Link href={`/${item.id}/RoomSinglePage`}>
+            <Image source={imageSource} style={styles.roomImage} />
+          </Link>
+        ) : (
           <Image source={imageSource} style={styles.roomImage} />
-        </Link>
+        )}
         <Text style={styles.roomName}>{item.name}</Text>
         <Text style={styles.roomDescription}>{item.description}</Text>
 
@@ -169,22 +173,32 @@ export default function RoomComponent() {
 
           <View style={styles.roomCardBottomRight}>
             {/* Only show the button if the room is available */}
-            {!item.isUnavailable &&
-              (role === "admin" ? (
+            {!item.isUnavailable && role !== "admin" ? (
+              <ButtonComponent
+                text="Book Now"
+                link={`/${item.id}/RoomSinglePage`}
+                color="primary"
+                width="100%"
+              />
+            ) : (
+              role !== "admin" && (
                 <ButtonComponent
-                  text="Manage"
-                  link={`/${item.id}/RoomSinglePage`}
-                  color="secondary"
-                  width="100%"
-                />
-              ) : (
-                <ButtonComponent
-                  text="Book Room"
+                  text="Find Free Dates"
                   link={`/${item.id}/RoomSinglePage`}
                   color="primary"
                   width="100%"
                 />
-              ))}
+              )
+            )}
+
+            {role === "admin" && (
+              <ButtonComponent
+                text="Manage"
+                link={`/Dashboard`}
+                color="secondary"
+                width="100%"
+              />
+            )}
           </View>
         </View>
       </View>
