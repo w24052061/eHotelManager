@@ -1,14 +1,20 @@
-import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+import { View, StyleSheet } from "react-native";
+import { Provider as PaperProvider } from "react-native-paper";
+import ComplaintsPage from "@/components/AdminPanel/ComplaintsPage";
+import HamburgerMenu from "@/components/HamburgerMenu";
 
-const AdminDashboardComplaintsTab = () => {
+export default function AdminDashboardIndex() {
   return (
-    <View>
-      <Text>AdminDashboardComplaintsTab</Text>
-    </View>
+    <PaperProvider>
+      <View style={styles.container}>
+        <HamburgerMenu />
+        <ComplaintsPage />
+      </View>
+    </PaperProvider>
   );
-};
+}
 
-export default AdminDashboardComplaintsTab;
-
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: "#fff" },
+});

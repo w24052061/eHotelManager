@@ -2,6 +2,10 @@ import { initializeApp } from "firebase/app";
 import {
   getAuth,
   initializeAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
+  signOut as firebaseSignOut,
   getReactNativePersistence,
 } from "firebase/auth";
 import {
@@ -13,14 +17,17 @@ import {
   query,
   orderByChild,
   equalTo,
+  push,
+  remove,
 } from "firebase/database";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Platform } from "react-native";
 
-// Your Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyDWELdHJnpLqMWGIZoBiCiuOQFpZukAqQ4",
   authDomain: "e-hotel-manager.firebaseapp.com",
+  databaseURL: "https://e-hotel-manager-default-rtdb.firebaseio.com",
   projectId: "e-hotel-manager",
   storageBucket: "e-hotel-manager.firebasestorage.app",
   messagingSenderId: "301876089939",
@@ -155,6 +162,40 @@ const getBookingsByUser = async (userId) => {
   }
 };
 
+// Fetch all complaints sorted by createdAt descending
+const getAllComplaints = async (): Promise<Complaint[]> => {
+  const complaintsRef = query(
+    ref(database, "complaints"),
+    orderByChild("createdAt")
+  );
+  const snapshot = await get(complaintsRef);
+  if (snapshot.exists()) {
+    const complaintsObj = snapshot.val();
+    const complaintsArray: Complaint[] = Object.keys(complaintsObj).map(
+      (key) => ({
+        id: key,
+        ...complaintsObj[key],
+      })
+    );
+    // Sort descending by createdAt
+    complaintsArray.sort((b, a) => b.createdAt - a.createdAt);
+    return complaintsArray;
+  } else {
+    return [];
+  }
+};
+
+// Delete a complaint by ID
+
+const deleteComplaint = async (complaintId: string): Promise<void> => {
+  try {
+    const complaintRef = ref(database, `complaints/${complaintId}`);
+    await remove(complaintRef);
+  } catch (error) {
+    throw new Error("Failed to delete complaint: " + error);
+  }
+};
+
 export {
   app,
   auth,
@@ -174,4 +215,6 @@ export {
   updateRoomDetails,
   getBookingsByUser,
   getAllBookings,
+  getAllComplaints,
+  deleteComplaint,
 };

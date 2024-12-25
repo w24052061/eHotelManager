@@ -5,7 +5,8 @@
     "baseUrl": ".",  // Root directory of the app as the base
     "paths": {
       "@/*": ["src/*"],  // Alias for `src` folder
-      "@firebaseConfig": ["firebaseConfig.js"]  // Alias for firebaseConfig.js in the root directory
+      "@firebaseConfig": ["firebaseConfig.tsx"],  // Alias for firebaseConfig.js in the root directory
+      "@firebase/auth": ["./node_modules/@firebase/auth/dist/index.rn.d.ts"],  // Alias for Firebase Auth types
     }
   },
   "include": [
@@ -15,3 +16,4 @@
     "expo-env.d.ts"        // Include Expo environment types
   ]
 }
+

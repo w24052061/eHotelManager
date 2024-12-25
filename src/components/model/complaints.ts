@@ -1,6 +1,9 @@
-// Define a type for your complaints
 export interface Complaint {
     id: string;
-    description: string;
+    bookingId: string;
+    createdAt: number;
+    message: string;
     status: string;
-}
+    title: string;
+    userId: string;
+  }

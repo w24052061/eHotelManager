@@ -1,4 +1,3 @@
-// app/(auth)/admin/index.tsx
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";

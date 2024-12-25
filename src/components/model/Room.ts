@@ -1,9 +1,10 @@
 // model/Course.ts
 export interface Room {
   id: string;
-  name: string;
   description: string;
+  image: string; // as it is a link to the image
+  name: string;
   price: number;
+  roomId: string;
   status: string;
-  image?: string;  // Optional property if image might not be present for all rooms
 }
