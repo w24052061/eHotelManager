@@ -11,51 +11,66 @@ export default BookedRoomCard = ({ booking }) => {
     const today = new Date().toISOString().split("T")[0];
     if (booking.toDate < today) return "Passed";
     if (booking.status === "cancel-pending") return "Cancel Pending";
+    if (booking.status === "cancel-accepted") return "Cancel Accepted";
     return "Available";
   };
 
   const status = getStatus(booking);
   const isPassed = status === "Passed";
   const isCancelRequested = status === "Cancel Pending";
+  const isCancelAccepted = status === "Cancel Accepted";
   const shouldShowCancel = !isPassed && !isCancelRequested;
 
   return (
-    <View style={styles.card}>
+    <View
+      style={{
+        ...styles.card,
+        backgroundColor: isCancelAccepted ? "orange" : "#fff", // Inline conditional for background color
+      }}
+    >
       <View style={styles.bookdetails}>
         <Text style={styles.cardTitle}>Room ID: {booking.roomId}</Text>
         <Text>From: {booking.fromDate}</Text>
         <Text>To: {booking.toDate}</Text>
         <Text>Status: {getStatus(booking)}</Text>
       </View>
-      {/* Request Service Button */}
-      {!isPassed && (
-        <RequestServiceButton bookingId={booking.id} roomId={booking.roomId} />
+
+      {!isCancelAccepted && (
+        <>
+          {/* Request Service Button */}
+          {!isPassed && (
+            <RequestServiceButton
+              bookingId={booking.id}
+              roomId={booking.roomId}
+            />
+          )}
+
+          {/* Complaint Button */}
+          <Text
+            style={styles.complaintLink}
+            onPress={() => setShowComplaintModal(true)}
+          >
+            COMPLAINT
+          </Text>
+
+          {/* Cancel Room Button */}
+          {shouldShowCancel && <CancelButton bookingId={booking.id} />}
+
+          {/* Complaint Modal */}
+          <ComplaintModal
+            bookingId={booking.id}
+            isVisible={showComplaintModal}
+            onClose={() => setShowComplaintModal(false)}
+          />
+        </>
       )}
-
-      {/* Complaint Button */}
-      <Text
-        style={styles.complaintLink}
-        onPress={() => setShowComplaintModal(true)}
-      >
-        COMPLAINT
-      </Text>
-
-      {/* Cancel Room Button */}
-      {shouldShowCancel && <CancelButton bookingId={booking.id} />}
-
-      {/* Complaint Modal */}
-      <ComplaintModal
-        bookingId={booking.id}
-        isVisible={showComplaintModal}
-        onClose={() => setShowComplaintModal(false)}
-      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#fff",
+    backgroundColor: "#ffffff",
     padding: 16,
     marginVertical: 8,
     borderRadius: 8,
