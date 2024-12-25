@@ -25,6 +25,7 @@ const HamburgerMenu = () => {
   const navigateToDash = () => router.push("/Dashboard");
   const navigateToLogin = () => router.push("/Login");
   const navigateToProfile = () => router.push("/profile");
+  const navigateToManageStaff = () => router.push("/ManageStaff");
 
   const handleLogout = async () => {
     try {
@@ -55,7 +56,7 @@ const HamburgerMenu = () => {
                 🏠 Home
               </Text>
 
-              {isLoggedIn ? (
+              {isLoggedIn && role !== "admin" && (
                 // If logged in, show Dashboard and Logout
                 <View>
                   <Text style={styles.menuItem} onPress={navigateToDash}>
@@ -68,11 +69,27 @@ const HamburgerMenu = () => {
                     ↪️ Logout
                   </Text>
                 </View>
-              ) : (
+              )}
+              {!isLoggedIn && (
                 // Otherwise, show Login
                 <Text style={styles.menuItem} onPress={navigateToLogin}>
                   📲 Login
                 </Text>
+              )}
+
+              {role === "admin" && (
+                // If logged in, show Dashboard and Logout
+                <View>
+                  <Text style={styles.menuItem} onPress={navigateToDash}>
+                    📊 Dashboard
+                  </Text>
+                  <Text style={styles.menuItem} onPress={navigateToManageStaff}>
+                    👥 User Management
+                  </Text>
+                  <Text style={styles.menuItem} onPress={handleLogout}>
+                    ↪️ Logout
+                  </Text>
+                </View>
               )}
             </View>
           </TouchableOpacity>
