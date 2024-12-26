@@ -1,5 +1,3 @@
-// BookingCard.tsx
-
 import React, { useState } from "react";
 import {
   View,
@@ -12,6 +10,7 @@ import {
 } from "react-native";
 import { Booking, User } from "@/components/model/BookedRoom";
 import { Picker as RNPicker } from "@react-native-picker/picker";
+import AccessLimit from "@/components/AccessLimitComponent";
 
 interface BookingCardProps {
   booking: Booking;
@@ -79,17 +78,27 @@ const BookingCard: React.FC<BookingCardProps> = ({
         </Text>
       )}
 
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.editButton}
-          onPress={() => setIsEditModalVisible(true)}
-        >
-          <Text style={styles.buttonText}>Edit</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.removeButton} onPress={confirmRemove}>
-          <Text style={styles.buttonText}>Remove</Text>
-        </TouchableOpacity>
-      </View>
+      <AccessLimit
+        allowedRoles={["admin"]}
+        render={
+          <>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={styles.editButton}
+                onPress={() => setIsEditModalVisible(true)}
+              >
+                <Text style={styles.buttonText}>Edit</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.removeButton}
+                onPress={confirmRemove}
+              >
+                <Text style={styles.buttonText}>Remove</Text>
+              </TouchableOpacity>
+            </View>
+          </>
+        }
+      />
 
       {/* Edit Modal */}
       <Modal

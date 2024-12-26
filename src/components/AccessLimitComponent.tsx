@@ -61,6 +61,8 @@ const styles = StyleSheet.create({
 
 // ________________________Usage Examples________________________
 
+// import AccessLimit from "@/components/AccessLimitComponent";
+
 //------------------- Admin access only -------------------
 // <AccessLimit
 //   allowedRoles={["admin"]}

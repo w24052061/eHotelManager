@@ -22,6 +22,7 @@ import {
 import { Room } from "@/components/model/Room";
 import { Booking } from "@/components/model/Booking";
 import { Complaint } from "@/components/model/complaints";
+import AccessLimit from "@/components/AccessLimitComponent";
 
 const ComplaintsPage: React.FC = () => {
   const [complaints, setComplaints] = useState<Complaint[]>([]);
@@ -208,19 +209,30 @@ const ComplaintsPage: React.FC = () => {
           <Paragraph style={styles.message}>
             {selectedComplaint?.message}
           </Paragraph>
-          <View style={styles.buttonContainer}>
-            <Button
-              mode="contained"
-              onPress={handleDelete}
-              style={styles.button}
-              color="#d32f2f"
-            >
-              Remove
-            </Button>
-            <Button mode="outlined" onPress={closeModal} style={styles.button}>
-              Close
-            </Button>
-          </View>
+          <AccessLimit
+            allowedRoles={["admin"]}
+            render={
+              <>
+                <View style={styles.buttonContainer}>
+                  <Button
+                    mode="contained"
+                    onPress={handleDelete}
+                    style={styles.button}
+                    color="#d32f2f"
+                  >
+                    Remove
+                  </Button>
+                  <Button
+                    mode="outlined"
+                    onPress={closeModal}
+                    style={styles.button}
+                  >
+                    Close
+                  </Button>
+                </View>
+              </>
+            }
+          />
         </ScrollView>
       </Modal>
     </View>

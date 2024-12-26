@@ -3,6 +3,7 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { AdminRequest } from "@/components/model/AdminRequest";
+import AccessLimit from "@/components/AccessLimitComponent";
 
 interface AdminRequestCardProps {
   request: AdminRequest;
@@ -49,14 +50,27 @@ const AdminRequestCard: React.FC<AdminRequestCardProps> = ({
         <Text>From: {fromDate}</Text>
         <Text>To: {toDate}</Text>
         <Text>Status: {status}</Text>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.acceptButton} onPress={onAccept}>
-            <Text style={styles.buttonText}>Accept</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.rejectButton} onPress={handleReject}>
-            <Text style={styles.buttonText}>Reject</Text>
-          </TouchableOpacity>
-        </View>
+        <AccessLimit
+          allowedRoles={["admin"]}
+          render={
+            <>
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  style={styles.acceptButton}
+                  onPress={onAccept}
+                >
+                  <Text style={styles.buttonText}>Accept</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.rejectButton}
+                  onPress={handleReject}
+                >
+                  <Text style={styles.buttonText}>Reject</Text>
+                </TouchableOpacity>
+              </View>
+            </>
+          }
+        />
       </View>
     );
   }
@@ -81,14 +95,27 @@ const AdminRequestCard: React.FC<AdminRequestCardProps> = ({
         <Text>Booking ID: {bookingId}</Text>
         <Text>Service ID: {serviceId}</Text>
         <Text>Status: {status}</Text>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.acceptButton} onPress={onAccept}>
-            <Text style={styles.buttonText}>Accept</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.rejectButton} onPress={handleReject}>
-            <Text style={styles.buttonText}>Reject</Text>
-          </TouchableOpacity>
-        </View>
+        <AccessLimit
+          allowedRoles={["admin"]}
+          render={
+            <>
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  style={styles.acceptButton}
+                  onPress={onAccept}
+                >
+                  <Text style={styles.buttonText}>Accept</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.rejectButton}
+                  onPress={handleReject}
+                >
+                  <Text style={styles.buttonText}>Reject</Text>
+                </TouchableOpacity>
+              </View>
+            </>
+          }
+        />
       </View>
     );
   }
