@@ -26,7 +26,7 @@ const ForgotPassword = () => {
     try {
       await sendPasswordResetEmail(auth, email);
       Alert.alert("Success", "Password reset link sent to your email.");
-      router.push("/login");
+      router.push("/Login");
     } catch (error) {
       let errorMessage = "Failed to send reset link";
       if (error.code === "auth/user-not-found") {
