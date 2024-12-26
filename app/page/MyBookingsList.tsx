@@ -3,7 +3,7 @@ import { View, Text, ActivityIndicator } from "react-native";
 import { useRouter } from "expo-router";
 import useCheckUserRole from "@/components/CheckUserRole";
 import DashboardScreen from "@/screens/auth/DashboardScreen";
-import AdminDashboardBookingsTab from "./AdminDashboard";
+import AdminDashboardBookingsTab from "../(auth)/AdminDashboard";
 
 export default function DashboardTab() {
   const router = useRouter();
@@ -36,7 +36,7 @@ export default function DashboardTab() {
   if (role === "admin") {
     return <AdminDashboardBookingsTab />;
   } else {
-    // staff or user
+    // if user or Staff
     return <DashboardScreen />;
   }
 }
