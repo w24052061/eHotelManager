@@ -43,7 +43,7 @@ const AdminRequestCard: React.FC<AdminRequestCardProps> = ({
 
   if (type === "cancel" && status === "cancel-pending") {
     return (
-      <View style={styles.card}>
+      <View style={styles.CancellationCard}>
         <Text style={styles.cardTitle}>Cancellation Request</Text>
         <Text>Room ID: {roomId}</Text>
         <Text>From: {fromDate}</Text>
@@ -75,7 +75,7 @@ const AdminRequestCard: React.FC<AdminRequestCardProps> = ({
 
   if (type === "service" && status === "pending") {
     return (
-      <View style={styles.card}>
+      <View style={styles.ServiceCard}>
         <Text style={styles.cardTitle}>Service Request</Text>
         <Text>Room ID: {roomId}</Text>
         <Text>Booking ID: {bookingId}</Text>
@@ -101,7 +101,25 @@ export default AdminRequestCard;
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#fff",
+    backgroundColor: "green",
+    padding: 16,
+    marginVertical: 8,
+    borderRadius: 8,
+    elevation: 2,
+    borderWidth: 1,
+    borderColor: "#ccc",
+  },
+  CancellationCard: {
+    backgroundColor: "orange",
+    padding: 16,
+    marginVertical: 8,
+    borderRadius: 8,
+    elevation: 2,
+    borderWidth: 1,
+    borderColor: "#ccc",
+  },
+  ServiceCard: {
+    backgroundColor: "lightblue",
     padding: 16,
     marginVertical: 8,
     borderRadius: 8,
@@ -117,6 +135,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 8,
+    textAlign: "center",
   },
   buttonContainer: {
     flexDirection: "row",

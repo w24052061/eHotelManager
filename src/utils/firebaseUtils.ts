@@ -31,12 +31,27 @@ export const fetchBookings = async (roomId: string) => {
   }
 };
 
-// Cancel a booking by setting status to "cancel-pending"
-export async function requestCancelBooking(bookingId) {
-  const bookingRef = ref(database, `bookings/${bookingId}`);
-  await update(bookingRef, { status: "cancel-pending" });
+interface CancelBookingResponse {
+  success: boolean;
+  message: string;
 }
 
+export async function requestCancelBooking(
+  bookingId: string
+): Promise<CancelBookingResponse> {
+  try {
+    const bookingRef = ref(database, `bookings/${bookingId}`);
+    await update(bookingRef, {
+      status: "cancel-pending",
+      cancelRequestedAt: Date.now(), // Add the cancellation request timestamp
+    });
+
+    return { success: true, message: "Cancellation request submitted successfully." };
+  } catch (error) {
+    console.error("Error requesting cancellation:", error);
+    return { success: false, message: "Failed to submit cancellation request." };
+  }
+}
 // Service request queries by users
 export async function addServiceRequest({ bookingId, userId, roomId }) {
   const servicesRef = ref(database, "services"); // Reference to "services" node

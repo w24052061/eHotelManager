@@ -59,7 +59,9 @@ const AdminRequests: React.FC = () => {
           .map((key) => ({
             id: key,
             type: "cancel" as "cancel",
-            createdAtTimestamp: new Date(bookingsData[key].createdAt).getTime(),
+            createdAtTimestamp: bookingsData[key].cancelRequestedAt
+              ? bookingsData[key].cancelRequestedAt
+              : new Date(bookingsData[key].createdAt).getTime(),
             roomId: bookingsData[key].roomId,
             status: bookingsData[key].status || "",
             userId: bookingsData[key].userId,

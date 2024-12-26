@@ -22,6 +22,7 @@ export async function addBooking({
       fromDate,
       toDate,
       email,
+      createdAt: Date.now(), // Add createdAt as a timestamp in milliseconds
     };
 
     await push(bookingsRef, newBooking);
