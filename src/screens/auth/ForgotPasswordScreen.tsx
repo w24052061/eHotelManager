@@ -1,32 +1,38 @@
-// src/screens/auth/ForgotPassword.tsx
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from 'react-native';
-import { sendPasswordResetEmail } from 'firebase/auth';
-import { auth } from '@firebaseConfig';  // Your Firebase auth configuration
-import { useRouter } from 'expo-router';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Alert,
+  StyleSheet,
+} from "react-native";
+import { sendPasswordResetEmail } from "firebase/auth";
+import { auth } from "@firebaseConfig";
+import { useRouter } from "expo-router";
 
 const ForgotPassword = () => {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const handlePasswordReset = async () => {
     if (!email) {
-      Alert.alert('Error', 'Please enter your email address.');
+      Alert.alert("Error", "Please enter your email address.");
       return;
     }
 
     setLoading(true);
     try {
       await sendPasswordResetEmail(auth, email);
-      Alert.alert('Success', 'Password reset link sent to your email.');
-      router.push('/login'); // Navigate to the login page after successful reset
+      Alert.alert("Success", "Password reset link sent to your email.");
+      router.push("/login");
     } catch (error) {
-      let errorMessage = 'Failed to send reset link';
-      if (error.code === 'auth/user-not-found') {
-        errorMessage = 'No user found with this email';
+      let errorMessage = "Failed to send reset link";
+      if (error.code === "auth/user-not-found") {
+        errorMessage = "No user found with this email";
       }
-      Alert.alert('Error', errorMessage);
+      Alert.alert("Error", errorMessage);
     } finally {
       setLoading(false);
     }
@@ -50,11 +56,11 @@ const ForgotPassword = () => {
         disabled={loading}
       >
         <Text style={styles.buttonText}>
-          {loading ? 'Sending Reset Link...' : 'Send Reset Link'}
+          {loading ? "Sending Reset Link..." : "Send Reset Link"}
         </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => router.push('/Login')}>
+      <TouchableOpacity onPress={() => router.push("/Login")}>
         <Text style={styles.backToLogin}>Back to Login</Text>
       </TouchableOpacity>
     </View>
@@ -64,47 +70,47 @@ const ForgotPassword = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#25292e',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#25292e",
     padding: 20,
   },
   title: {
     fontSize: 24,
-    color: '#fff',
+    color: "#fff",
     marginBottom: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   input: {
-    width: '100%',
+    width: "100%",
     height: 40,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 5,
     paddingHorizontal: 10,
     marginBottom: 20,
-    color: '#fff',
+    color: "#fff",
   },
   button: {
-    backgroundColor: '#007AFF',
+    backgroundColor: "#007AFF",
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 5,
-    width: '100%',
-    alignItems: 'center',
+    width: "100%",
+    alignItems: "center",
   },
   buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
+    color: "white",
+    fontWeight: "bold",
   },
   buttonDisabled: {
-    backgroundColor: '#aaa',
+    backgroundColor: "#aaa",
   },
   backToLogin: {
-    color: '#007AFF',
+    color: "#007AFF",
     fontSize: 16,
     marginTop: 20,
-    textDecorationLine: 'underline',
+    textDecorationLine: "underline",
   },
 });
 

@@ -7,9 +7,9 @@ export const fetchUserRole = async (userId: string) => {
   const userRef = ref(db, `users/${userId}`);
   const snapshot = await get(userRef);
   if (snapshot.exists()) {
-    return snapshot.val().role; // Assuming the role is stored directly under the user object
+    return snapshot.val().role; 
   } else {
-    return null; // Handle case where user data may not exist
+    return null; 
   }
 };
 
@@ -22,7 +22,7 @@ export const fetchBookings = async (roomId: string) => {
     const snapshot = await get(roomBookingsQuery);
 
     if (snapshot.exists()) {
-      return Object.values(snapshot.val()); // Returns an array of booking objects
+      return Object.values(snapshot.val()); 
     }
     return [];
   } catch (error) {
@@ -43,7 +43,7 @@ export async function requestCancelBooking(
     const bookingRef = ref(database, `bookings/${bookingId}`);
     await update(bookingRef, {
       status: "cancel-pending",
-      cancelRequestedAt: Date.now(), // Add the cancellation request timestamp
+      cancelRequestedAt: Date.now(), // New Update: Add the cancellation request timestamp
     });
 
     return { success: true, message: "Cancellation request submitted successfully." };
@@ -54,8 +54,8 @@ export async function requestCancelBooking(
 }
 // Service request queries by users
 export async function addServiceRequest({ bookingId, userId, roomId }) {
-  const servicesRef = ref(database, "services"); // Reference to "services" node
-  const newServiceRef = push(servicesRef); // Create a unique key for the service request
+  const servicesRef = ref(database, "services"); 
+  const newServiceRef = push(servicesRef); 
 
   await set(newServiceRef, {
     bookingId,
@@ -78,9 +78,9 @@ export async function addComplaint({ bookingId, userId, title, message }) {
     userId,
     title,
     message,
-    createdAt: Date.now(), // Use a timestamp
+    createdAt: Date.now(), 
     status: "pending",
   });
 
-  return newComplaintRef.key; // Return the unique ID of the new complaint
+  return newComplaintRef.key; // unique ID for new complaint
 }

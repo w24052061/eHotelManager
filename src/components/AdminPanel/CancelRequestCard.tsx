@@ -1,5 +1,3 @@
-// CancelRequestCard.tsx
-
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { Booking } from "@/components/model/Booking";

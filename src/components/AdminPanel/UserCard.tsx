@@ -76,7 +76,7 @@ const UserCard: React.FC<UserCardProps> = ({
                 "Success",
                 `Successfully deleted ${user.name} ${user.surname}.`
               );
-              onDelete(); // Notify parent about deletion
+              onDelete();
             } catch (error: any) {
               console.error("Error deleting user:", error);
               Alert.alert(
@@ -84,7 +84,7 @@ const UserCard: React.FC<UserCardProps> = ({
                 `Failed to delete the user: ${error.message}`
               );
             } finally {
-              setLoading(false); // Hide loading indicator
+              setLoading(false);
             }
           },
         },

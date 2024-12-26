@@ -1,5 +1,3 @@
-// AdminRequestCard.tsx
-
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { AdminRequest } from "@/components/model/AdminRequest";

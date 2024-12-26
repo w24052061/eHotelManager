@@ -9,7 +9,7 @@ type CancelButtonProps = {
 export default function CancelButton({ bookingId }: CancelButtonProps) {
   const handleCancelRoom = async () => {
     try {
-      // Set the booking's status to "cancel-pending"
+      // booking status -> "cancel-pending"
       await requestCancelBooking(bookingId);
       Alert.alert(
         "Cancellation",

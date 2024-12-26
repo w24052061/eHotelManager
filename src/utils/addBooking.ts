@@ -1,4 +1,3 @@
-// utils/seedRooms.ts
 import { addRoom } from './roomService';
 
 export const seedInitialRooms = async () => {
@@ -21,7 +20,7 @@ export const seedInitialRooms = async () => {
       price: 129.99,
       status: 'available'
     },
-    // Add more rooms as needed
+    
   ];
 
   for (const room of initialRooms) {

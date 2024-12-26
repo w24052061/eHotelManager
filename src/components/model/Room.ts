@@ -1,4 +1,3 @@
-// model/Course.ts
 export interface Room {
   id: string;
   description: string;

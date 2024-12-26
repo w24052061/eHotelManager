@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Alert } from "react-native";
-import { addServiceRequest } from "@/utils/firebaseUtils"; // Your service request function
-import { auth } from "@firebaseConfig"; // Your Firebase init
+import { addServiceRequest } from "@/utils/firebaseUtils";
+import { auth } from "@firebaseConfig";
 
 type RequestServiceButtonProps = {
   bookingId: string;

@@ -1,4 +1,3 @@
-// ComplaintsPage.tsx
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -285,11 +284,11 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingTop: 0,
     borderRadius: 8,
-    maxHeight: "80%", // Limit the maximum height
-    flex: 0, // Allow the modal to wrap content
+    maxHeight: "80%",
+    flex: 0,
   },
   modalContentContainer: {
-    flexGrow: 0, // Prevent ScrollView from expanding
+    flexGrow: 0,
   },
   modalTitle: {
     fontSize: 20,

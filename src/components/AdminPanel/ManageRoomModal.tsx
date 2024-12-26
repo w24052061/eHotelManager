@@ -1,4 +1,3 @@
-// ManageRoomModal.js
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Alert, ScrollView } from "react-native";
 import { Modal, TextInput, Button, Text } from "react-native-paper";

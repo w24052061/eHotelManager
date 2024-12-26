@@ -1,4 +1,3 @@
-// src/screens/auth/LoginScreen.tsx
 import React, { useState } from "react";
 import {
   TextInput,
@@ -8,7 +7,7 @@ import {
   Alert,
 } from "react-native";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@firebaseConfig"; // Import firebase configuration
+import { auth } from "@firebaseConfig";
 import { useRouter } from "expo-router";
 
 const LoginScreen = () => {

@@ -1,9 +1,8 @@
-// roomService.ts
 import { ref, onValue } from 'firebase/database';
-import { database } from '@firebaseConfig';  // Import Firebase configuration
+import { database } from '@firebaseConfig';  
 
 export const fetchRooms = (callback: (rooms: any[]) => void) => {
-  const roomsRef = ref(database, 'rooms');  // Reference to the 'rooms' node
+  const roomsRef = ref(database, 'rooms');  
   onValue(roomsRef, (snapshot) => {
     if (snapshot.exists()) {
       const data = snapshot.val();
@@ -11,15 +10,15 @@ export const fetchRooms = (callback: (rooms: any[]) => void) => {
         .filter((key) => data[key].status === 'available')  // Filter for rooms with 'available' status
         .map((key) => ({
           id: key,
-          ...data[key],  // Map the data to the required format
+          ...data[key],  
         }));
-      callback(availableRooms);  // Pass the rooms data to the callback function
+      callback(availableRooms);  
     } else {
       console.warn('No rooms available');
-      callback([]);  // Return an empty array if no rooms are found
+      callback([]); 
     }
   }, (error) => {
     console.error('Error fetching rooms:', error);
-    callback([]);  // Return an empty array on error
+    callback([]); 
   });
 };
