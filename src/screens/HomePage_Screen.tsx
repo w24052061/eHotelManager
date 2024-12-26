@@ -5,7 +5,7 @@ import RoomComponent from "@/components/RoomManagement/RoomComponent";
 
 export default function HomePage_Screen() {
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: "#f5f5f5" }}>
       <HamburgerMenu />
       <Text
         style={{
@@ -13,6 +13,7 @@ export default function HomePage_Screen() {
           color: "#4A4E69",
           fontWeight: "bold",
           textAlign: "center",
+          backgroundColor: "#f5f5f5",
         }}
       >
         Available Rooms

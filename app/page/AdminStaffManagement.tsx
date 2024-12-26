@@ -2,12 +2,13 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import HamburgerMenu from "@/components/HamburgerMenu";
 import AdminUserManagement from "@/components/AdminPanel/AdminUserManagement";
+import AccessLimit from "@/components/AccessLimitComponent";
 
 const ManageStaff = () => {
   return (
     <View style={styles.mainContainer}>
       <HamburgerMenu />
-      <AdminUserManagement />
+      <AccessLimit allowedRoles={["admin"]} render={<AdminUserManagement />} />
     </View>
   );
 };

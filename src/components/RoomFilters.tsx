@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     padding: 10,
-    backgroundColor: "#fff",
+    backgroundColor: "#f5f5f5",
   },
   filter: {
     flex: 1,

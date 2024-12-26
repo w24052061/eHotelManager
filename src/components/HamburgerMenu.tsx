@@ -138,8 +138,6 @@ export default HamburgerMenu;
 /* --- Styles --- */
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
-    marginLeft: 20,
     alignItems: "flex-start",
   },
   menuButton: {
@@ -154,6 +152,7 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     shadowOffset: { width: 1, height: 1 },
     elevation: 6,
+    margin: 25,
   },
   menuText: {
     fontSize: 28,
