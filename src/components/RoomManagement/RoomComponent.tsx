@@ -194,7 +194,7 @@ export default function RoomComponent() {
             {role === "admin" && (
               <ButtonComponent
                 text="Manage"
-                link={`/Dashboard`}
+                link={`page/AdminRoomManagement`}
                 color="secondary"
                 width="100%"
               />
