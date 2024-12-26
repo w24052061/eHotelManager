@@ -83,7 +83,7 @@ const RegisterScreen = () => {
       // Success alert and redirection
       Alert.alert("Success", "Registration successful!");
       setTimeout(() => {
-        router.replace("/Dashboard");
+        router.replace("page/HomePage");
       }, 1000);
     } catch (error) {
       let errorMessage = "Registration failed";

@@ -19,7 +19,20 @@ export default function LoginPage() {
   return (
     <View style={styles.mainContainer}>
       <HamburgerMenu />
-
+      <View style={{ alignSelf: "center" }}>
+        <Text style={styles.text}>
+          EMAIL: admin@mail.com {"\n"}PASS: Admin123{"\n"}
+          --------------------------------
+        </Text>
+        <Text style={styles.text}>
+          EMAIL: staff@mail.com {"\n"}PASS: Staff123{"\n"}
+          --------------------------------
+        </Text>
+        <Text style={styles.text}>
+          EMAIL: user@mail.com {"\n"}PASS: User1234{"\n"}
+          --------------------------------
+        </Text>
+      </View>
       <View style={styles.container}>
         <LoginScreen />
 

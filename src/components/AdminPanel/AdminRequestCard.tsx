@@ -95,27 +95,24 @@ const AdminRequestCard: React.FC<AdminRequestCardProps> = ({
         <Text>Booking ID: {bookingId}</Text>
         <Text>Service ID: {serviceId}</Text>
         <Text>Status: {status}</Text>
-        <AccessLimit
-          allowedRoles={["admin"]}
-          render={
-            <>
-              <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                  style={styles.acceptButton}
-                  onPress={onAccept}
-                >
-                  <Text style={styles.buttonText}>Accept</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.rejectButton}
-                  onPress={handleReject}
-                >
-                  <Text style={styles.buttonText}>Reject</Text>
-                </TouchableOpacity>
-              </View>
-            </>
-          }
-        />
+
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.acceptButton} onPress={onAccept}>
+            <Text style={styles.buttonText}>Accept</Text>
+          </TouchableOpacity>
+
+          <AccessLimit
+            allowedRoles={["admin"]}
+            render={
+              <TouchableOpacity
+                style={styles.rejectButton}
+                onPress={handleReject}
+              >
+                <Text style={styles.buttonText}>Reject</Text>
+              </TouchableOpacity>
+            }
+          />
+        </View>
       </View>
     );
   }

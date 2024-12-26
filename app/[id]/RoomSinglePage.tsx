@@ -129,7 +129,7 @@ export default function RoomSinglePage() {
         fetchBookedDates(id); // Refresh booked dates
 
         // Redirect to the dashboard
-        router.push("/Dashboard");
+        router.push("/page/MyBookingsList");
       } else {
         Alert.alert("Error", result.message);
       }
