@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
-import AdminDashboard from "@/components/AdminPanel/AdminDashboard";
+import AdminBookingManagement from "@/components/AdminPanel/AdminBookingManagement";
 import HamburgerMenu from "@/components/HamburgerMenu";
 
 export default function AdminDashboardBookingsTab() {
@@ -9,7 +9,7 @@ export default function AdminDashboardBookingsTab() {
     <View style={styles.container}>
       <HamburgerMenu />
       <PaperProvider>
-        <AdminDashboard />
+        <AdminBookingManagement />
       </PaperProvider>
     </View>
   );
