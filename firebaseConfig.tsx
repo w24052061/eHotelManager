@@ -186,13 +186,22 @@ const getAllComplaints = async (): Promise<Complaint[]> => {
 };
 
 // Delete a complaint by ID
-
 const deleteComplaint = async (complaintId: string): Promise<void> => {
   try {
     const complaintRef = ref(database, `complaints/${complaintId}`);
     await remove(complaintRef);
   } catch (error) {
     throw new Error("Failed to delete complaint: " + error);
+  }
+};
+
+// Delete a User by ID
+const deleteUser = async (UserId: string): Promise<void> => {
+  try {
+    const UserRef = ref(database, `users/${UserId}`);
+    await remove(UserRef);
+  } catch (error) {
+    throw new Error("Failed to delete User: " + error);
   }
 };
 
@@ -217,4 +226,5 @@ export {
   getAllBookings,
   getAllComplaints,
   deleteComplaint,
+  deleteUser,
 };
