@@ -25,7 +25,7 @@ const HamburgerMenu = () => {
   const navigateToDash = () => router.push("/Dashboard");
   const navigateToLogin = () => router.push("/Login");
   const navigateToProfile = () => router.push("/profile");
-  const navigateToManageStaff = () => router.push("/ManageStaff");
+  const navigateToManageStaff = () => router.push("page/AdminStaffManagement");
   const navigateToRoomManagement = () =>
     router.push("page/AdminRoomManagement");
 
