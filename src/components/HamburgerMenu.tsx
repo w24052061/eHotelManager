@@ -22,7 +22,8 @@ const HamburgerMenu = () => {
   const toggleMenu = () => setMenuVisible((prev) => !prev);
 
   const navigateToHome = () => router.push("/");
-  const navigateToDash = () => router.push("/Dashboard");
+  const navigateToDash = () => router.push("/AdminDashboard");
+  const navigateToMyBookings = () => router.push("page/MyBookingsList");
   const navigateToLogin = () => router.push("/Login");
   const navigateToProfile = () => router.push("/profile");
   const navigateToManageStaff = () => router.push("page/AdminStaffManagement");
@@ -53,53 +54,77 @@ const HamburgerMenu = () => {
           onRequestClose={toggleMenu}
         >
           <TouchableOpacity style={styles.modalOverlay} onPress={toggleMenu}>
-            <View style={styles.menu}>
-              <Text style={styles.menuItem} onPress={navigateToHome}>
-                🏠 Home
-              </Text>
-
-              {isLoggedIn && role !== "admin" && (
-                // If logged in, show Dashboard and Logout
-                <View>
-                  <Text style={styles.menuItem} onPress={navigateToDash}>
-                    📊 Dashboard
-                  </Text>
-                  <Text style={styles.menuItem} onPress={navigateToProfile}>
-                    🙎🏻‍♂️ Profile
-                  </Text>
-                  <Text style={styles.menuItem} onPress={handleLogout}>
-                    ↪️ Logout
-                  </Text>
-                </View>
-              )}
-              {!isLoggedIn && (
-                // Otherwise, show Login
+            {/* --------- If user is not logged-in --------- */}
+            {!isLoggedIn && (
+              <View style={styles.menu}>
+                <Text style={styles.menuItem} onPress={navigateToHome}>
+                  🏠 Home
+                </Text>
                 <Text style={styles.menuItem} onPress={navigateToLogin}>
                   📲 Login
                 </Text>
-              )}
-
-              {role === "admin" && (
-                // If logged in, show Dashboard and Logout
-                <View>
-                  <Text style={styles.menuItem} onPress={navigateToDash}>
-                    📊 Dashboard
-                  </Text>
-                  <Text style={styles.menuItem} onPress={navigateToManageStaff}>
-                    👥 Manage Users
-                  </Text>
-                  <Text
-                    style={styles.menuItem}
-                    onPress={navigateToRoomManagement}
-                  >
-                    🛏️ Manage Rooms
-                  </Text>
-                  <Text style={styles.menuItem} onPress={handleLogout}>
-                    ↪️ Logout
-                  </Text>
-                </View>
-              )}
-            </View>
+              </View>
+            )}
+            {/* --------- If user is logged-in --------- */}
+            {role === "user" && (
+              <View style={styles.menu}>
+                <Text style={styles.menuItem} onPress={navigateToHome}>
+                  🏠 Home
+                </Text>
+                <Text style={styles.menuItem} onPress={navigateToMyBookings}>
+                  📅 My Bookings
+                </Text>
+                <Text style={styles.menuItem} onPress={navigateToProfile}>
+                  🙎🏻‍♂️ Profile
+                </Text>
+                <Text style={styles.menuItem} onPress={handleLogout}>
+                  📴 Logout
+                </Text>
+              </View>
+            )}
+            {/* --------- If user is a staff --------- */}
+            {role === "staff" && (
+              <View style={styles.menu}>
+                <Text style={styles.menuItem} onPress={navigateToHome}>
+                  🏠 Home
+                </Text>
+                <Text style={styles.menuItem} onPress={navigateToDash}>
+                  📊 Dashboard
+                </Text>
+                <Text style={styles.menuItem} onPress={navigateToMyBookings}>
+                  📅 My Bookings
+                </Text>
+                <Text style={styles.menuItem} onPress={navigateToProfile}>
+                  🙎🏻‍♂️ Profile
+                </Text>
+                <Text style={styles.menuItem} onPress={handleLogout}>
+                  📴 Logout
+                </Text>
+              </View>
+            )}
+            {/* --------- If user is anAdmin --------- */}
+            {role === "admin" && (
+              <View style={styles.menu}>
+                <Text style={styles.menuItem} onPress={navigateToHome}>
+                  🏠 Home
+                </Text>
+                <Text style={styles.menuItem} onPress={navigateToDash}>
+                  📊 Dashboard
+                </Text>
+                <Text style={styles.menuItem} onPress={navigateToManageStaff}>
+                  👥 Manage Users
+                </Text>
+                <Text
+                  style={styles.menuItem}
+                  onPress={navigateToRoomManagement}
+                >
+                  🛏️ Manage Rooms
+                </Text>
+                <Text style={styles.menuItem} onPress={handleLogout}>
+                  📴 Logout
+                </Text>
+              </View>
+            )}
           </TouchableOpacity>
         </Modal>
       )}
