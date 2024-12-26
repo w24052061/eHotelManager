@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
   },
   picker: {
     flex: 1,
-    height: 40,
+    height: 50,
     backgroundColor: "#fff",
   },
   listContainer: {
