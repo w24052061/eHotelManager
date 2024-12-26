@@ -3,13 +3,14 @@ import { View, StyleSheet } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
 import AdminDashboard from "@/components/AdminPanel/AdminDashboard";
 import HamburgerMenu from "@/components/HamburgerMenu";
+import AccessLimit from "@/components/AccessLimitComponent";
 
 export default function AdminDashboardIndex() {
   return (
     <View style={styles.container}>
       <HamburgerMenu />
       <PaperProvider>
-        <AdminDashboard />
+        <AccessLimit allowedRoles={["admin"]} render={<AdminDashboard />} />
       </PaperProvider>
     </View>
   );

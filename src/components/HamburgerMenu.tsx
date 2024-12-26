@@ -22,10 +22,10 @@ const HamburgerMenu = () => {
   const toggleMenu = () => setMenuVisible((prev) => !prev);
 
   const navigateToHome = () => router.push("/");
-  const navigateToDash = () => router.push("/AdminDashboard");
+  const navigateToDash = () => router.push("page/AdminDashboard");
   const navigateToMyBookings = () => router.push("page/MyBookingsList");
   const navigateToLogin = () => router.push("/Login");
-  const navigateToProfile = () => router.push("/profile");
+  const navigateToProfile = () => router.push("page/profile");
   const navigateToManageStaff = () => router.push("page/AdminStaffManagement");
   const navigateToRoomManagement = () =>
     router.push("page/AdminRoomManagement");
@@ -33,6 +33,7 @@ const HamburgerMenu = () => {
   const handleLogout = async () => {
     try {
       await signOut(auth);
+      router.push("/");
     } catch (error: any) {
       Alert.alert("Logout Error", error.message);
     }
@@ -89,7 +90,7 @@ const HamburgerMenu = () => {
                   🏠 Home
                 </Text>
                 <Text style={styles.menuItem} onPress={navigateToDash}>
-                  📊 Dashboard
+                  📊 Staff Dashboard
                 </Text>
                 <Text style={styles.menuItem} onPress={navigateToMyBookings}>
                   📅 My Bookings
@@ -109,7 +110,7 @@ const HamburgerMenu = () => {
                   🏠 Home
                 </Text>
                 <Text style={styles.menuItem} onPress={navigateToDash}>
-                  📊 Dashboard
+                  📊 Admin Dashboard
                 </Text>
                 <Text style={styles.menuItem} onPress={navigateToManageStaff}>
                   👥 Manage Users
