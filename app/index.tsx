@@ -37,12 +37,11 @@ const AppRedirector = () => {
   }
 
   if (isLoggedIn) {
-    return <Redirect href="/Dashboard" />;
+    return <Redirect href="/page/HomePage" />;
   }
 
   return <Redirect href="/page/HomePage" />;
   // return <Redirect href="/onboarding/onBoardingScreen1" />;
 };
-
 
 export default AppRedirector;
