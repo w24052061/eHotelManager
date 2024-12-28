@@ -50,91 +50,105 @@ These features would improve user experience but are not essential for the initi
 
 ```
 eHotelManager/
-├── /app/                              # Main app entry point for expo-router
-│   ├── /auth/                         # Authentication related screens
-│   │   ├── Dashboard.tsx              # User's dashboard (Staff/Guest dashboard)
+├── /app/                              # Main app directory
+│   ├── /auth/                         # Authentication-related screens
 │   │   ├── ForgotPassword.tsx         # Forgot password screen
 │   │   ├── Login.tsx                  # Login screen
-│   │   ├── Profile.tsx                # User profile screen
 │   │   ├── Register.tsx               # Register screen
-│   ├── /tabs/                          # Tab navigation related screens
-│   │   ├── _layout.tsx                # Tab layout screen (for navigation between tabs)
-│   │   ├── settings.tsx               # Settings page (manage user preferences, etc.)
-│   ├── /onboarding/                   # Onboarding related screens
-│   │   ├── OnboardingScreen1.tsx      # Onboarding screen 1 (introduction to app features)
-│   │   ├── OnboardingScreen2.tsx      # Onboarding screen 2 (features overview)
-│   │   ├── OnboardingScreen3.tsx      # Onboarding screen 3 (final introduction)
-│   │   └── _layout.tsx                # Layout for onboarding pages (only for first-time users)
-│   ├── /page/                          # Pages for main app routes
-│   │   ├── home.tsx                   # Homepage (overview of hotel features)
-│   │   ├── roomList.tsx               # List of available rooms
-│   │   ├── bookingConfirmation.tsx    # Booking confirmation page
-│   │   ├── bookingDetails.tsx         # Booking details page
-│   ├── +html.tsx                      # HTML layout page (for web)
-│   ├── index.tsx                      # Main entry point (renders the appropriate layout and tabs)
-│   └── _layout.tsx                    # Global layout for app navigation
-├── /assets/                           # All images and other media
-│   ├── /fonts/                        # Font assets
-│   │   └── SpaceMono-Regular.ttf      # Font file
-│   └── /images/                       # Image assets
-│       ├── logo.png                   # Logo of the hotel app
-│       ├── banner.png                 # Banner image for homepage or onboarding
-│       ├── splash.png                 # Splash screen image
-│       ├── roomThumbnail1.jpg         # Room thumbnail image 1
-│       ├── roomThumbnail2.jpg         # Room thumbnail image 2
-│       ├── roomThumbnail3.jpg         # Room thumbnail image 3
-│       ├── hotelExterior.jpg          # Exterior view of the hotel
-│       ├── onBoardingImage1.webp      # Onboarding image 1 (room amenities)
-│       ├── onBoardingImage2.webp      # Onboarding image 2 (hotel services)
-│       ├── onBoardingImage3.webp      # Onboarding image 3 (guest experiences)
-│       └── favicon.png                # App favicon
-├── /node_modules/                    # Node.js modules (auto-generated)
-├── /src/                              # Source code for app components, utilities, etc.
-│   ├── /components/                   # Reusable UI components
-│   │   ├── AnimatedImage.tsx          # Animated image component (used for onboarding)
+│   ├── /tabs/                         # Admin navigation tabs
+│   │   ├── AdminDashboardBookingsTab.tsx # Admin bookings tab
+│   │   ├── AdminDashboardCancelRequestTab.tsx # Admin cancellations tab
+│   │   ├── AdminDashboardComplaintsTab.tsx # Admin complaints tab
+│   │   ├── _layout.tsx                # Layout for tabs
+│   ├── /onboarding/                   # Onboarding screens
+│   │   ├── onBoardingScreen1.tsx      # First onboarding screen
+│   │   ├── onBoardingScreen2.tsx      # Second onboarding screen
+│   │   ├── onBoardingScreen3.tsx      # Third onboarding screen
+│   │   ├── _layout.tsx                # Onboarding layout
+│   ├── /page/                         # Main application pages
+│   │   ├── AdminDashboard.tsx         # Admin dashboard
+│   │   ├── AdminRoomManagement.tsx    # Room management screen
+│   │   ├── AdminStaffManagement.tsx   # Staff management screen
+│   │   ├── HomePage.tsx               # Homepage
+│   │   ├── MyBookingsList.tsx         # User booking list
+│   │   ├── profile.tsx                # User profile screen
+│   ├── /[id]/                         # Dynamic routing
+│   │   ├── RoomSinglePage.tsx         # Single room details page
+│   ├── index.tsx                      # Entry point for the app
+│   ├── _layout.tsx                    # Global layout
+├── /assets/                           # Media and visual assets
+│   ├── /high-fidelity-images/         # High-quality mockups and screenshots
+│   ├── /low-fidelity-images/          # Wireframes and prototypes
+│   ├── /images/                       # General image assets
+│   │   ├── adaptive-icon.png          # Adaptive app icon
+│   │   ├── defaultRoomImage.webp      # Default room placeholder image
+│   │   ├── onBoardingImage1.webp      # Onboarding image 1
+│   │   ├── onBoardingImage2.webp      # Onboarding image 2
+│   │   ├── onBoardingImage3.webp      # Onboarding image 3
+├── /src/                              # Source code
+│   ├── /components/                   # Reusable components
+│   │   ├── /AdminPanel/               # Admin-specific components
+│   │   │   ├── AdminBookingManagement.tsx
+│   │   │   ├── AdminCancelRequests.tsx
+│   │   │   ├── AdminDashboard.tsx
+│   │   │   ├── AdminRequestCard.tsx
+│   │   │   ├── AdminRequests.tsx
+│   │   │   ├── AdminUserManagement.tsx
+│   │   │   ├── BookingCard.tsx
+│   │   │   ├── CancelRequestCard.tsx
+│   │   │   ├── ComplaintsPage.tsx
+│   │   │   ├── ManageRoomModal.tsx
+│   │   │   └── UserCard.tsx
+│   │   ├── /Complaint/                # Complaint management components
+│   │   │   ├── ComplaintPage.tsx
+│   │   │   └── ComplaintView.tsx
+│   │   ├── /Dashboard/                # Dashboard-related components
+│   │   │   ├── BookedRoomCard.tsx
+│   │   │   ├── BookedRooms.tsx
+│   │   │   ├── CancelButton.tsx
+│   │   │   ├── ComplaintModal.tsx
+│   │   │   └── RequestServiceButton.tsx
+│   │   ├── /RoomManagement/           # Room management components
+│   │   │   ├── RoomAvailability.tsx
+│   │   │   ├── RoomBooking.tsx
+│   │   │   ├── RoomComponent.tsx
+│   │   │   └── RoomDetailsScreen.tsx
+│   │   ├── /model/                    # Data models
+│   │   │   ├── AdminRequest.ts
+│   │   │   ├── BookedRoom.ts
+│   │   │   ├── Booking.ts
+│   │   │   ├── Button.ts
+│   │   │   ├── complaints.ts
+│   │   │   ├── PaymentDetails.ts
+│   │   │   ├── Room.ts
+│   │   │   ├── Service.ts
+│   │   │   └── Users.ts
+│   │   ├── /navigation/               # Navigation components
+│   │   │   ├── DrawerNavigator.js
+│   │   │   ├── TabBarIcon.tsx
+│   │   │   └── TabNavigator.js
+│   │   ├── AccessLimitComponent.tsx   # Role-based access control
+│   │   ├── AnimatedImage.tsx          # Component for animated images
+│   │   ├── ButtonComponent.tsx        # Reusable button component
+│   │   ├── CheckUserRole.tsx          # User role checker
+│   │   ├── HamburgerMenu.tsx          # Hamburger menu component
 │   │   ├── InputField.tsx             # Input field component
-│   │   ├── MenuComponent.tsx         # Menu component (for navigation)
-│   │   ├── /model/                   # Model-related components
-│   │   │   ├── Room.ts               # Room model (e.g., room availability, price, type)
-│   │   │   ├── PaymentDetails.ts     # Payment model (credit card info)
-│   │   │   └── Booking.ts            # Booking model (room reservation info)
-│   │   ├── /navigation/              # Navigation components
-│   │   │   └── TabBarIcon.tsx        # TabBarIcon component (icon for tabs)
-│   ├── /constants/                    # Constants and configurations
-│   │   ├── Colors.ts                  # Color scheme constants (for hotel app theme)
+│   │   └── RoomFilters.tsx            # Filters for rooms
+│   ├── /constants/                    # App-wide constants
+│   │   ├── Colors.ts                  # Color themes
 │   ├── /hooks/                        # Custom React hooks
-│   │   ├── useColorScheme.ts          # Hook for managing color scheme (light/dark mode)
-│   │   └── useThemeColor.ts           # Hook for theme-related colors
-│   ├── /screens/                      # Screens for each route/page
-│   │   ├── /auth/                     # Authentication screens
-│   │   │   ├── DashboardScreen.tsx    # Dashboard screen (User's hotel-related information)
-│   │   │   ├── ForgotPasswordScreen.tsx
-│   │   │   ├── LoginScreen.tsx        # Login screen
-│   │   │   ├── ProfileScreen.tsx      # User profile screen (view/edit user details)
-│   │   │   └── RegisterScreen.tsx     # Register screen (new user registration)
-│   │   ├── /rooms/                    # Rooms-related screens
-│   │   │   ├── AvailableRooms.tsx     # Available rooms screen (for guests to book)
-│   │   │   ├── RoomDetails.tsx        # Room details screen
-│   │   ├── /booking/                  # Booking-related screens
-│   │   │   ├── BookingConfirmation.tsx # Confirmation page after booking a room
-│   │   │   └── BookingDetails.tsx     # Detailed booking information
-│   │   ├── /complaints/               # Complaint-related screens (view/manage complaints)
-│   │   ├── /payment/                  # Payment-related screens
-│   │   │   ├── PaymentForm.tsx        # Payment form screen (to make payment)
-│   │   │   └── PaymentSuccess.tsx     # Payment success screen (payment confirmation)
-│   │   ├── AdjustMyKeyboard.tsx       # Adjust keyboard screen (for better UX)
-│   │   ├── AlertMessage.tsx           # Alert message screen (for notifications)
-│   │   ├── AnimatedText.tsx           # Animated text screen (for introducing hotel features)
+│   │   ├── useColorScheme.ts          # Handle light/dark mode
+│   │   ├── useThemeColor.ts           # Theme color management
 │   ├── /utils/                        # Utility functions
-│   │   ├── addBooking.ts              # Utility to add a new booking
-│   │   ├── roomService.ts             # Room service API calls and utilities
-│   │   ├── onboardingStorage.ts      # Onboarding status (whether onboarding is completed)
-│   │   └── updateUserProfile.ts      # Utility to update user profile
-├── /package.json                      # Project configuration and dependencies
-├── /README.md                         # Project documentation
-├── /firebaseConfig.js                 # Firebase configuration
-├── /tsconfig.json                     # TypeScript configuration file
-└── /app.json                          # Expo app configuration
+│   │   ├── addBooking.ts              # Add booking utility
+│   │   ├── firebaseUtils.ts           # Firebase helper functions
+│   │   ├── onboardingStorage.ts       # Manage onboarding state
+│   │   ├── roomService.ts             # Room service utilities
+│   │   └── updateUserProfile.ts       # User profile updates
+├── package.json                       # Project metadata and dependencies
+├── tsconfig.json                      # TypeScript configuration
+├── firebaseConfig.tsx                 # Firebase setup
+└── README.md                          # Project documentation
 ```
 
 ## PowerShell code to take out my file and folders name:
