@@ -73,16 +73,19 @@ const styles = StyleSheet.create({
   text: {
     color: "#fff",
     fontSize: 16,
+    fontFamily: "Saira",
   },
   registerText: {
     color: "#007AFF",
     fontWeight: "bold",
     fontSize: 16,
+    fontFamily: "Saira",
   },
   forgotPasswordText: {
     color: "#007AFF",
     fontSize: 16,
     marginTop: 15,
     fontWeight: "bold",
+    fontFamily: "Saira",
   },
 });

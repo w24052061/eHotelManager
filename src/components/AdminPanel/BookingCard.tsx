@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Alert,
-  TextInput,
-  Modal,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Alert, TextInput, Modal } from "react-native";
 import { Booking, User } from "@/components/model/BookedRoom";
 import { Picker as RNPicker } from "@react-native-picker/picker";
 import AccessLimit from "@/components/AccessLimitComponent";
@@ -19,12 +11,7 @@ interface BookingCardProps {
   onUpdate: (updatedFields: Partial<Booking>) => void;
 }
 
-const BookingCard: React.FC<BookingCardProps> = ({
-  booking,
-  user,
-  onRemove,
-  onUpdate,
-}) => {
+const BookingCard: React.FC<BookingCardProps> = ({ booking, user, onRemove, onUpdate }) => {
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [fromDate, setFromDate] = useState(booking.fromDate);
   const [toDate, setToDate] = useState(booking.toDate);
@@ -42,57 +29,34 @@ const BookingCard: React.FC<BookingCardProps> = ({
   };
 
   const confirmRemove = () => {
-    Alert.alert(
-      "Confirm Remove",
-      "Are you sure you want to remove this booking?",
-      [
-        { text: "Cancel", style: "cancel" },
-        { text: "OK", onPress: onRemove },
-      ]
-    );
+    Alert.alert("Confirm Remove", "Are you sure you want to remove this booking?", [
+      { text: "Cancel", style: "cancel" },
+      { text: "OK", onPress: onRemove },
+    ]);
   };
 
-  const statusOptions: Booking["status"][] = [
-    "cancel-pending",
-    "cancel-accepted",
-    "cancel-rejected",
-    "Available",
-    "",
-  ];
+  const statusOptions: Booking["status"][] = ["cancel-pending", "cancel-accepted", "cancel-rejected", "Available", ""];
 
   return (
     <View style={styles.card}>
       <Text style={styles.cardTitle}>Room ID: {booking.roomId}</Text>
-      <Text>
-        User: {user ? `${user.name} ${user.surname}` : "Unknown User"}
-      </Text>
-      <Text>Email: {booking.email}</Text>
-      <Text>From: {booking.fromDate}</Text>
-      <Text>To: {booking.toDate}</Text>
-      <Text>Status: {booking.status || "Available"}</Text>
-      <Text>Booked At: {new Date(booking.createdAt).toLocaleString()}</Text>
-      {booking.cancelRequestedAt && (
-        <Text>
-          Cancel Requested At:{" "}
-          {new Date(booking.cancelRequestedAt).toLocaleString()}
-        </Text>
-      )}
+      <Text style={styles.cardDetails}>User: {user ? `${user.name} ${user.surname}` : "Unknown User"}</Text>
+      <Text style={styles.cardDetails}>Email: {booking.email}</Text>
+      <Text style={styles.cardDetails}>From: {booking.fromDate}</Text>
+      <Text style={styles.cardDetails}>To: {booking.toDate}</Text>
+      <Text style={styles.cardDetails}>Status: {booking.status || "Available"}</Text>
+      <Text style={styles.cardDetails}>Booked At: {new Date(booking.createdAt).toLocaleString()}</Text>
+      {booking.cancelRequestedAt && <Text>Cancel Requested At: {new Date(booking.cancelRequestedAt).toLocaleString()}</Text>}
 
       <AccessLimit
         allowedRoles={["admin"]}
         render={
           <>
             <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                style={styles.editButton}
-                onPress={() => setIsEditModalVisible(true)}
-              >
+              <TouchableOpacity style={styles.editButton} onPress={() => setIsEditModalVisible(true)}>
                 <Text style={styles.buttonText}>Edit</Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.removeButton}
-                onPress={confirmRemove}
-              >
+              <TouchableOpacity style={styles.removeButton} onPress={confirmRemove}>
                 <Text style={styles.buttonText}>Remove</Text>
               </TouchableOpacity>
             </View>
@@ -101,41 +65,18 @@ const BookingCard: React.FC<BookingCardProps> = ({
       />
 
       {/* Edit Modal */}
-      <Modal
-        visible={isEditModalVisible}
-        animationType="slide"
-        transparent={true}
-        onRequestClose={() => setIsEditModalVisible(false)}
-      >
+      <Modal visible={isEditModalVisible} animationType="slide" transparent={true} onRequestClose={() => setIsEditModalVisible(false)}>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>Edit Booking</Text>
 
-            <TextInput
-              style={styles.input}
-              placeholder="From Date (YYYY-MM-DD)"
-              value={fromDate}
-              onChangeText={setFromDate}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="To Date (YYYY-MM-DD)"
-              value={toDate}
-              onChangeText={setToDate}
-            />
+            <TextInput style={styles.input} placeholder="From Date (YYYY-MM-DD)" value={fromDate} onChangeText={setFromDate} />
+            <TextInput style={styles.input} placeholder="To Date (YYYY-MM-DD)" value={toDate} onChangeText={setToDate} />
 
             <Text style={styles.label}>Status:</Text>
-            <RNPicker
-              selectedValue={status}
-              style={styles.picker}
-              onValueChange={(itemValue) => setStatus(itemValue)}
-            >
+            <RNPicker selectedValue={status} style={styles.picker} onValueChange={(itemValue) => setStatus(itemValue)}>
               {statusOptions.map((option) => (
-                <RNPicker.Item
-                  key={option}
-                  label={option || "Available"}
-                  value={option}
-                />
+                <RNPicker.Item key={option} label={option || "Available"} value={option} />
               ))}
             </RNPicker>
 
@@ -143,10 +84,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
               <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
                 <Text style={styles.buttonText}>Save</Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.cancelButton}
-                onPress={() => setIsEditModalVisible(false)}
-              >
+              <TouchableOpacity style={styles.cancelButton} onPress={() => setIsEditModalVisible(false)}>
                 <Text style={styles.buttonText}>Cancel</Text>
               </TouchableOpacity>
             </View>
@@ -173,6 +111,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 8,
+    fontFamily: "Saira",
   },
   buttonContainer: {
     flexDirection: "row",
@@ -185,6 +124,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     flex: 0.48,
     alignItems: "center",
+    fontFamily: "Saira",
   },
   removeButton: {
     backgroundColor: "#dc3545",
@@ -192,10 +132,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     flex: 0.48,
     alignItems: "center",
+    fontFamily: "Saira",
   },
   buttonText: {
     color: "#fff",
     fontWeight: "bold",
+    fontFamily: "Saira",
   },
   // Modal Styles
   modalContainer: {
@@ -216,6 +158,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 16,
     textAlign: "center",
+    fontFamily: "Saira",
   },
   input: {
     borderWidth: 1,
@@ -223,15 +166,18 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 8,
     marginBottom: 12,
+    fontFamily: "Saira",
   },
   label: {
     fontSize: 16,
     marginBottom: 8,
+    fontFamily: "Saira",
   },
   picker: {
     height: 50,
     width: "100%",
     marginBottom: 16,
+    fontFamily: "Saira",
   },
   modalButtonContainer: {
     flexDirection: "row",
@@ -244,6 +190,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     flex: 0.48,
     alignItems: "center",
+    fontFamily: "Saira",
   },
   cancelButton: {
     backgroundColor: "#6c757d",
@@ -251,5 +198,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     flex: 0.48,
     alignItems: "center",
+    fontFamily: "Saira",
+  },
+  cardDetails: {
+    fontFamily: "Saira",
   },
 });

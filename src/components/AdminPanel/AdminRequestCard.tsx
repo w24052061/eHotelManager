@@ -9,23 +9,14 @@ interface AdminRequestCardProps {
   onReject: () => void;
 }
 
-const AdminRequestCard: React.FC<AdminRequestCardProps> = ({
-  request,
-  onAccept,
-  onReject,
-}) => {
-  const { type, status, roomId, fromDate, toDate, bookingId, serviceId } =
-    request;
+const AdminRequestCard: React.FC<AdminRequestCardProps> = ({ request, onAccept, onReject }) => {
+  const { type, status, roomId, fromDate, toDate, bookingId, serviceId } = request;
 
   const handleReject = () => {
-    Alert.alert(
-      "Confirm Reject",
-      "Are you sure you want to reject this request?",
-      [
-        { text: "Cancel", style: "cancel" },
-        { text: "OK", onPress: onReject },
-      ]
-    );
+    Alert.alert("Confirm Reject", "Are you sure you want to reject this request?", [
+      { text: "Cancel", style: "cancel" },
+      { text: "OK", onPress: onReject },
+    ]);
   };
 
   if (type === "cancel" && status === "cancel-accepted") {
@@ -53,16 +44,10 @@ const AdminRequestCard: React.FC<AdminRequestCardProps> = ({
           render={
             <>
               <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                  style={styles.acceptButton}
-                  onPress={onAccept}
-                >
+                <TouchableOpacity style={styles.acceptButton} onPress={onAccept}>
                   <Text style={styles.buttonText}>Accept</Text>
                 </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.rejectButton}
-                  onPress={handleReject}
-                >
+                <TouchableOpacity style={styles.rejectButton} onPress={handleReject}>
                   <Text style={styles.buttonText}>Reject</Text>
                 </TouchableOpacity>
               </View>
@@ -102,10 +87,7 @@ const AdminRequestCard: React.FC<AdminRequestCardProps> = ({
           <AccessLimit
             allowedRoles={["admin"]}
             render={
-              <TouchableOpacity
-                style={styles.rejectButton}
-                onPress={handleReject}
-              >
+              <TouchableOpacity style={styles.rejectButton} onPress={handleReject}>
                 <Text style={styles.buttonText}>Reject</Text>
               </TouchableOpacity>
             }
@@ -158,6 +140,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 8,
     textAlign: "center",
+    fontFamily: "Saira",
   },
   buttonContainer: {
     flexDirection: "row",
@@ -181,5 +164,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     fontWeight: "bold",
+    fontFamily: "Saira",
   },
 });

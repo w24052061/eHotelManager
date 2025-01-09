@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  FlatList,
-  ActivityIndicator,
-  Text,
-  StyleSheet,
-  Alert,
-} from "react-native";
+import { View, FlatList, ActivityIndicator, Text, StyleSheet, Alert } from "react-native";
 import { ref, get, update } from "firebase/database";
 import { database } from "@firebaseConfig";
 import AdminRequestCard from "./AdminRequestCard";
@@ -57,9 +50,7 @@ const AdminRequests: React.FC = () => {
           .map((key) => ({
             id: key,
             type: "cancel" as "cancel",
-            createdAtTimestamp: bookingsData[key].cancelRequestedAt
-              ? bookingsData[key].cancelRequestedAt
-              : new Date(bookingsData[key].createdAt).getTime(),
+            createdAtTimestamp: bookingsData[key].cancelRequestedAt ? bookingsData[key].cancelRequestedAt : new Date(bookingsData[key].createdAt).getTime(),
             roomId: bookingsData[key].roomId,
             status: bookingsData[key].status || "",
             userId: bookingsData[key].userId,
@@ -69,11 +60,7 @@ const AdminRequests: React.FC = () => {
           }))
           .filter((booking: AdminRequest) => {
             const { status, toDate, userId } = booking;
-            return (
-              (status === "cancel-pending" || status === "cancel-accepted") &&
-              toDate >= today &&
-              rolesMap[userId] !== "admin"
-            );
+            return (status === "cancel-pending" || status === "cancel-accepted") && toDate >= today && rolesMap[userId] !== "admin";
           });
       }
 
@@ -115,10 +102,7 @@ const AdminRequests: React.FC = () => {
     }
   };
 
-  const handleStatusUpdate = async (
-    request: AdminRequest,
-    newStatus: string
-  ) => {
+  const handleStatusUpdate = async (request: AdminRequest, newStatus: string) => {
     try {
       if (request.type === "cancel") {
         const bookingRef = ref(database, `bookings/${request.id}`);
@@ -189,5 +173,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 20,
     color: "#888",
+    fontFamily: "Saira",
   },
 });

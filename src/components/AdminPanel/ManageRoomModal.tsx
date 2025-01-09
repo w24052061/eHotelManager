@@ -50,39 +50,13 @@ const ManageRoomModal = ({ isVisible, onClose, room }) => {
   };
 
   return (
-    <Modal
-      visible={isVisible}
-      onDismiss={onClose}
-      contentContainerStyle={styles.modal}
-    >
+    <Modal visible={isVisible} onDismiss={onClose} contentContainerStyle={styles.modal}>
       <ScrollView>
         <Text style={styles.title}>Manage Room</Text>
-        <TextInput
-          label="Room Name"
-          value={name}
-          onChangeText={setName}
-          style={styles.input}
-        />
-        <TextInput
-          label="Description"
-          value={description}
-          onChangeText={setDescription}
-          style={styles.input}
-          multiline
-        />
-        <TextInput
-          label="Price"
-          value={price}
-          onChangeText={setPrice}
-          style={styles.input}
-          keyboardType="numeric"
-        />
-        <TextInput
-          label="Image URL"
-          value={image}
-          onChangeText={setImage}
-          style={styles.input}
-        />
+        <TextInput label="Room Name" value={name} onChangeText={setName} style={styles.input} />
+        <TextInput label="Description" value={description} onChangeText={setDescription} style={styles.input} multiline />
+        <TextInput label="Price" value={price} onChangeText={setPrice} style={styles.input} keyboardType="numeric" />
+        <TextInput label="Image URL" value={image} onChangeText={setImage} style={styles.input} />
         <View style={styles.buttonContainer}>
           <Button mode="contained" onPress={handleUpdate}>
             Update
@@ -108,17 +82,24 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 20,
     alignSelf: "center",
+    fontFamily: "Saira",
   },
   input: {
     marginBottom: 15,
     backgroundColor: "white",
+    fontFamily: "Saira",
   },
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
+    fontFamily: "Saira",
   },
   cancelButton: {
     marginLeft: 10,
+    fontFamily: "Saira",
+  },
+  font: {
+    fontFamily: "Saira",
   },
 });
 

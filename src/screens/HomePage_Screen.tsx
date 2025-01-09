@@ -14,6 +14,7 @@ export default function HomePage_Screen() {
           fontWeight: "bold",
           textAlign: "center",
           backgroundColor: "#f5f5f5",
+          fontFamily: "Saira",
         }}
       >
         Available Rooms

@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Alert,
-  StyleSheet,
-} from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from "react-native";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "@firebaseConfig";
 import { useRouter } from "expo-router";
@@ -50,14 +43,8 @@ const ForgotPassword = () => {
         autoCapitalize="none"
         editable={!loading}
       />
-      <TouchableOpacity
-        style={[styles.button, loading && styles.buttonDisabled]}
-        onPress={handlePasswordReset}
-        disabled={loading}
-      >
-        <Text style={styles.buttonText}>
-          {loading ? "Sending Reset Link..." : "Send Reset Link"}
-        </Text>
+      <TouchableOpacity style={[styles.button, loading && styles.buttonDisabled]} onPress={handlePasswordReset} disabled={loading}>
+        <Text style={styles.buttonText}>{loading ? "Sending Reset Link..." : "Send Reset Link"}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => router.push("/Login")}>
@@ -80,6 +67,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     marginBottom: 20,
     fontWeight: "bold",
+    fontFamily: "Saira",
   },
   input: {
     width: "100%",
@@ -90,6 +78,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: 20,
     color: "#fff",
+    fontFamily: "Saira",
   },
   button: {
     backgroundColor: "#007AFF",
@@ -98,19 +87,23 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     width: "100%",
     alignItems: "center",
+    fontFamily: "Saira",
   },
   buttonText: {
     color: "white",
     fontWeight: "bold",
+    fontFamily: "Saira",
   },
   buttonDisabled: {
     backgroundColor: "#aaa",
+    fontFamily: "Saira",
   },
   backToLogin: {
     color: "#007AFF",
     fontSize: 16,
     marginTop: 20,
     textDecorationLine: "underline",
+    fontFamily: "Saira",
   },
 });
 

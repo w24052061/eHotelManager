@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-  Modal,
-  View,
-  Text,
-  TextInput,
-  Button,
-  StyleSheet,
-  Alert,
-} from "react-native";
+import { Modal, View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
 import { addComplaint } from "@/utils/firebaseUtils";
 import { auth } from "@firebaseConfig";
 
@@ -17,11 +9,7 @@ type ComplaintModalProps = {
   onClose: () => void;
 };
 
-export default function ComplaintModal({
-  bookingId,
-  isVisible,
-  onClose,
-}: ComplaintModalProps) {
+export default function ComplaintModal({ bookingId, isVisible, onClose }: ComplaintModalProps) {
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
 
@@ -55,20 +43,9 @@ export default function ComplaintModal({
         <View style={styles.modalBox}>
           <Text style={styles.modalTitle}>Submit Complaint</Text>
 
-          <TextInput
-            style={styles.input}
-            placeholder="Complaint Title"
-            value={title}
-            onChangeText={setTitle}
-          />
+          <TextInput style={styles.input} placeholder="Complaint Title" value={title} onChangeText={setTitle} />
 
-          <TextInput
-            style={[styles.input, { height: 80 }]}
-            placeholder="Complaint Message"
-            multiline
-            value={message}
-            onChangeText={setMessage}
-          />
+          <TextInput style={[styles.input, { height: 80 }]} placeholder="Complaint Message" multiline value={message} onChangeText={setMessage} />
 
           <Button title="Submit" onPress={submitComplaint} />
           <Button title="Close" onPress={onClose} color="red" />
@@ -95,6 +72,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 8,
+    fontFamily: "Saira",
   },
   input: {
     borderWidth: 1,
@@ -102,5 +80,6 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     padding: 8,
     marginBottom: 10,
+    fontFamily: "Saira",
   },
 });

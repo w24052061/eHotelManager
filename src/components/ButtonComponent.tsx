@@ -11,13 +11,7 @@ const BUTTON_COLORS = {
   default: "#4A4E69", // Grey
 };
 
-const ButtonComponent: React.FC<ButtonComponentProps> = ({
-  text,
-  link,
-  color = "primary",
-  style,
-  width = "100%",
-}) => {
+const ButtonComponent: React.FC<ButtonComponentProps> = ({ text, link, color = "primary", style, width = "100%" }) => {
   const router = useRouter();
 
   const handlePress = () => {
@@ -26,11 +20,7 @@ const ButtonComponent: React.FC<ButtonComponentProps> = ({
 
   return (
     <TouchableOpacity
-      style={[
-        styles.button,
-        { backgroundColor: BUTTON_COLORS[color], width },
-        style,
-      ]} // Combine default and custom styles
+      style={[styles.button, { backgroundColor: BUTTON_COLORS[color], width }, style]} // Combine default and custom styles
       onPress={handlePress}
     >
       <Text style={styles.buttonText}>{text}</Text>
@@ -51,6 +41,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "bold",
     fontSize: 16,
+    fontFamily: "Saira",
   },
 });
 

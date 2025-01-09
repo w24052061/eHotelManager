@@ -1,14 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  Image,
-  ActivityIndicator,
-  Alert,
-  ScrollView,
-} from "react-native";
+import { View, Text, StyleSheet, FlatList, Image, ActivityIndicator, Alert, ScrollView } from "react-native";
 import { Button, Card, Title, Paragraph, List } from "react-native-paper";
 import Modal from "react-native-modal";
 import {
@@ -36,10 +27,7 @@ const AdminDashboard = () => {
           ...room,
           bookings: bookingsData
             .filter((booking) => booking.roomId === room.id)
-            .sort(
-              (a, b) =>
-                new Date(a.fromDate).getTime() - new Date(b.fromDate).getTime()
-            ),
+            .sort((a, b) => new Date(a.fromDate).getTime() - new Date(b.fromDate).getTime()),
         }));
 
         setRooms(roomsWithBookings);
@@ -75,12 +63,7 @@ const AdminDashboard = () => {
 
       const roomsWithBookings = roomsData.map((room) => ({
         ...room,
-        bookings: bookingsData
-          .filter((booking) => booking.roomId === room.id)
-          .sort(
-            (a, b) =>
-              new Date(a.fromDate).getTime() - new Date(b.fromDate).getTime()
-          ),
+        bookings: bookingsData.filter((booking) => booking.roomId === room.id).sort((a, b) => new Date(a.fromDate).getTime() - new Date(b.fromDate).getTime()),
       }));
 
       setRooms(roomsWithBookings);
@@ -94,22 +77,12 @@ const AdminDashboard = () => {
   };
 
   const renderBooking = ({ item }) => (
-    <List.Item
-      title={`User: ${item.email}`}
-      description={`From: ${item.fromDate} To: ${item.toDate}`}
-      left={() => <List.Icon icon="calendar" />}
-    />
+    <List.Item title={`User: ${item.email}`} description={`From: ${item.fromDate} To: ${item.toDate}`} left={() => <List.Icon icon="calendar" />} />
   );
 
   const renderRoom = ({ item }) => (
     <Card style={styles.card}>
-      {item.image ? (
-        <Card.Cover source={{ uri: item.image }} />
-      ) : (
-        <Card.Cover
-          source={require("../../../assets/images/defaultRoomImage.webp")}
-        />
-      )}
+      {item.image ? <Card.Cover source={{ uri: item.image }} /> : <Card.Cover source={require("../../../assets/images/defaultRoomImage.webp")} />}
       <Card.Content>
         <Title>{item.name}</Title>
         <Paragraph>{item.description}</Paragraph>
@@ -117,11 +90,7 @@ const AdminDashboard = () => {
         <Paragraph>Status: {item.status}</Paragraph>
         <Title style={styles.bookingTitle}>Bookings:</Title>
         {item.bookings.length > 0 ? (
-          <FlatList
-            data={item.bookings}
-            keyExtractor={(booking) => booking.id}
-            renderItem={renderBooking}
-          />
+          <FlatList data={item.bookings} keyExtractor={(booking) => booking.id} renderItem={renderBooking} />
         ) : (
           <Paragraph>No bookings for this room.</Paragraph>
         )}
@@ -142,20 +111,9 @@ const AdminDashboard = () => {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={rooms}
-        keyExtractor={(item) => item.id}
-        renderItem={renderRoom}
-        contentContainerStyle={styles.list}
-      />
+      <FlatList data={rooms} keyExtractor={(item) => item.id} renderItem={renderRoom} contentContainerStyle={styles.list} />
 
-      {selectedRoom && (
-        <ManageRoomModal
-          isVisible={isModalVisible}
-          onClose={closeManageModal}
-          room={selectedRoom}
-        />
-      )}
+      {selectedRoom && <ManageRoomModal isVisible={isModalVisible} onClose={closeManageModal} room={selectedRoom} />}
     </View>
   );
 };
@@ -174,9 +132,11 @@ const styles = StyleSheet.create({
   price: {
     marginTop: 5,
     fontWeight: "bold",
+    fontFamily: "Saira",
   },
   bookingTitle: {
     marginTop: 10,
+    fontFamily: "Saira",
   },
   loader: {
     flex: 1,

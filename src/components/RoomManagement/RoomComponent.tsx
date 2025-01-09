@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  FlatList,
-  ActivityIndicator,
-  Dimensions,
-} from "react-native";
+import { View, Text, Image, StyleSheet, FlatList, ActivityIndicator, Dimensions } from "react-native";
 import { Link } from "expo-router";
 
 // -- Firebase & model imports
@@ -28,13 +20,9 @@ const defaultRoomImage = require("../../../assets/images/defaultRoomImage.webp")
 export default function RoomComponent() {
   /** ------------------ STATES ------------------ */
   // Holds the full array of rooms (fetched from Firebase).
-  const [rooms, setRooms] = useState<Array<Room & { isUnavailable?: boolean }>>(
-    []
-  );
+  const [rooms, setRooms] = useState<Array<Room & { isUnavailable?: boolean }>>([]);
   // Holds the *filtered* list of rooms (after applying date filter/sorting).
-  const [filteredRooms, setFilteredRooms] = useState<
-    Array<Room & { isUnavailable?: boolean }>
-  >([]);
+  const [filteredRooms, setFilteredRooms] = useState<Array<Room & { isUnavailable?: boolean }>>([]);
 
   // Loading indicator for fetch
   const [loading, setLoading] = useState(true);
@@ -140,16 +128,9 @@ export default function RoomComponent() {
   }
 
   // Helper function to render each room item in the list
-  const renderRoom = ({
-    item,
-  }: {
-    item: Room & { isUnavailable?: boolean };
-  }) => {
+  const renderRoom = ({ item }: { item: Room & { isUnavailable?: boolean } }) => {
     const imageSource = item.image ? { uri: item.image } : defaultRoomImage;
-    const containerStyle = [
-      styles.roomContainer,
-      item.isUnavailable && { backgroundColor: "#e0e0e0" },
-    ];
+    const containerStyle = [styles.roomContainer, item.isUnavailable && { backgroundColor: "#e0e0e0" }];
 
     return (
       <View style={containerStyle}>
@@ -166,39 +147,18 @@ export default function RoomComponent() {
         <View style={styles.roomCardBottom}>
           <View style={styles.roomCardBottomLeft}>
             <Text style={styles.roomPrice}>Price: ${item.price}</Text>
-            <Text style={styles.roomStatus}>
-              Status: {item.isUnavailable ? "Unavailable" : "Available"}
-            </Text>
+            <Text style={styles.roomStatus}>Status: {item.isUnavailable ? "Unavailable" : "Available"}</Text>
           </View>
 
           <View style={styles.roomCardBottomRight}>
             {/* Only show the button if the room is available */}
             {!item.isUnavailable && role !== "admin" ? (
-              <ButtonComponent
-                text="Book Now"
-                link={`/${item.id}/RoomSinglePage`}
-                color="primary"
-                width="100%"
-              />
+              <ButtonComponent text="Book Now" link={`/${item.id}/RoomSinglePage`} color="primary" width="100%" />
             ) : (
-              role !== "admin" && (
-                <ButtonComponent
-                  text="Find Free Dates"
-                  link={`/${item.id}/RoomSinglePage`}
-                  color="primary"
-                  width="100%"
-                />
-              )
+              role !== "admin" && <ButtonComponent text="Find Free Dates" link={`/${item.id}/RoomSinglePage`} color="primary" width="100%" />
             )}
 
-            {role === "admin" && (
-              <ButtonComponent
-                text="Manage"
-                link={`page/AdminRoomManagement`}
-                color="secondary"
-                width="100%"
-              />
-            )}
+            {role === "admin" && <ButtonComponent text="Manage" link={`page/AdminRoomManagement`} color="secondary" width="100%" />}
           </View>
         </View>
       </View>
@@ -209,12 +169,7 @@ export default function RoomComponent() {
   return (
     <View style={styles.container}>
       {/* Render the filter controls */}
-      <RoomFilters
-        sortOption={sortOption}
-        setSortOption={setSortOption}
-        filterDate={filterDate}
-        setFilterDate={setFilterDate}
-      />
+      <RoomFilters sortOption={sortOption} setSortOption={setSortOption} filterDate={filterDate} setFilterDate={setFilterDate} />
 
       {/* Render the list of (filtered) rooms */}
       <FlatList
@@ -267,11 +222,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600",
     marginVertical: 8,
+    fontFamily: "Saira",
   },
   roomDescription: {
     fontSize: 14,
     color: "#555",
     marginBottom: 8,
+    fontFamily: "Saira",
   },
   roomCardBottom: {
     flexDirection: "row",
@@ -285,10 +242,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     marginBottom: 4,
+    fontFamily: "Saira",
   },
   roomStatus: {
     fontSize: 14,
     color: "#888",
+    fontFamily: "Saira",
   },
   emptyContainer: {
     marginTop: 20,
@@ -297,5 +256,6 @@ const styles = StyleSheet.create({
   emptyText: {
     fontSize: 16,
     color: "#999",
+    fontFamily: "Saira",
   },
 });

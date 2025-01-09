@@ -1,22 +1,8 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  StyleSheet,
-  FlatList,
-  ActivityIndicator,
-  Alert,
-  Text,
-  Pressable,
-  ScrollView,
-} from "react-native";
+import { View, StyleSheet, FlatList, ActivityIndicator, Alert, Text, Pressable, ScrollView } from "react-native";
 import { Card, Title, Paragraph, Button } from "react-native-paper";
 import Modal from "react-native-modal";
-import {
-  getAllComplaints,
-  getAllBookings,
-  getRooms,
-  deleteComplaint,
-} from "@firebaseConfig";
+import { getAllComplaints, getAllBookings, getRooms, deleteComplaint } from "@firebaseConfig";
 
 import { Room } from "@/components/model/Room";
 import { Booking } from "@/components/model/Booking";
@@ -28,9 +14,7 @@ const ComplaintsPage: React.FC = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [rooms, setRooms] = useState<Room[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [selectedComplaint, setSelectedComplaint] = useState<Complaint | null>(
-    null
-  );
+  const [selectedComplaint, setSelectedComplaint] = useState<Complaint | null>(null);
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
   const [relatedBooking, setRelatedBooking] = useState<Booking | null>(null);
   const [relatedRoom, setRelatedRoom] = useState<Room | null>(null);
@@ -41,11 +25,7 @@ const ComplaintsPage: React.FC = () => {
 
   const fetchData = async () => {
     try {
-      const [complaintsData, bookingsData, roomsData] = await Promise.all([
-        getAllComplaints(),
-        getAllBookings(),
-        getRooms(),
-      ]);
+      const [complaintsData, bookingsData, roomsData] = await Promise.all([getAllComplaints(), getAllBookings(), getRooms()]);
       setComplaints(complaintsData);
       setBookings(bookingsData);
       setRooms(roomsData);
@@ -59,9 +39,7 @@ const ComplaintsPage: React.FC = () => {
 
   const openModal = (complaint: Complaint) => {
     const booking = bookings.find((b) => b.id === complaint.bookingId) || null;
-    const room = booking
-      ? rooms.find((r) => r.id === booking.roomId) || null
-      : null;
+    const room = booking ? rooms.find((r) => r.id === booking.roomId) || null : null;
     setSelectedComplaint(complaint);
     setRelatedBooking(booking);
     setRelatedRoom(room);
@@ -77,31 +55,27 @@ const ComplaintsPage: React.FC = () => {
 
   const handleDelete = async () => {
     if (!selectedComplaint) return;
-    Alert.alert(
-      "Confirm Deletion",
-      "Are you sure you want to delete this complaint?",
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
+    Alert.alert("Confirm Deletion", "Are you sure you want to delete this complaint?", [
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+      {
+        text: "Remove",
+        style: "destructive",
+        onPress: async () => {
+          try {
+            await deleteComplaint(selectedComplaint.id);
+            Alert.alert("Success", "Complaint removed successfully.");
+            closeModal();
+            fetchData(); // Refresh the complaints list
+          } catch (error) {
+            console.error("❌ Error deleting complaint:", error);
+            Alert.alert("Error", "Failed to delete complaint.");
+          }
         },
-        {
-          text: "Remove",
-          style: "destructive",
-          onPress: async () => {
-            try {
-              await deleteComplaint(selectedComplaint.id);
-              Alert.alert("Success", "Complaint removed successfully.");
-              closeModal();
-              fetchData(); // Refresh the complaints list
-            } catch (error) {
-              console.error("❌ Error deleting complaint:", error);
-              Alert.alert("Error", "Failed to delete complaint.");
-            }
-          },
-        },
-      ]
-    );
+      },
+    ]);
   };
 
   const renderComplaint = ({ item }: { item: Complaint }) => {
@@ -111,17 +85,12 @@ const ComplaintsPage: React.FC = () => {
     const room = booking ? rooms.find((r) => r.id === booking.roomId) : null;
 
     return (
-      <Pressable
-        onPress={() => openModal(item)}
-        style={({ pressed }) => [{ opacity: pressed ? 0.6 : 1 }]}
-      >
+      <Pressable onPress={() => openModal(item)} style={({ pressed }) => [{ opacity: pressed ? 0.6 : 1 }]}>
         <Card style={styles.card}>
           <Card.Content>
             <View style={styles.cardHeader}>
               <Title>{item.title}</Title>
-              <Paragraph style={styles.date}>
-                {new Date(item.createdAt).toLocaleDateString()}
-              </Paragraph>
+              <Paragraph style={styles.date}>{new Date(item.createdAt).toLocaleDateString()}</Paragraph>
             </View>
             {booking && (
               <Paragraph style={styles.info}>
@@ -165,23 +134,10 @@ const ComplaintsPage: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={complaints}
-        keyExtractor={(item) => item.id}
-        renderItem={renderComplaint}
-        contentContainerStyle={styles.list}
-      />
+      <FlatList data={complaints} keyExtractor={(item) => item.id} renderItem={renderComplaint} contentContainerStyle={styles.list} />
 
-      <Modal
-        isVisible={isModalVisible}
-        onBackdropPress={closeModal}
-        onBackButtonPress={closeModal}
-        style={styles.modal}
-      >
-        <ScrollView
-          style={styles.modalContent}
-          contentContainerStyle={styles.modalContentContainer}
-        >
+      <Modal isVisible={isModalVisible} onBackdropPress={closeModal} onBackButtonPress={closeModal} style={styles.modal}>
+        <ScrollView style={styles.modalContent} contentContainerStyle={styles.modalContentContainer}>
           <Title style={styles.modalTitle}>{selectedComplaint?.title}</Title>
           {relatedBooking && (
             <Paragraph style={styles.info}>
@@ -201,31 +157,17 @@ const ComplaintsPage: React.FC = () => {
               {relatedRoom.name}
             </Paragraph>
           )}
-          <Paragraph style={styles.date}>
-            {selectedComplaint &&
-              new Date(selectedComplaint.createdAt).toLocaleString()}
-          </Paragraph>
-          <Paragraph style={styles.message}>
-            {selectedComplaint?.message}
-          </Paragraph>
+          <Paragraph style={styles.date}>{selectedComplaint && new Date(selectedComplaint.createdAt).toLocaleString()}</Paragraph>
+          <Paragraph style={styles.message}>{selectedComplaint?.message}</Paragraph>
           <AccessLimit
             allowedRoles={["admin"]}
             render={
               <>
                 <View style={styles.buttonContainer}>
-                  <Button
-                    mode="contained"
-                    onPress={handleDelete}
-                    style={styles.button}
-                    color="#d32f2f"
-                  >
+                  <Button mode="contained" onPress={handleDelete} style={styles.button} color="#d32f2f">
                     Remove
                   </Button>
-                  <Button
-                    mode="outlined"
-                    onPress={closeModal}
-                    style={styles.button}
-                  >
+                  <Button mode="outlined" onPress={closeModal} style={styles.button}>
                     Close
                   </Button>
                 </View>
@@ -264,6 +206,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontWeight: "bold",
+    fontFamily: "Saira",
   },
   loader: {
     flex: 1,
@@ -294,9 +237,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 10,
     alignSelf: "center",
+    fontFamily: "Saira",
   },
   message: {
     marginVertical: 15,
+    fontFamily: "Saira",
   },
   buttonContainer: {
     flexDirection: "row",
@@ -305,6 +250,7 @@ const styles = StyleSheet.create({
   button: {
     flex: 1,
     marginHorizontal: 5,
+    fontFamily: "Saira",
   },
 });
 

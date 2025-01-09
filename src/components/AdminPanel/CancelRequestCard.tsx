@@ -8,22 +8,14 @@ interface CancelRequestCardProps {
   onReject: () => void;
 }
 
-const CancelRequestCard: React.FC<CancelRequestCardProps> = ({
-  booking,
-  onAccept,
-  onReject,
-}) => {
+const CancelRequestCard: React.FC<CancelRequestCardProps> = ({ booking, onAccept, onReject }) => {
   const { status } = booking;
 
   const handleDelete = () => {
-    Alert.alert(
-      "Confirm Delete",
-      "Are you sure you want to reject this cancel request?",
-      [
-        { text: "Cancel", style: "cancel" },
-        { text: "OK", onPress: onReject },
-      ]
-    );
+    Alert.alert("Confirm Delete", "Are you sure you want to reject this cancel request?", [
+      { text: "Cancel", style: "cancel" },
+      { text: "OK", onPress: onReject },
+    ]);
   };
 
   if (status === "cancel-accepted") {
@@ -80,6 +72,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 8,
+    fontFamily: "Saira",
   },
   buttonContainer: {
     flexDirection: "row",
@@ -103,5 +96,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     fontWeight: "bold",
+    fontFamily: "Saira",
   },
 });

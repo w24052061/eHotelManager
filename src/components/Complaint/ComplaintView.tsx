@@ -26,11 +26,7 @@ const ComplaintView = () => {
   const handleUpdateStatus = async (complaintId: string, newStatus: string) => {
     try {
       await updateComplaintStatus(complaintId, newStatus);
-      const updatedComplaints = complaints.map((complaint) =>
-        complaint.id === complaintId
-          ? { ...complaint, status: newStatus }
-          : complaint
-      );
+      const updatedComplaints = complaints.map((complaint) => (complaint.id === complaintId ? { ...complaint, status: newStatus } : complaint));
       setComplaints(updatedComplaints);
       Alert.alert("Status updated successfully");
     } catch (error) {
@@ -42,10 +38,7 @@ const ComplaintView = () => {
     <View style={styles.complaintItem}>
       <Text style={styles.description}>{item.description}</Text>
       <Text>Status: {item.status}</Text>
-      <Button
-        title="Resolve"
-        onPress={() => handleUpdateStatus(item.id, "resolved")}
-      />
+      <Button title="Resolve" onPress={() => handleUpdateStatus(item.id, "resolved")} />
     </View>
   );
 
@@ -65,14 +58,7 @@ const ComplaintView = () => {
     );
   }
 
-  return (
-    <FlatList
-      data={complaints}
-      keyExtractor={(item) => item.id}
-      renderItem={renderComplaint}
-      contentContainerStyle={styles.list}
-    />
-  );
+  return <FlatList data={complaints} keyExtractor={(item) => item.id} renderItem={renderComplaint} contentContainerStyle={styles.list} />;
 };
 
 const styles = StyleSheet.create({
@@ -92,6 +78,7 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 16,
     marginBottom: 5,
+    fontFamily: "Saira",
   },
 });
 

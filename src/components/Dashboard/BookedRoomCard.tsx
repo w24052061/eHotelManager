@@ -12,8 +12,7 @@ export default BookedRoomCard = ({ booking }) => {
     if (booking.toDate < today) return "Passed";
     if (booking.status === "cancel-pending") return "Cancel Pending";
     if (booking.status === "cancel-accepted") return "Cancel Accepted";
-    if (booking.status === "cancel-rejected")
-      return "Cancel Request been Rejected";
+    if (booking.status === "cancel-rejected") return "Cancel Request been Rejected";
     return "Available";
   };
 
@@ -40,18 +39,10 @@ export default BookedRoomCard = ({ booking }) => {
       {!isCancelAccepted && (
         <>
           {/* Request Service Button */}
-          {!isPassed && (
-            <RequestServiceButton
-              bookingId={booking.id}
-              roomId={booking.roomId}
-            />
-          )}
+          {!isPassed && <RequestServiceButton bookingId={booking.id} roomId={booking.roomId} />}
 
           {/* Complaint Button */}
-          <Text
-            style={styles.complaintLink}
-            onPress={() => setShowComplaintModal(true)}
-          >
+          <Text style={styles.complaintLink} onPress={() => setShowComplaintModal(true)}>
             COMPLAINT
           </Text>
 
@@ -59,11 +50,7 @@ export default BookedRoomCard = ({ booking }) => {
           {shouldShowCancel && <CancelButton bookingId={booking.id} />}
 
           {/* Complaint Modal */}
-          <ComplaintModal
-            bookingId={booking.id}
-            isVisible={showComplaintModal}
-            onClose={() => setShowComplaintModal(false)}
-          />
+          <ComplaintModal bookingId={booking.id} isVisible={showComplaintModal} onClose={() => setShowComplaintModal(false)} />
         </>
       )}
     </View>
@@ -90,6 +77,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 8,
+    fontFamily: "Saira",
   },
   complaintLink: {
     color: "#ffffff",
@@ -99,5 +87,6 @@ const styles = StyleSheet.create({
     padding: 7,
     borderRadius: 2,
     backgroundColor: "#4A4E69",
+    fontFamily: "Saira",
   },
 });

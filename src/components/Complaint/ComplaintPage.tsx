@@ -22,12 +22,7 @@ const ComplaintPage = () => {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Enter your complaint"
-        value={complaint}
-        onChangeText={setComplaint}
-      />
+      <TextInput style={styles.input} placeholder="Enter your complaint" value={complaint} onChangeText={setComplaint} />
       <Button title="Submit Complaint" onPress={handleComplaintSubmit} />
     </View>
   );
@@ -45,6 +40,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 12,
     paddingHorizontal: 8,
+    fontFamily: "Saira",
   },
 });
 

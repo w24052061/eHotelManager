@@ -9,21 +9,12 @@ type RoomFiltersProps = {
   setFilterDate: (date: string) => void;
 };
 
-export default function RoomFilters({
-  sortOption,
-  setSortOption,
-  filterDate,
-  setFilterDate,
-}: RoomFiltersProps) {
+export default function RoomFilters({ sortOption, setSortOption, filterDate, setFilterDate }: RoomFiltersProps) {
   return (
     <View style={styles.container}>
       <View style={styles.filter}>
         <Text style={styles.label}>Sort By Price:</Text>
-        <Picker
-          selectedValue={sortOption}
-          onValueChange={(value) => setSortOption(value)}
-          style={styles.picker}
-        >
+        <Picker selectedValue={sortOption} onValueChange={(value) => setSortOption(value)} style={styles.picker}>
           <Picker.Item label="Low to High" value="low-to-high" />
           <Picker.Item label="High to Low" value="high-to-low" />
         </Picker>
@@ -31,16 +22,9 @@ export default function RoomFilters({
 
       <View style={styles.filter}>
         <Text style={styles.label}>Available By Date:</Text>
-        <Picker
-          selectedValue={filterDate}
-          onValueChange={(value) => setFilterDate(value)}
-          style={styles.picker}
-        >
+        <Picker selectedValue={filterDate} onValueChange={(value) => setFilterDate(value)} style={styles.picker}>
           <Picker.Item label="All Dates" value="" />
-          <Picker.Item
-            label="Today"
-            value={new Date().toISOString().split("T")[0]}
-          />
+          <Picker.Item label="Today" value={new Date().toISOString().split("T")[0]} />
         </Picker>
       </View>
     </View>
@@ -61,9 +45,11 @@ const styles = StyleSheet.create({
   label: {
     fontWeight: "bold",
     marginBottom: 5,
+    fontFamily: "Saira",
   },
   picker: {
     height: 50,
     width: "90%",
+    fontFamily: "Saira",
   },
 });

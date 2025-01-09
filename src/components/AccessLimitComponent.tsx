@@ -26,9 +26,7 @@ const AccessLimit: React.FC<AccessLimitProps> = ({ allowedRoles, render }) => {
   ) {
     return (
       <View style={styles.accessDeniedContainer}>
-        <Text style={styles.accessDeniedText}>
-          Access Denied: Authorized roles only.
-        </Text>
+        <Text style={styles.accessDeniedText}>Access Denied: Authorized roles only.</Text>
       </View>
     );
   }
@@ -56,6 +54,7 @@ const styles = StyleSheet.create({
     color: "red",
     fontSize: 18,
     fontWeight: "bold",
+    fontFamily: "Saira",
   },
 });
 

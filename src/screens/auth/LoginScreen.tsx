@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  TextInput,
-  TouchableOpacity,
-  Text,
-  StyleSheet,
-  Alert,
-} from "react-native";
+import { TextInput, TouchableOpacity, Text, StyleSheet, Alert } from "react-native";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@firebaseConfig";
 import { useRouter } from "expo-router";
@@ -36,29 +30,10 @@ const LoginScreen = () => {
 
   return (
     <>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      <TouchableOpacity
-        onPress={handleLogin}
-        style={styles.button}
-        disabled={loading}
-      >
-        <Text style={styles.buttonText}>
-          {loading ? "Signing in..." : "Sign In"}
-        </Text>
+      <TextInput style={styles.input} placeholder="Email" value={email} onChangeText={setEmail} keyboardType="email-address" autoCapitalize="none" />
+      <TextInput style={styles.input} placeholder="Password" value={password} onChangeText={setPassword} secureTextEntry />
+      <TouchableOpacity onPress={handleLogin} style={styles.button} disabled={loading}>
+        <Text style={styles.buttonText}>{loading ? "Signing in..." : "Sign In"}</Text>
       </TouchableOpacity>
     </>
   );
@@ -72,6 +47,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 15,
     paddingLeft: 10,
+    fontFamily: "Saira",
   },
   button: {
     backgroundColor: "#007AFF",

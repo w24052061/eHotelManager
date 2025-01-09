@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Alert,
-  ActivityIndicator,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Alert, ActivityIndicator } from "react-native";
 import { ref, remove, update } from "firebase/database";
 import { database } from "@firebaseConfig";
 import { User } from "@/components/model/Users";
@@ -19,77 +12,56 @@ interface UserCardProps {
 
 const ROLES = { STAFF: "staff", USER: "user" }; // Role constants for better maintainability
 
-const UserCard: React.FC<UserCardProps> = ({
-  user,
-  onRoleChange,
-  onDelete = () => {},
-}) => {
+const UserCard: React.FC<UserCardProps> = ({ user, onRoleChange, onDelete = () => {} }) => {
   const [loading, setLoading] = React.useState(false); // State for showing a loading indicator
 
   const handleChangeRole = () => {
     const newRole = user.role === ROLES.STAFF ? ROLES.USER : ROLES.STAFF;
     const action = user.role === ROLES.STAFF ? "demote to user" : "make staff";
 
-    Alert.alert(
-      "Change Role",
-      `Are you sure you want to ${action} ${user.name} ${user.surname}?`,
-      [
-        { text: "Cancel", style: "cancel" },
-        {
-          text: "OK",
-          onPress: async () => {
-            setLoading(true); // Show loading indicator
-            try {
-              const userRef = ref(database, `users/${user.id}`);
-              await update(userRef, { role: newRole });
-              Alert.alert("Success", `User role updated to '${newRole}'.`);
-              onRoleChange(); // Notify parent about role change
-            } catch (error: any) {
-              console.error("Error updating role:", error);
-              Alert.alert(
-                "Error",
-                `Failed to update user role: ${error.message}`
-              );
-            } finally {
-              setLoading(false); // Hide loading indicator
-            }
-          },
+    Alert.alert("Change Role", `Are you sure you want to ${action} ${user.name} ${user.surname}?`, [
+      { text: "Cancel", style: "cancel" },
+      {
+        text: "OK",
+        onPress: async () => {
+          setLoading(true); // Show loading indicator
+          try {
+            const userRef = ref(database, `users/${user.id}`);
+            await update(userRef, { role: newRole });
+            Alert.alert("Success", `User role updated to '${newRole}'.`);
+            onRoleChange(); // Notify parent about role change
+          } catch (error: any) {
+            console.error("Error updating role:", error);
+            Alert.alert("Error", `Failed to update user role: ${error.message}`);
+          } finally {
+            setLoading(false); // Hide loading indicator
+          }
         },
-      ]
-    );
+      },
+    ]);
   };
 
   const handleDeleteUser = () => {
-    Alert.alert(
-      "Delete this user?",
-      `Are you sure you want to delete ${user.name} ${user.surname}?`,
-      [
-        { text: "Cancel", style: "cancel" },
-        {
-          text: "OK",
-          onPress: async () => {
-            setLoading(true); // Show loading indicator
-            try {
-              const userRef = ref(database, `users/${user.id}`);
-              await remove(userRef);
-              Alert.alert(
-                "Success",
-                `Successfully deleted ${user.name} ${user.surname}.`
-              );
-              onDelete();
-            } catch (error: any) {
-              console.error("Error deleting user:", error);
-              Alert.alert(
-                "Error",
-                `Failed to delete the user: ${error.message}`
-              );
-            } finally {
-              setLoading(false);
-            }
-          },
+    Alert.alert("Delete this user?", `Are you sure you want to delete ${user.name} ${user.surname}?`, [
+      { text: "Cancel", style: "cancel" },
+      {
+        text: "OK",
+        onPress: async () => {
+          setLoading(true); // Show loading indicator
+          try {
+            const userRef = ref(database, `users/${user.id}`);
+            await remove(userRef);
+            Alert.alert("Success", `Successfully deleted ${user.name} ${user.surname}.`);
+            onDelete();
+          } catch (error: any) {
+            console.error("Error deleting user:", error);
+            Alert.alert("Error", `Failed to delete the user: ${error.message}`);
+          } finally {
+            setLoading(false);
+          }
         },
-      ]
-    );
+      },
+    ]);
   };
 
   return (
@@ -115,9 +87,7 @@ const UserCard: React.FC<UserCardProps> = ({
       <Text>Gender: {user.gender}</Text>
       <Text>Role: {user.role}</Text>
       <TouchableOpacity style={styles.button} onPress={handleChangeRole}>
-        <Text style={styles.buttonText}>
-          {user.role === ROLES.STAFF ? "Demote to User" : "Make Staff"}
-        </Text>
+        <Text style={styles.buttonText}>{user.role === ROLES.STAFF ? "Demote to User" : "Make Staff"}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -144,6 +114,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 4,
+    fontFamily: "Saira",
   },
   button: {
     backgroundColor: "#4A4E69",
@@ -151,10 +122,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginTop: 10,
     alignItems: "center",
+    fontFamily: "Saira",
   },
   buttonText: {
     color: "#fff",
     fontWeight: "bold",
+    fontFamily: "Saira",
   },
   remove: {
     textAlign: "right",
@@ -162,6 +135,7 @@ const styles = StyleSheet.create({
     marginBottom: -30,
     color: "#4A4E69",
     fontWeight: "bold",
+    fontFamily: "Saira",
   },
   loadingOverlay: {
     ...StyleSheet.absoluteFillObject,

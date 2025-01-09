@@ -14,6 +14,7 @@ export default function AdminLayout() {
         },
         tabBarLabelStyle: {
           fontSize: 12, // Optional: adjust the label font size
+          fontFamily: "Saira",
         },
         tabBarIconStyle: {
           marginBottom: -5, // Optional: adjust icon alignment
@@ -25,13 +26,7 @@ export default function AdminLayout() {
         name="AdminDashboardBookingsTab"
         options={{
           title: "Bookings",
-          tabBarIcon: ({ focused, color, size }) => (
-            <Feather
-              name="bookmark"
-              size={size}
-              color={focused ? "#4a4e69" : color}
-            />
-          ),
+          tabBarIcon: ({ focused, color, size }) => <Feather name="bookmark" size={size} color={focused ? "#4a4e69" : color} />,
         }}
       />
       {/* Tab 2: Complaints */}
@@ -39,13 +34,7 @@ export default function AdminLayout() {
         name="AdminDashboardComplaintsTab"
         options={{
           title: "Complaints",
-          tabBarIcon: ({ focused, color, size }) => (
-            <Ionicons
-              name="clipboard"
-              size={size}
-              color={focused ? "#4a4e69" : color}
-            />
-          ),
+          tabBarIcon: ({ focused, color, size }) => <Ionicons name="clipboard" size={size} color={focused ? "#4a4e69" : color} />,
         }}
       />
       {/* Tab 3: Cancel Requests */}
@@ -53,13 +42,7 @@ export default function AdminLayout() {
         name="AdminDashboardCancelRequestTab"
         options={{
           title: "Requests",
-          tabBarIcon: ({ focused, color, size }) => (
-            <Ionicons
-              name="chatbubble-ellipses-outline"
-              size={size}
-              color={focused ? "#4a4e69" : color}
-            />
-          ),
+          tabBarIcon: ({ focused, color, size }) => <Ionicons name="chatbubble-ellipses-outline" size={size} color={focused ? "#4a4e69" : color} />,
         }}
       />
     </Tabs>

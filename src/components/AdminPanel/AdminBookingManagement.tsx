@@ -1,14 +1,7 @@
 // AdminBookingManagement.tsx
 
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  FlatList,
-  ActivityIndicator,
-  Text,
-  StyleSheet,
-  Alert,
-} from "react-native";
+import { View, FlatList, ActivityIndicator, Text, StyleSheet, Alert } from "react-native";
 import { ref, get, remove, update } from "firebase/database";
 import { database } from "@firebaseConfig";
 import BookingCard from "./BookingCard";
@@ -97,10 +90,7 @@ const AdminBookingManagement: React.FC = () => {
     }
   };
 
-  const handleUpdateBooking = async (
-    bookingId: string,
-    updatedFields: Partial<Booking>
-  ) => {
+  const handleUpdateBooking = async (bookingId: string, updatedFields: Partial<Booking>) => {
     try {
       await update(ref(database, `bookings/${bookingId}`), updatedFields);
       Alert.alert("Success", "Booking updated successfully.");
@@ -137,9 +127,7 @@ const AdminBookingManagement: React.FC = () => {
           booking={item}
           user={usersMap[item.userId]}
           onRemove={() => handleRemoveBooking(item.id)}
-          onUpdate={(updatedFields) =>
-            handleUpdateBooking(item.id, updatedFields)
-          }
+          onUpdate={(updatedFields) => handleUpdateBooking(item.id, updatedFields)}
         />
       )}
       contentContainerStyle={styles.listContainer}
@@ -157,5 +145,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    fontFamily: "Saira",
   },
 });

@@ -1,17 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  Modal,
-  FlatList,
-  Alert,
-  KeyboardAvoidingView,
-  ScrollView,
-  Platform,
-} from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal, FlatList, Alert, KeyboardAvoidingView, ScrollView, Platform } from "react-native";
 import { ref, get } from "firebase/database";
 import { auth, database } from "@firebaseConfig";
 import { updateUserProfile } from "@/utils/updateUserProfile";
@@ -75,30 +63,15 @@ const ProfileScreen = () => {
   const genderOptions = ["Male", "Female", "Other"];
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
-    >
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : undefined}>
       <ScrollView contentContainerStyle={styles.container}>
         <Text style={styles.title}>Complete Your Profile</Text>
 
         <Text style={styles.label}>Name</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your name"
-          value={name}
-          onChangeText={setName}
-          editable={!loading}
-        />
+        <TextInput style={styles.input} placeholder="Enter your name" value={name} onChangeText={setName} editable={!loading} />
 
         <Text style={styles.label}>Surname</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your surname"
-          value={surname}
-          onChangeText={setSurname}
-          editable={!loading}
-        />
+        <TextInput style={styles.input} placeholder="Enter your surname" value={surname} onChangeText={setSurname} editable={!loading} />
 
         <Text style={styles.label}>Mobile Number</Text>
         <TextInput
@@ -111,21 +84,12 @@ const ProfileScreen = () => {
         />
 
         <Text style={styles.label}>Gender</Text>
-        <TouchableOpacity
-          style={styles.dropdown}
-          onPress={() => setModalVisible(true)}
-          disabled={loading}
-        >
+        <TouchableOpacity style={styles.dropdown} onPress={() => setModalVisible(true)} disabled={loading}>
           <Text style={styles.dropdownText}>{gender || "Select Gender"}</Text>
         </TouchableOpacity>
 
         {/* Gender Selection Modal */}
-        <Modal
-          visible={modalVisible}
-          transparent={true}
-          animationType="slide"
-          onRequestClose={() => setModalVisible(false)}
-        >
+        <Modal visible={modalVisible} transparent={true} animationType="slide" onRequestClose={() => setModalVisible(false)}>
           <View style={styles.modalOverlay}>
             <View style={styles.modalContent}>
               <Text style={styles.modalTitle}>Select Gender</Text>
@@ -144,24 +108,15 @@ const ProfileScreen = () => {
                   </TouchableOpacity>
                 )}
               />
-              <TouchableOpacity
-                style={styles.closeButton}
-                onPress={() => setModalVisible(false)}
-              >
+              <TouchableOpacity style={styles.closeButton} onPress={() => setModalVisible(false)}>
                 <Text style={styles.closeButtonText}>Cancel</Text>
               </TouchableOpacity>
             </View>
           </View>
         </Modal>
 
-        <TouchableOpacity
-          style={[styles.button, loading && styles.buttonDisabled]}
-          onPress={handleSaveProfile}
-          disabled={loading}
-        >
-          <Text style={styles.buttonText}>
-            {loading ? "Saving..." : "Save Profile"}
-          </Text>
+        <TouchableOpacity style={[styles.button, loading && styles.buttonDisabled]} onPress={handleSaveProfile} disabled={loading}>
+          <Text style={styles.buttonText}>{loading ? "Saving..." : "Save Profile"}</Text>
         </TouchableOpacity>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -181,12 +136,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 20,
     color: "#fff",
+    fontFamily: "Saira",
   },
   label: {
     alignSelf: "flex-start",
     fontSize: 16,
     marginBottom: 5,
     color: "#fff",
+    fontFamily: "Saira",
   },
   input: {
     width: "100%",
@@ -198,6 +155,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     backgroundColor: "#fff",
     color: "black",
+    fontFamily: "Saira",
   },
   dropdown: {
     width: "100%",
@@ -212,6 +170,7 @@ const styles = StyleSheet.create({
   },
   dropdownText: {
     color: "#333",
+    fontFamily: "Saira",
   },
   button: {
     backgroundColor: "#4CAF50",
@@ -219,13 +178,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     borderRadius: 5,
     marginTop: 20,
+    fontFamily: "Saira",
   },
   buttonDisabled: {
     backgroundColor: "#999",
+    fontFamily: "Saira",
   },
   buttonText: {
     color: "#fff",
     fontWeight: "bold",
+    fontFamily: "Saira",
   },
   modalOverlay: {
     flex: 1,
@@ -243,6 +205,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 10,
+    fontFamily: "Saira",
   },
   modalItem: {
     padding: 15,
@@ -252,6 +215,7 @@ const styles = StyleSheet.create({
   modalItemText: {
     fontSize: 16,
     color: "#333",
+    fontFamily: "Saira",
   },
   closeButton: {
     marginTop: 10,
@@ -260,6 +224,7 @@ const styles = StyleSheet.create({
   closeButtonText: {
     color: "#007BFF",
     fontSize: 16,
+    fontFamily: "Saira",
   },
 });
 

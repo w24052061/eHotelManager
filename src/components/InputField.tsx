@@ -6,9 +6,9 @@ import { TextInput, View, Text, StyleSheet } from "react-native";
 type Props = {
   label: string;
   placeholder?: string;
-  isPassword?: boolean
+  isPassword?: boolean;
 };
-const InputField = ({ label, placeholder, isPassword = false }:Props) => {
+const InputField = ({ label, placeholder, isPassword = false }: Props) => {
   // this function will handle the input text entered
   const handleTextChange = (text: string) => {
     console.log("➡️ text", text);
@@ -18,12 +18,7 @@ const InputField = ({ label, placeholder, isPassword = false }:Props) => {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
-      <TextInput 
-        secureTextEntry={isPassword}
-        style={styles.input}
-        placeholder={placeholder || "Enter text here ..."}
-        onChangeText={handleTextChange}
-      />
+      <TextInput secureTextEntry={isPassword} style={styles.input} placeholder={placeholder || "Enter text here ..."} onChangeText={handleTextChange} />
     </View>
   );
 };
@@ -44,6 +39,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#333",
     marginBottom: 5,
+    fontFamily: "Saira",
   },
   input: {
     height: 50,
@@ -52,6 +48,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     fontSize: 16,
+    fontFamily: "Saira",
   },
 });
 

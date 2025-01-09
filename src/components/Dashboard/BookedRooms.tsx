@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  FlatList,
-  ActivityIndicator,
-  Text,
-  StyleSheet,
-} from "react-native";
+import { View, FlatList, ActivityIndicator, Text, StyleSheet } from "react-native";
 import { ref, get, query, orderByChild, equalTo } from "firebase/database";
 import { auth, database } from "@firebaseConfig";
 import BookedRoomCard from "./BookedRoomCard";
@@ -24,11 +18,7 @@ export const BookedRooms = () => {
       const userId = auth.currentUser?.uid;
       if (!userId) return;
 
-      const bookingsRef = query(
-        ref(database, "bookings"),
-        orderByChild("userId"),
-        equalTo(userId)
-      );
+      const bookingsRef = query(ref(database, "bookings"), orderByChild("userId"), equalTo(userId));
 
       const snapshot = await get(bookingsRef);
       if (snapshot.exists()) {
@@ -55,13 +45,7 @@ export const BookedRooms = () => {
     return <Text style={styles.noBookings}>No bookings found.</Text>;
   }
 
-  return (
-    <FlatList
-      data={bookings}
-      keyExtractor={(item) => item.id}
-      renderItem={({ item }) => <BookedRoomCard booking={item} />}
-    />
-  );
+  return <FlatList data={bookings} keyExtractor={(item) => item.id} renderItem={({ item }) => <BookedRoomCard booking={item} />} />;
 };
 
 const styles = StyleSheet.create({
@@ -70,5 +54,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 20,
     color: "#888",
+    fontFamily: "Saira",
   },
 });

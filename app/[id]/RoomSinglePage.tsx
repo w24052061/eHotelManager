@@ -1,17 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  ActivityIndicator,
-  Image,
-  StyleSheet,
-  Button,
-  Alert,
-  ScrollView,
-  TextInput,
-  Modal,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, ActivityIndicator, Image, StyleSheet, Button, Alert, ScrollView, TextInput, Modal, TouchableOpacity } from "react-native";
 import { Calendar } from "react-native-calendars";
 import { Redirect, useLocalSearchParams } from "expo-router";
 import { getRoomById } from "@firebaseConfig";
@@ -31,9 +19,7 @@ export default function RoomSinglePage() {
   const isLoggedIn = role !== "" && role !== "loading";
   const router = useRouter();
 
-  const [selectedDates, setSelectedDates] = useState<{ [key: string]: any }>(
-    {}
-  );
+  const [selectedDates, setSelectedDates] = useState<{ [key: string]: any }>({});
   const [bookedDates, setBookedDates] = useState<string[]>([]);
   const [bookingLoading, setBookingLoading] = useState(false);
 
@@ -67,11 +53,7 @@ export default function RoomSinglePage() {
         const startDate = new Date(booking.fromDate);
         const endDate = new Date(booking.toDate);
         const bookedRange: string[] = [];
-        for (
-          let date = startDate;
-          date <= endDate;
-          date.setDate(date.getDate() + 1)
-        ) {
+        for (let date = startDate; date <= endDate; date.setDate(date.getDate() + 1)) {
           bookedRange.push(date.toISOString().split("T")[0]);
         }
         return bookedRange;
@@ -209,19 +191,10 @@ export default function RoomSinglePage() {
 
       {isLoggedIn ? (
         <View style={styles.bookingButton}>
-          <Button
-            title={bookingLoading ? "Processing..." : "Book Now"}
-            onPress={() => setIsModalVisible(true)}
-            disabled={bookingLoading}
-          />
+          <Button title={bookingLoading ? "Processing..." : "Book Now"} onPress={() => setIsModalVisible(true)} disabled={bookingLoading} />
         </View>
       ) : (
-        <ButtonComponent
-          text="Login to Book"
-          link={"Login"}
-          color="default"
-          width="100%"
-        />
+        <ButtonComponent text="Login to Book" link={"Login"} color="default" width="100%" />
       )}
 
       {/* Modal for Payment */}
@@ -239,9 +212,7 @@ export default function RoomSinglePage() {
             />
             <TextInput
               style={styles.input}
-              placeholder={`Any name: ${
-                auth.currentUser?.email.split("@")[0] || ""
-              }`}
+              placeholder={`Any name: ${auth.currentUser?.email.split("@")[0] || ""}`}
               placeholderTextColor="lightgrey"
               value={userName}
               onChangeText={setUserName}
@@ -250,10 +221,7 @@ export default function RoomSinglePage() {
               <TouchableOpacity style={styles.button} onPress={handlePayment}>
                 <Text style={styles.buttonText}>Pay</Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.buttonCancel}
-                onPress={() => setIsModalVisible(false)}
-              >
+              <TouchableOpacity style={styles.buttonCancel} onPress={() => setIsModalVisible(false)}>
                 <Text style={styles.buttonText}>Cancel</Text>
               </TouchableOpacity>
             </View>
@@ -282,6 +250,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 16,
+    fontFamily: "Saira",
   },
   input: {
     width: "100%",
@@ -290,6 +259,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 8,
     marginBottom: 16,
+    fontFamily: "Saira",
   },
   modalButtons: {
     flexDirection: "row",
@@ -315,6 +285,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontWeight: "bold",
+    fontFamily: "Saira",
   },
 
   center: {
@@ -339,19 +310,23 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 8,
+    fontFamily: "Saira",
   },
   roomDescription: {
     fontSize: 16,
     marginBottom: 16,
+    fontFamily: "Saira",
   },
   roomPrice: {
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 8,
+    fontFamily: "Saira",
   },
   roomStatus: {
     fontSize: 16,
     color: "#888",
+    fontFamily: "Saira",
   },
   bookingButton: {
     marginTop: 16,

@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  Alert,
-  ActivityIndicator,
-} from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ActivityIndicator } from "react-native";
 import { useRouter } from "expo-router";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { ref, set } from "firebase/database";
@@ -29,12 +21,7 @@ const RegisterScreen = () => {
 
   // Password strength validation
   const isStrongPassword = (password: string) => {
-    return (
-      password.length >= 8 &&
-      /[A-Z]/.test(password) &&
-      /[a-z]/.test(password) &&
-      /[0-9]/.test(password)
-    );
+    return password.length >= 8 && /[A-Z]/.test(password) && /[a-z]/.test(password) && /[0-9]/.test(password);
   };
 
   // Handle Registration
@@ -50,10 +37,7 @@ const RegisterScreen = () => {
     }
 
     if (!isStrongPassword(password)) {
-      Alert.alert(
-        "Error",
-        "Password must be at least 8 characters, with uppercase, lowercase, and numbers"
-      );
+      Alert.alert("Error", "Password must be at least 8 characters, with uppercase, lowercase, and numbers");
       return;
     }
 
@@ -65,11 +49,7 @@ const RegisterScreen = () => {
     setLoading(true);
     try {
       // Create user with Firebase Authentication
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
       // Store user data in Firebase Realtime Database
@@ -134,16 +114,8 @@ const RegisterScreen = () => {
         editable={!loading}
         placeholderTextColor="white"
       />
-      <TouchableOpacity
-        style={[styles.button, loading && styles.buttonDisabled]}
-        onPress={handleRegister}
-        disabled={loading}
-      >
-        {loading ? (
-          <ActivityIndicator size="small" color="#000" />
-        ) : (
-          <Text style={styles.buttonText}>Register</Text>
-        )}
+      <TouchableOpacity style={[styles.button, loading && styles.buttonDisabled]} onPress={handleRegister} disabled={loading}>
+        {loading ? <ActivityIndicator size="small" color="#000" /> : <Text style={styles.buttonText}>Register</Text>}
       </TouchableOpacity>
     </View>
   );
@@ -162,6 +134,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 20,
     color: "#fff",
+    fontFamily: "Saira",
   },
   input: {
     width: "100%",
@@ -172,6 +145,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginVertical: 10,
     color: "#fff",
+    fontFamily: "Saira",
   },
   button: {
     backgroundColor: "#4CAF50",
@@ -180,13 +154,16 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginTop: 20,
     alignItems: "center",
+    fontFamily: "Saira",
   },
   buttonDisabled: {
     backgroundColor: "#ccc",
+    fontFamily: "Saira",
   },
   buttonText: {
     color: "black",
     fontWeight: "bold",
+    fontFamily: "Saira",
   },
 });
 

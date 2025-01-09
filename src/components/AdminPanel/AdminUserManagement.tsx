@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  FlatList,
-  ActivityIndicator,
-  Text,
-  StyleSheet,
-  TextInput,
-  Platform,
-} from "react-native";
+import { View, FlatList, ActivityIndicator, Text, StyleSheet, TextInput, Platform } from "react-native";
 import { ref, get } from "firebase/database";
 import { database, auth } from "@firebaseConfig";
 import UserCard from "./UserCard";
@@ -68,10 +60,7 @@ const AdminUserManagement: React.FC = () => {
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
       updatedUsers = updatedUsers.filter(
-        (user) =>
-          user.name?.toLowerCase().includes(query) ||
-          user.surname?.toLowerCase().includes(query) ||
-          user.email?.toLowerCase().includes(query)
+        (user) => user.name?.toLowerCase().includes(query) || user.surname?.toLowerCase().includes(query) || user.email?.toLowerCase().includes(query)
       );
     }
 
@@ -82,9 +71,7 @@ const AdminUserManagement: React.FC = () => {
       } else if (selectedSort === "email") {
         return (a.email || "").localeCompare(b.email || "");
       } else if (selectedSort === "createdAt") {
-        return (
-          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-        );
+        return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
       }
       return 0;
     });
@@ -105,21 +92,12 @@ const AdminUserManagement: React.FC = () => {
       <Text style={styles.header}>User Management</Text>
 
       {/* Search Bar */}
-      <TextInput
-        style={styles.searchBar}
-        placeholder="Search by name, surname, or email"
-        value={searchQuery}
-        onChangeText={(text) => setSearchQuery(text)}
-      />
+      <TextInput style={styles.searchBar} placeholder="Search by name, surname, or email" value={searchQuery} onChangeText={(text) => setSearchQuery(text)} />
 
       {/* Sort Dropdown */}
       <View style={styles.pickerContainer}>
         <Text style={styles.sortLabel}>Sort By:</Text>
-        <Picker
-          selectedValue={selectedSort}
-          style={styles.picker}
-          onValueChange={(itemValue) => setSelectedSort(itemValue)}
-        >
+        <Picker selectedValue={selectedSort} style={styles.picker} onValueChange={(itemValue) => setSelectedSort(itemValue)}>
           <Picker.Item label="Name" value="name" />
           <Picker.Item label="Email" value="email" />
           <Picker.Item label="Created At" value="createdAt" />
@@ -133,9 +111,7 @@ const AdminUserManagement: React.FC = () => {
         <FlatList
           data={filteredUsers}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <UserCard user={item} onRoleChange={handleRoleChange} />
-          )}
+          renderItem={({ item }) => <UserCard user={item} onRoleChange={handleRoleChange} />}
           contentContainerStyle={styles.listContainer}
         />
       )}
@@ -157,6 +133,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     textAlign: "center",
     color: "#4A4E69",
+    fontFamily: "Saira",
   },
   searchBar: {
     height: 40,
@@ -176,11 +153,13 @@ const styles = StyleSheet.create({
     marginRight: 10,
     fontSize: 16,
     color: "#333",
+    fontFamily: "Saira",
   },
   picker: {
     flex: 1,
     height: 50,
     backgroundColor: "#fff",
+    fontFamily: "Saira",
   },
   listContainer: {
     paddingBottom: 20,
@@ -190,5 +169,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 20,
     color: "#888",
+    fontFamily: "Saira",
   },
 });

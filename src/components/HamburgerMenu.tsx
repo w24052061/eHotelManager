@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Modal,
-  Alert,
-} from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Modal, Alert } from "react-native";
 import { useRouter } from "expo-router";
 import { auth } from "@firebaseConfig";
 import { signOut } from "firebase/auth";
@@ -27,8 +20,7 @@ const HamburgerMenu = () => {
   const navigateToLogin = () => router.push("/Login");
   const navigateToProfile = () => router.push("page/profile");
   const navigateToManageStaff = () => router.push("page/AdminStaffManagement");
-  const navigateToRoomManagement = () =>
-    router.push("page/AdminRoomManagement");
+  const navigateToRoomManagement = () => router.push("page/AdminRoomManagement");
 
   const handleLogout = async () => {
     try {
@@ -48,12 +40,7 @@ const HamburgerMenu = () => {
 
       {/* Dropdown Menu */}
       {menuVisible && (
-        <Modal
-          transparent
-          animationType="none"
-          visible={menuVisible}
-          onRequestClose={toggleMenu}
-        >
+        <Modal transparent animationType="none" visible={menuVisible} onRequestClose={toggleMenu}>
           <TouchableOpacity style={styles.modalOverlay} onPress={toggleMenu}>
             {/* --------- If user is not logged-in --------- */}
             {!isLoggedIn && (
@@ -115,10 +102,7 @@ const HamburgerMenu = () => {
                 <Text style={styles.menuItem} onPress={navigateToManageStaff}>
                   👥 Manage Users
                 </Text>
-                <Text
-                  style={styles.menuItem}
-                  onPress={navigateToRoomManagement}
-                >
+                <Text style={styles.menuItem} onPress={navigateToRoomManagement}>
                   🛏️ Manage Rooms
                 </Text>
                 <Text style={styles.menuItem} onPress={handleLogout}>
@@ -157,6 +141,7 @@ const styles = StyleSheet.create({
   menuText: {
     fontSize: 28,
     color: "#fff",
+    fontFamily: "Saira",
   },
   modalOverlay: {
     flex: 1,
@@ -176,5 +161,6 @@ const styles = StyleSheet.create({
     padding: 15,
     color: "#333",
     textAlign: "left",
+    fontFamily: "Saira",
   },
 });

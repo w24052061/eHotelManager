@@ -1,22 +1,8 @@
 // AdminCancelRequests.tsx
 
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  FlatList,
-  ActivityIndicator,
-  Text,
-  StyleSheet,
-  Alert,
-} from "react-native";
-import {
-  ref,
-  get,
-  query,
-  orderByChild,
-  equalTo,
-  update,
-} from "firebase/database";
+import { View, FlatList, ActivityIndicator, Text, StyleSheet, Alert } from "react-native";
+import { ref, get, query, orderByChild, equalTo, update } from "firebase/database";
 import { database } from "@firebaseConfig";
 import CancelRequestCard from "./CancelRequestCard";
 import { Booking } from "@/components/model/Booking";
@@ -45,10 +31,7 @@ const AdminCancelRequests: React.FC = () => {
           .filter((booking: Booking) => {
             const status = booking.status;
             const toDate = booking.toDate;
-            return (
-              (status === "cancel-pending" || status === "cancel-accepted") &&
-              toDate >= today
-            );
+            return (status === "cancel-pending" || status === "cancel-accepted") && toDate >= today;
           });
         setCancelRequests(filteredBookings);
       } else {
@@ -109,5 +92,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 20,
     color: "#888",
+    fontFamily: "Saira",
   },
 });
